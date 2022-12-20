@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hab_scores: 1.5
+  dat_scores: 1.5
+  maturity_score: 1.5
+  alignment_score: 1.5
+  empresa: one
+
+two:
+  hab_scores: 1.5
+  dat_scores: 1.5
+  maturity_score: 1.5
+  alignment_score: 1.5
+  empresa: two
