@@ -1,0 +1,35 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.sidenav {
+  height: 100%;
+  width: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #808080;
+  padding-top: 20px;
+}
+.navelement {
+  text-decoration: none;
+  text-align: center;
+  padding: 6px 8px 6px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  display: block;
+}
+
+.carousel-item {
+  height: 32rem;
+  width: auto;
+  position: relative;
+}
+
+.main {
+  margin-left: 100px; /* Same as the width of the sidenav */
+}
+
+.aligncenter {
+  align-items: center;
+}
