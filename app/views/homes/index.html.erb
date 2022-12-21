@@ -7,8 +7,10 @@
           </div>
 
           <% if user_signed_in? %>
-          <p class="text-center"> ¡Comienza tu transformación! Te invitamos a ir ver tu empresa en el siguiente enlace:</p>
-          
+          <p class="text-center"> ¡Comienza tu transformación! Te invitamos a inscribir empresa en el siguiente enlace:</p>
+          <div class="d-grid gap-2 col-8 mx-auto">
+            <%= link_to 'Inscribir empresa', new_empresa_path, class:"btn btn-primary" %>
+          </div>
           <% else %>
           <p class="text-center">Aquí podrás responder las preguntas del ITD e ingresar a tu cuenta. Si no tienes cuenta, podrás registrarte.</p>
 

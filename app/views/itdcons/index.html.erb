@@ -1,0 +1,31 @@
+<div class = "main">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+              <h4> ITDs Históricos </h4>
+
+                 <% itds = @empresa.itdcons %>
+                 <% idcol = "id=flush-collapse" %>
+                 <% fechas = [" 15/10/2022"," 29/10/2022", " 23/11/2022"] %>
+ 
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                    <% itds.each_with_index do |itd, index| %>
+                    <% num = (index+1).to_s %> 
+
+                    <% @str = idcol + (index+1).humanize.capitalize + ' class="accordion-collapse collapse" aria-labelledby="flush-heading' + num + '" data-bs-parent="#accordionFlushExample"' %>
+
+                
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-heading<%= sanitize (index+1).humanize.capitalize %> ">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= sanitize (index+1).humanize.capitalize %>" aria-expanded="false" aria-controls="flush-collapse<%= sanitize (index+1).humanize.capitalize %>">
+                          ITD realizado el: <%= itd.created_at %><% sanitize (index+1).humanize.capitalize %> 
+                        </button>
+                      </h2>
+
+                            <div <%= sanitize @str %>>
+                              <div class="accordion-body">
+                                <% itd = Itdcon.find_by(id: (index + 1)) %>
+                                <div class="shadow-sm p-3 mb-5 bg-white rounded"> 
+                                  <div class="container-fluid">
+                    <% end %>
+</div>

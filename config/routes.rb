@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'itdcons/index'
   get 'homes/index'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -7,4 +8,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
   root "homes#index"
+  resources :empresas do 
+    resources :itdcons
+  end
+  get "homes/example"
 end

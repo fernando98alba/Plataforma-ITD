@@ -103,6 +103,7 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    humanize (2.5.1)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -240,6 +241,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  humanize
   importmap-rails
   jbuilder
   pg (~> 1.1)

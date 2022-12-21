@@ -312,13 +312,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pregunta", force: :cascade do |t|
+  create_table "preguntas", force: :cascade do |t|
     t.string "min_description"
     t.string "max_descrption"
     t.bigint "driver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["driver_id"], name: "index_pregunta_on_driver_id"
+    t.index ["driver_id"], name: "index_preguntas_on_driver_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -353,6 +353,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
   add_foreign_key "itdinds", "itdcons"
   add_foreign_key "itdinds", "madurezs"
   add_foreign_key "itdinds", "users"
-  add_foreign_key "pregunta", "drivers"
+  add_foreign_key "preguntas", "drivers"
   add_foreign_key "users", "empresas"
 end

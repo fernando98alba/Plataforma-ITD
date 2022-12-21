@@ -1,6 +1,6 @@
-class CreatePregunta < ActiveRecord::Migration[7.0]
+class CreatePreguntas < ActiveRecord::Migration[7.0]
   def change
-    create_table :pregunta do |t|
+    create_table :preguntas do |t|
       t.string :min_description
       t.string :max_descrption
       t.references :driver, null: true, foreign_key: true

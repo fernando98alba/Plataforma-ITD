@@ -79,3 +79,6 @@ gem "webpacker"
 
 #bootstrap
 gem "bootstrap-sass", "~>3.4.1"
+
+#number to words
+gem "humanize"
