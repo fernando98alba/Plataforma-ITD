@@ -76,3 +76,6 @@ gem "devise"
 
 #webpacker
 gem "webpacker"
+
+#bootstrap
+gem "bootstrap-sass", "~>3.4.1"

@@ -1,0 +1,37 @@
+<header class="container">
+  <nav class="sidenav">
+
+    <div class="container-fluid">
+
+      <%= link_to 'IMAGEN', root_path, class:"navelement" %>
+      
+        <div class="offcanvas-header">
+        </div>
+        <div class="offcanvas-body">
+
+              <%= link_to 'Inicio', root_path, class:"navelement" %>
+            <br/>
+              <%= link_to 'Sobre nosotros', root_path, class:"navelement" %>
+            <br/>
+
+            <% if user_signed_in? %>
+
+                  <%= link_to 'Editar Perfil', edit_user_registration_path, class:"navelement" %>
+                <br/>
+                  <%= link_to 'Cerrar sesión', destroy_user_session_path, data: { turbo_method: :delete }, class:"navelement" %>
+                  <!-- aquí se puede usar el metodo "data { turbo_method: :delete }-->
+
+
+
+            <% else %>
+
+                  <%= link_to 'Ingresar', new_user_session_path, class:"navelement" %>
+                <br/>
+
+                  <%= link_to 'Registrarse', new_user_registration_path, class:"navelement" %>
+                <br/>
+            <% end %>
+        </div>
+    </div>
+  </nav>
+<header>

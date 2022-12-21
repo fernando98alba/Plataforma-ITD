@@ -1,4 +1,4 @@
 class Alineamiento < ApplicationRecord
-  as_many :itdinds
-  as_many :itdcons
+  has_many :itdinds
+  has_many :itdcons
 end

@@ -199,9 +199,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
   end
 
   create_table "itdinds", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "madurez_id", null: false
-    t.bigint "alineamiento_id", null: false
+    t.bigint "user_id"
+    t.bigint "madurez_id"
+    t.bigint "alineamiento_id"
     t.integer "p1"
     t.integer "p2"
     t.integer "p3"
