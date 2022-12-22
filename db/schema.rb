@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,10 +44,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
     t.index ["iniciativa_id"], name: "index_brechas_on_iniciativa_id"
   end
 
+  create_table "cuestionarios", force: :cascade do |t|
+    t.string "min_description"
+    t.string "max_description"
+    t.string "verifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "driver_id"
+    t.index ["driver_id"], name: "index_cuestionarios_on_driver_id"
+  end
+
   create_table "dats", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -80,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
     t.bigint "dat_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["dat_id"], name: "index_habilitadors_on_dat_id"
   end
 
@@ -312,15 +324,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "preguntas", force: :cascade do |t|
-    t.string "min_description"
-    t.string "max_descrption"
-    t.bigint "driver_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["driver_id"], name: "index_preguntas_on_driver_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -341,6 +344,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
   add_foreign_key "aspiracions", "empresas"
   add_foreign_key "brechas", "empresas"
   add_foreign_key "brechas", "iniciativas"
+  add_foreign_key "cuestionarios", "drivers"
   add_foreign_key "drivers", "elementos"
   add_foreign_key "elementos", "habilitadors"
   add_foreign_key "habilitadors", "dats"
@@ -353,6 +357,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_135040) do
   add_foreign_key "itdinds", "itdcons"
   add_foreign_key "itdinds", "madurezs"
   add_foreign_key "itdinds", "users"
-  add_foreign_key "preguntas", "drivers"
   add_foreign_key "users", "empresas"
 end

@@ -2,10 +2,10 @@
 
 one:
   min_description: MyString
-  max_descrption: MyString
-  driver: one
+  max_description: MyString
+  driver_id: one
 
 two:
   min_description: MyString
-  max_descrption: MyString
-  driver: two
+  max_description: MyString
+  driver_id: two
