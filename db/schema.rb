@@ -11,9 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "alineamientos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -29,15 +26,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.float "dat_scores"
     t.float "maturity_score"
     t.float "alignment_score"
-    t.bigint "empresa_id"
+    t.integer "empresa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_aspiracions_on_empresa_id"
   end
 
   create_table "brechas", force: :cascade do |t|
-    t.bigint "empresa_id"
-    t.bigint "iniciativa_id"
+    t.integer "empresa_id"
+    t.integer "iniciativa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_brechas_on_empresa_id"
@@ -50,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.string "verifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "driver_id"
+    t.integer "driver_id"
     t.index ["driver_id"], name: "index_cuestionarios_on_driver_id"
   end
 
@@ -63,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
 
   create_table "drivers", force: :cascade do |t|
     t.string "name"
-    t.bigint "elemento_id"
+    t.integer "elemento_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["elemento_id"], name: "index_drivers_on_elemento_id"
@@ -71,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
 
   create_table "elementos", force: :cascade do |t|
     t.string "name"
-    t.bigint "habilitador_id"
+    t.integer "habilitador_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["habilitador_id"], name: "index_elementos_on_habilitador_id"
@@ -88,7 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
 
   create_table "habilitadors", force: :cascade do |t|
     t.string "name"
-    t.bigint "dat_id"
+    t.integer "dat_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
@@ -97,21 +94,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
 
   create_table "iniciativas", force: :cascade do |t|
     t.string "name"
-    t.bigint "madurez_id"
+    t.integer "madurez_id"
     t.text "description"
     t.text "effort"
     t.text "benefict"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "driver_id"
+    t.integer "driver_id"
     t.index ["driver_id"], name: "index_iniciativas_on_driver_id"
     t.index ["madurez_id"], name: "index_iniciativas_on_madurez_id"
   end
 
   create_table "itdcons", force: :cascade do |t|
-    t.bigint "empresa_id"
-    t.bigint "madurez_id"
-    t.bigint "alineamiento_id"
+    t.integer "empresa_id"
+    t.integer "madurez_id"
+    t.integer "alineamiento_id"
     t.integer "p1"
     t.integer "p2"
     t.integer "p3"
@@ -211,9 +208,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
   end
 
   create_table "itdinds", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "madurez_id"
-    t.bigint "alineamiento_id"
+    t.integer "user_id"
+    t.integer "madurez_id"
+    t.integer "alineamiento_id"
     t.integer "p1"
     t.integer "p2"
     t.integer "p3"
@@ -307,7 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.integer "p91"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "itdcon_id"
+    t.integer "itdcon_id"
     t.index ["alineamiento_id"], name: "index_itdinds_on_alineamiento_id"
     t.index ["itdcon_id"], name: "index_itdinds_on_itdcon_id"
     t.index ["madurez_id"], name: "index_itdinds_on_madurez_id"
@@ -335,7 +332,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.string "name"
     t.string "lastname"
     t.binary "is_admin"
-    t.bigint "empresa_id"
+    t.integer "empresa_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["empresa_id"], name: "index_users_on_empresa_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
