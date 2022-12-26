@@ -7,7 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 require 'spreadsheet'
 
-Cuestionario.delete_all
 Driver.delete_all
 Elemento.delete_all
 Habilitador.delete_all
@@ -35,14 +34,17 @@ end
 book_des = Spreadsheet.open("db/docs_seed/Descripciones.xls")
 des = book_des.worksheet(0)
 descripciones = {}
+ponderadores = {}
 des.each 1 do |row|
   if row[0].nil?
     break
   end
   descripciones[row[0]] = row[1]
+  ponderadores[row[0]] = row[2]
 end
 book_mod = Spreadsheet.open("db/docs_seed/Modelo_ITD.xls")
 modelo = book_mod.worksheet(0)
+index = 1
 modelo.each 1 do |row|
   if row[0].nil?
     break
@@ -53,24 +55,21 @@ modelo.each 1 do |row|
     if hab
       ele = Elemento.find_by(name: row[2])
       if ele
-        dri = Driver.create(name: row[3], elemento_id: ele.id)
-        pre = Cuestionario.create(driver_id: dri.id, verifier: row[6], min_description: row[4], max_description: row[5])
+        dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
       else
         ele = Elemento.create(name: row[2], habilitador_id: hab.id)
-        dri = Driver.create(name: row[3], elemento_id: ele.id)
-        pre = Cuestionario.create(driver_id: dri.id, verifier: row[6], min_description: row[4], max_description: row[5])
+        dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
       end
     else
       hab = Habilitador.create(name: row[1], dat_id: cap.id, description: descripciones[row[1]])
       ele = Elemento.create(name: row[2], habilitador_id: hab.id)
-      dri = Driver.create(name: row[3], elemento_id: ele.id)
-      pre = Cuestionario.create(driver_id: dri.id, verifier: row[6], min_description: row[4], max_description: row[5])
+      dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
     end
   else
-    cap = Dat.create(name: row[0], description: descripciones[row[1]])
+    cap = Dat.create(name: row[0], description: descripciones[row[0]], ponderador: ponderadores[row[0]])
     hab = Habilitador.create(name: row[1], dat_id: cap.id, description: descripciones[row[1]])
     ele = Elemento.create(name: row[2], habilitador_id: hab.id)
-    dri = Driver.create(name: row[3], elemento_id: ele.id)
-    pre = Cuestionario.create(driver_id: dri.id, verifier: row[6], min_description: row[4], max_description: row[5])
+    dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
   end
+  index +=1
 end

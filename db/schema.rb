@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_26_134234) do
   create_table "alineamientos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -41,21 +41,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.index ["iniciativa_id"], name: "index_brechas_on_iniciativa_id"
   end
 
-  create_table "cuestionarios", force: :cascade do |t|
-    t.string "min_description"
-    t.string "max_description"
-    t.string "verifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "driver_id"
-    t.index ["driver_id"], name: "index_cuestionarios_on_driver_id"
-  end
-
   create_table "dats", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.float "ponderador"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -63,6 +54,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.integer "elemento_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "min_description"
+    t.string "max_description"
+    t.string "identifier"
+    t.string "verifier"
     t.index ["elemento_id"], name: "index_drivers_on_elemento_id"
   end
 
@@ -202,6 +197,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
     t.integer "p91"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "maturity"
+    t.float "alignment"
     t.index ["alineamiento_id"], name: "index_itdcons_on_alineamiento_id"
     t.index ["empresa_id"], name: "index_itdcons_on_empresa_id"
     t.index ["madurez_id"], name: "index_itdcons_on_madurez_id"
@@ -341,7 +338,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_22_010551) do
   add_foreign_key "aspiracions", "empresas"
   add_foreign_key "brechas", "empresas"
   add_foreign_key "brechas", "iniciativas"
-  add_foreign_key "cuestionarios", "drivers"
   add_foreign_key "drivers", "elementos"
   add_foreign_key "elementos", "habilitadors"
   add_foreign_key "habilitadors", "dats"

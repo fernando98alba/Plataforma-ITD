@@ -13,21 +13,13 @@
               </button>
                  <% itds = @empresa.itdcons.all %>
                  <% idcol = "id=flush-collapse" %>
-                 <% fechas = [" 15/10/2022"," 29/10/2022", " 23/11/2022"] %>
- 
-              <div class="accordion accordion-flush" id="accordionFlushExample">
-
                     <% itds.each_with_index do |itd, index| %>
                     <% num = (index).to_s %> 
                     <% @str = idcol + (index).humanize.capitalize + ' class="accordion-collapse collapse" aria-labelledby="flush-heading' + num + '" data-bs-parent="#accordionFlushExample"' %>
 
                 
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="flush-heading<%= sanitize (index).humanize.capitalize %> ">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= sanitize (index).humanize.capitalize %>" aria-expanded="false" aria-controls="flush-collapse<%= sanitize (index).humanize.capitalize %>">
-                          ITD realizado el: <%= itd.created_at %><% sanitize (index).humanize.capitalize %> 
-                        </button>
-                      </h2>
+                    <div class="shadow p-3 mb-5 bg-white">
+                      <%= link_to 'ITD realizado el: ' + itd.created_at.to_s, empresa_itdcon_path(@empresa.id, itd.id), class:"itdlink" %>
                     </div>
                     <% end %>
   </div>
