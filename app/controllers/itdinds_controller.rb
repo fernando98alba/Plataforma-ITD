@@ -10,7 +10,8 @@ class ItdindsController < ApplicationController
     @itdind.user = current_user
     respond_to do |format|
       if @itdind.save
-        format.html { redirect_to root_path, notice: "El Itd se creó correctamente." }
+        calculate_itdcon()
+        format.html { redirect_to empresa_itdcon_path(@empresa, @itdcon), notice: "El Itd se creó correctamente." }
       else #REVISAR EL ELSE
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -18,6 +19,58 @@ class ItdindsController < ApplicationController
   end
 
   private
+
+  def calculate_itdcon
+    (1..91).each do |index|
+      question = "p" + index.to_s
+      if @itdind[question].is_a? Numeric
+        @itdcon[question] = @itdind[question]
+      else
+        @itdcon[question] = rand(1..4) #ELIMINAAAR
+      end
+    end
+    madurez = 0
+    habilitadores = []
+    Dat.all.each do |dat|
+      point_dat = 0
+      dat.habilitadors.each do |habilitador|
+        point_habilitador = 0
+        habilitador.elementos.each do |elemento|
+          point_elemento = 0
+          elemento.drivers.each do |driver|
+            point_elemento += @itdcon[driver.identifier]
+            puts
+          end
+          point_elemento = point_elemento/elemento.drivers.count.to_f
+          point_elemento = point_elemento*100.0/4
+          point_habilitador += point_elemento 
+        end
+        point_habilitador = point_habilitador/habilitador.elementos.count.to_f
+        point_dat += point_habilitador
+        habilitadores.push(point_habilitador)
+      end
+      point_dat = point_dat/dat.habilitadors.count.to_f
+      madurez += point_dat*dat.ponderador
+    end
+    @itdcon.maturity = madurez
+    alignment_mean = habilitadores.sum(0.0)/habilitadores.size
+    num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
+    variance = num_sum / (habilitadores.size)  
+    @itdcon.alignment = Math.sqrt(variance)
+    Madurez.all.each do |level|
+      if madurez <= level.max and madurez >= level.min
+        @itdcon.madurez = level
+        break
+      end
+    end
+    Alineamiento.all.each do |level|
+      if madurez <= level.max and madurez >= level.min
+        @itdcon.alineamiento = level
+        break
+      end
+    end
+    @itdcon.save
+  end
 
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:itdcon_id])
