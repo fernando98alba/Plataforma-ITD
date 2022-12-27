@@ -128,77 +128,23 @@
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
           <h1>Nueva Aspiracion</h1>
 
-          <%= render "form", empresa: @empresa, aspiracion: @aspiracion %>
-
+          <%= link_to "change_hab_aspiracion", update_hab_aspiracion_path %>
+          <% turbo_frame_tag "dat_graph" do %> 
+            <div>
+              <p>aaaaaaaaa</p>
+            </div>
+          <% end %>  
           <br>
 
         </div>
-
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-          <div>
-            <canvas id="myChart"></canvas>
-          </div>
-          <%recomendation = {}%>
-          <% @points_dat.keys.each do |dat|%>
-            <% if @points_dat[dat] < @itdcon.maturity%>
-              <%recomendation[dat] = @itdcon.maturity - @points_dat[dat]%>
-            <%else%>
-              <%recomendation[dat] = 0%>
-            <%end%>
+        <%recomendation = {}%>
+        <% @points_dat.keys.each do |dat|%>
+          <% if @points_dat[dat] < @itdcon.maturity%>
+            <%recomendation[dat] = @itdcon.maturity - @points_dat[dat]%>
+          <%else%>
+            <%recomendation[dat] = 0%>
           <%end%>
-
-          <script>
-            let label = [];
-            let values = [];
-            let maturity = [] ;
-            let recomendation = [];
-            <% @points_dat.keys.each do |dat|%>
-              label.push("Capital <%= dat %>");
-              values.push(<%= @points_dat[dat]%>);
-              maturity.push(<%= @itdcon.maturity%>);
-              recomendation.push(<%= recomendation[dat]%>);
-            <%end%>
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-              data: {
-              labels: label,
-              datasets: [{
-                label: 'Puntaje por capital',
-                type: 'bar',
-                data: values,
-                fill: true,
-              },
-              {
-                label: 'Meta Umbral (Aún por definir limites)',
-                type: 'line',
-                data: maturity,
-              },
-              {
-                label: 'Meta',
-                type: 'bar',
-                labels: [' ', 'Capital Estrategico','Capital Estructural','Capital Humano','Capital Relacional','Capital Natural', ' '],
-                data: recomendation,
-              }]
-              },
-              options: {
-                x: {
-                  stacked: true
-                },
-                y: {
-                  stacked: true,
-                  beginAtZero: true,
-                  reverse: true
-                },
-                elements: {
-                  line: {
-                    borderWidth: 3
-
-                  }
-                }
-              },
-            });             
-          </script>
-        </div>
+        <%end%>
         <div>
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
               <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>

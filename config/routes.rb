@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'itdcons/index'
   get 'homes/index'
+  get "empresa/:empresa_id/update_hab_aspiracion", to: "aspiracions#update_hab_aspiracion", as: "update_hab_aspiracion"
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'

@@ -35,3 +35,5 @@ gem "groupdate", "~> 6.1"
 gem "humanize"
 
 gem "spreadsheet"
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"

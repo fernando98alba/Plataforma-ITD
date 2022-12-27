@@ -8,34 +8,78 @@ class AspiracionsController < ApplicationController
   end
 
   def create
-    @aspiracion = @empresa.aspiracion.build(aspiracion_params)
-
+    @aspiracion = Aspiracion.new(aspiracion_params)
+    puts "PARAMS"
+    puts aspiracion_params
     respond_to do |format|
       if @aspiracion.save
         format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to new_empresa_aspiracion_path(@empresa.id), status: :unprocessable_entity }
+        format.json { render json: @aspiracion.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_hab_aspiracio
+    if @aspiracion
+      aspiracion_params.keys.each do |param|
+        @aspiracion.param = aspiracion_params[param]
+      end
+    else
+      @aspiracion = Aspiracion.new(aspiracion_params)
+      @aspiracion.empresa = @empresa
+    end
+    if @aspiracion.save
+      update_aspiracion_params
+    end
+  end
+
+  def update_hab_aspiracion
+    if @aspiracion
+      @aspiracion.empresa = @empresa
+      @aspiracion.estrategico = 30
+    else
+      @aspiracion = Aspiracion.new()
+      @aspiracion.empresa = @empresa
+      @aspiracion.estrategico = 30
+    end
+    puts @aspiracion.empresa
+    puts "CCCCCCCCCCCCCCCCCCCCCCCCC"
+    if @aspiracion.save
+      puts"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      update_aspiracion_params
+    else
+      puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
     end
   end
 
   private
 
+  def update_aspiracion_params
+    render turbo_stream:
+      turbo_stream.replace("dat_graph",
+        partial: "dat_graph",
+        locals: {empresa: @empresa, aspiracion: @aspiracion}
+      )
+  end
   def get_aspiracion
     @aspiracion = Aspiracion.find_by(id: params[:id])
   end
 
   def get_empresa
+
     @empresa = Empresa.find_by(id: params[:empresa_id])
   end
 
   def get_last_itdcon
+
     @itdcon = @empresa.itdcons.last
   end
 
   def aspiracion_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural)
+    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :empresa_id)
   end
 
   def get_points ##DRYS

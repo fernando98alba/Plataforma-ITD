@@ -1,0 +1,63 @@
+<% turbo_frame_tag "dat_graph" do %>  
+  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+    <p>aaaaaaaaa</p>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      let label = [];
+      let values = [];
+      let maturity = [] ;
+      let recomendation = [];
+      <% points_dat.keys.each do |dat|%>
+        label.push("Capital <%= dat %>");
+        values.push(<%= points_dat[dat]%>);
+        maturity.push(<%= itdcon.maturity%>);
+        recomendation.push(<%= recomendation[dat]%>);
+      <%end%>
+      console.log(label);
+      console.log( values);
+      console.log(label);
+      const ctx = document.getElementById('myChart');
+      new Chart(ctx, {
+        data: {
+        labels: label,
+        datasets: [{
+          label: 'Puntaje por capital',
+          type: 'bar',
+          data: values,
+          fill: true,
+        },
+        {
+          label: 'Meta Umbral (Aún por definir limites)',
+          type: 'line',
+          data: maturity,
+        },
+        {
+          label: 'Meta',
+          type: 'bar',
+          data: recomendation,
+        }]
+        },
+        options: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            reverse: true
+          },
+          elements: {
+            line: {
+              borderWidth: 3
+
+            }
+          }
+        },
+      });             
+    </script>
+  </div>
+  
+<% end %>  

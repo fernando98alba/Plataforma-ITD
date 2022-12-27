@@ -23,9 +23,11 @@ class EmpresasController < ApplicationController
         current_user.empresa_id = @empresa.id
         current_user.is_admin = 1
         current_user.save
-        format.html { redirect_to root_path, notice: "Empresa was successfully created." }
+        format.html { redirect_to empresa_url(@empresa), notice: "Empresa was successfully created." }
+        format.json { render :show, status: :created, location: @empresa }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @empresa.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -36,6 +38,7 @@ class EmpresasController < ApplicationController
         @empresa.destroy
         respond_to do |format|
           redirect_to root_path, notice: "Empresa was successfully destroyed."
+          format.json { head :no_content }
         end 
     else
         respond_to do |format|
