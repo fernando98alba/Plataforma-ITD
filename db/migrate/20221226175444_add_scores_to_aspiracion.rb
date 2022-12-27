@@ -17,8 +17,7 @@ class AddScoresToAspiracion < ActiveRecord::Migration[7.0]
     add_column :aspiracions, :ciclodevida, :integer
     add_column :aspiracions, :estructura, :integer
     add_column :aspiracions, :stakeholders, :integer
-    add_column :aspiracions, :marca, :string
-    add_column :aspiracions, :, :integer
+    add_column :aspiracions, :marca, :integer
     add_column :aspiracions, :clientes, :integer
     add_column :aspiracions, :sustentabilidad, :integer
   end

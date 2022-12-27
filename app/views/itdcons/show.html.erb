@@ -29,7 +29,7 @@
                   let values = [];
                   let maturity = [] ;
                   <% @points_dat.keys.each do |dat|%>
-                    label.push("<%= dat %>");
+                    label.push("Capital <%= dat %>");
                     values.push(<%= @points_dat[dat]%>);
                     maturity.push(<%= @itdcon.maturity%>);
                   <%end%>
@@ -174,7 +174,6 @@
                           x: {
                             stacked: true,
                             beginAtZero: true,
-                            
                           }
                         }
                       },
@@ -299,8 +298,6 @@
                           label.push("<%= hab.name %>");
                           values.push("<%= @points_hab[hab.name]%>");
                         <%end%>
-                        console.log(values);
-                        console.log(label);
                         ctx_cap= document.getElementById('myChart' + "<%=(index + 4)%>");
                         new Chart(ctx_cap, {
                           type: 'bar',
@@ -343,6 +340,6 @@
     </div>
   </div>
   <div class = "d-flex justify-content-end marginright">
-    <%= link_to 'Definir aspiración', root_path, class:"btn btn-primary" %>
+    <%= link_to 'Definir aspiración', new_empresa_aspiracion_path(@empresa), class:"btn btn-primary" %>
   </div>
 </div>

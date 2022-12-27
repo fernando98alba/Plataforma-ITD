@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_26_134234) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
   create_table "alineamientos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -22,13 +22,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_134234) do
   end
 
   create_table "aspiracions", force: :cascade do |t|
-    t.float "hab_scores"
-    t.float "dat_scores"
     t.float "maturity_score"
     t.float "alignment_score"
     t.integer "empresa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "estrategico"
+    t.integer "estructural"
+    t.integer "humano"
+    t.integer "relacional"
+    t.integer "natural"
+    t.integer "estrategia"
+    t.integer "modelonegocio"
+    t.integer "governance"
+    t.integer "procesos"
+    t.integer "tecnologia"
+    t.integer "datosyanalitica"
+    t.integer "modelooperativo"
+    t.integer "propiedadintelectual"
+    t.integer "personas"
+    t.integer "ciclodevida"
+    t.integer "estructura"
+    t.integer "stakeholders"
+    t.integer "marca"
+    t.integer "clientes"
+    t.integer "sustentabilidad"
     t.index ["empresa_id"], name: "index_aspiracions_on_empresa_id"
   end
 

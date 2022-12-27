@@ -19,12 +19,11 @@ class EmpresasController < ApplicationController
 
     respond_to do |format|
       if @empresa.save
-        puts @empresa
+
         current_user.empresa_id = @empresa.id
         current_user.is_admin = 1
         current_user.save
         format.html { redirect_to root_path, notice: "Empresa was successfully created." }
-        #UserEmpresa.create(user_id: current_user.id, empresa_id: @empresa.id, admin: true)
       else
         format.html { render :new, status: :unprocessable_entity }
       end

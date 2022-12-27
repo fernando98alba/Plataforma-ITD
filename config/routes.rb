@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :itdcons do
       resources :itdinds
     end
+    resources :aspiracions
   end
   get "homes/example"
 end
