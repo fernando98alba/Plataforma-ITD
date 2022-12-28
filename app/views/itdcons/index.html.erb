@@ -11,15 +11,14 @@
               <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Nuevo ITD
               </button>
-                 <% itds = @empresa.itdcons.all %>
                  <% idcol = "id=flush-collapse" %>
-                    <% itds.each_with_index do |itd, index| %>
+                    <% @itdcons.each_with_index do |itd, index| %>
                     <% num = (index).to_s %> 
                     <% @str = idcol + (index).humanize.capitalize + ' class="accordion-collapse collapse" aria-labelledby="flush-heading' + num + '" data-bs-parent="#accordionFlushExample"' %>
 
                 
                     <div class="shadow p-3 mb-5 bg-white">
-                      <%= link_to 'ITD realizado el: ' + itd.created_at.to_s, empresa_itdcon_path(@empresa.id, itd.id), class:"itdlink" %>
+                      <%= link_to 'ITD realizado el: ' + itd.created_at.to_s, empresa_itdcon_path(@empresa.id, itd.id), class:"itdlink", data: {turbo: false} %>
                     </div>
                     <% end %>
   </div>

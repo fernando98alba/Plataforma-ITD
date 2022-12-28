@@ -1,59 +1,83 @@
- <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-  <div>
-    <canvas id="myChart"></canvas>
+<%= turbo_frame_tag "dat_graph" do %>
+  <div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+    
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+        <script>
+          label = [];
+          values = [];
+          maturity = [] ;
+          recomendation = [];
+          <% points_dat.keys.each do |dat|%>
+            label.push("Capital <%= dat %>");
+            values.push(<%= points_dat[dat]%>);
+            maturity.push(<%= itdcon.maturity%>);
+            recomendation.push(<%= recomendation[dat.downcase.gsub("é", "e")]%>);
+          <%end%>
+          console.log(label);
+          console.log( values);
+          console.log(label);
+          ctx = document.getElementById('myChart');
+          new Chart(ctx, {
+            data: {
+            labels: label,
+            datasets: [{
+              label: 'Puntaje por capital',
+              type: 'bar',
+              data: values,
+              fill: true,
+            },
+            {
+              label: 'Meta Umbral (Aún por definir limites)',
+              type: 'line',
+              data: maturity,
+            },
+            {
+              label: 'Meta',
+              type: 'bar',
+              data: recomendation,
+            }]
+            },
+            options: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+                beginAtZero: true,
+                reverse: true
+              },
+              elements: {
+                line: {
+                  borderWidth: 3
+
+                }
+              }
+            },
+          });             
+        </script>
+      </div>
+
+      <div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>
+            <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment.to_i %></b></h3>
+            <b> Los capitales bajo el umbral son:</b>
+            <% @points_dat.keys().each do |dat|%>
+            <div>
+            <%if recomendation[dat.downcase.gsub("é", "e")] > 0 %>
+              <%= " - Te recomendamos subir el Capital #{dat} en #{recomendation[dat.downcase.gsub("é", "e")].to_i}" %>
+            <% end %>
+            </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <script>
-    let label = [];
-    let values = [];
-    let maturity = [] ;
-    let recomendation = [];
-    <% points_dat.keys.each do |dat|%>
-      label.push("Capital <%= dat %>");
-      values.push(<%= points_dat[dat]%>);
-      maturity.push(<%= itdcon.maturity%>);
-      recomendation.push(<%= recomendation[dat]%>);
-    <%end%>
-    console.log(label);
-    console.log( values);
-    console.log(label);
-    const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
-      data: {
-      labels: label,
-      datasets: [{
-        label: 'Puntaje por capital',
-        type: 'bar',
-        data: values,
-        fill: true,
-      },
-      {
-        label: 'Meta Umbral (Aún por definir limites)',
-        type: 'line',
-        data: maturity,
-      },
-      {
-        label: 'Meta',
-        type: 'bar',
-        data: recomendation,
-      }]
-      },
-      options: {
-        x: {
-          stacked: true
-        },
-        y: {
-          stacked: true,
-          beginAtZero: true,
-          reverse: true
-        },
-        elements: {
-          line: {
-            borderWidth: 3
-
-          }
-        }
-      },
-    });             
-  </script>
-</div>
+<% end %>

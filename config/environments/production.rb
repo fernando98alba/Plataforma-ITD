@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "pasantia_production"
+  # config.active_job.queue_name_prefix = "Plataforma_ITD_2_production"
 
   config.action_mailer.perform_caching = false
 
@@ -90,5 +90,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end

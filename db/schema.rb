@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "alineamientos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -24,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
   create_table "aspiracions", force: :cascade do |t|
     t.float "maturity_score"
     t.float "alignment_score"
-    t.integer "empresa_id"
+    t.bigint "empresa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "estrategico"
@@ -51,8 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
   end
 
   create_table "brechas", force: :cascade do |t|
-    t.integer "empresa_id"
-    t.integer "iniciativa_id"
+    t.bigint "empresa_id"
+    t.bigint "iniciativa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_brechas_on_empresa_id"
@@ -69,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
 
   create_table "drivers", force: :cascade do |t|
     t.string "name"
-    t.integer "elemento_id"
+    t.bigint "elemento_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "min_description"
@@ -81,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
 
   create_table "elementos", force: :cascade do |t|
     t.string "name"
-    t.integer "habilitador_id"
+    t.bigint "habilitador_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["habilitador_id"], name: "index_elementos_on_habilitador_id"
@@ -98,7 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
 
   create_table "habilitadors", force: :cascade do |t|
     t.string "name"
-    t.integer "dat_id"
+    t.bigint "dat_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
@@ -107,21 +110,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
 
   create_table "iniciativas", force: :cascade do |t|
     t.string "name"
-    t.integer "madurez_id"
+    t.bigint "madurez_id"
     t.text "description"
     t.text "effort"
     t.text "benefict"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "driver_id"
+    t.bigint "driver_id"
     t.index ["driver_id"], name: "index_iniciativas_on_driver_id"
     t.index ["madurez_id"], name: "index_iniciativas_on_madurez_id"
   end
 
   create_table "itdcons", force: :cascade do |t|
-    t.integer "empresa_id"
-    t.integer "madurez_id"
-    t.integer "alineamiento_id"
+    t.bigint "empresa_id"
+    t.bigint "madurez_id"
+    t.bigint "alineamiento_id"
     t.integer "p1"
     t.integer "p2"
     t.integer "p3"
@@ -223,9 +226,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
   end
 
   create_table "itdinds", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "madurez_id"
-    t.integer "alineamiento_id"
+    t.bigint "user_id"
+    t.bigint "madurez_id"
+    t.bigint "alineamiento_id"
     t.integer "p1"
     t.integer "p2"
     t.integer "p3"
@@ -319,7 +322,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
     t.integer "p91"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "itdcon_id"
+    t.bigint "itdcon_id"
     t.index ["alineamiento_id"], name: "index_itdinds_on_alineamiento_id"
     t.index ["itdcon_id"], name: "index_itdinds_on_itdcon_id"
     t.index ["madurez_id"], name: "index_itdinds_on_madurez_id"
@@ -347,7 +350,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_175444) do
     t.string "name"
     t.string "lastname"
     t.binary "is_admin"
-    t.integer "empresa_id"
+    t.bigint "empresa_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["empresa_id"], name: "index_users_on_empresa_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -1,0 +1,91 @@
+// app/assets/stylesheets/application.sass.scss
+
+// Mixins
+//@import "mixins/media";
+
+// Configuration
+//@import "config/variables";
+//@import "config/reset";
+
+// Components
+//@import "components/btn";
+//@import "components/error_message";
+//@import "components/form";
+//@import "components/visually_hidden";
+//@import "components/quote";
+//@import "components/turbo_progress_bar";
+
+// Layouts
+//@import "layouts/container";
+//@import "layouts/header";
+
+
+
+.carousel-control-next {
+    right: -30px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 110px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #808080;
+  padding-top: 20px;
+}
+.carousel-item {
+    height: 32rem;
+    width: auto;
+    position: relative;
+  }
+.navelement {
+  text-decoration: none;
+  text-align: center;
+  padding: 6px 8px 6px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  display: block;
+}
+.navbuttonelement {
+  background-color: transparent;
+  border-color: transparent;
+}
+.navelement:hover{
+  text-decoration: none;
+  color: white;
+}
+.main {
+  flex: 1;
+  margin-top: 110px;
+  margin-left: 110px; /* Same as the width of the sidenav */
+}
+
+.aligncenter {
+  align-items: center;
+}
+
+.carrouselitem {
+  height:100%;
+}
+
+.itdlink {
+  text-decoration: none;
+  padding: 6px 8px 6px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  display: block;
+}
+.itdlink:hover{
+  text-decoration: none;
+  color: black;
+}
+.marginright {
+  margin-right: 10px;
+}
+
+.back {
+  background-color: red;
+}
