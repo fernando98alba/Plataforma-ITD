@@ -127,39 +127,23 @@
       <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
           <h1>Nueva Aspiracion</h1>
-          <%= turbo_frame_tag "first_turbo_frame" do %>
-              <%= link_to "New aspiracion", new_empresa_aspiracion_path(@empresa), data: {turbo: true}, class: "btn btn--primary" %>
-          <% end %>
-
-          <%= render "form", empresa: @empresa, aspiracion: @empresa.aspiracion.build %>
-          <br>
-
-        </div>
-        <%recomendation = {}%>
-        <% @points_dat.keys.each do |dat|%>
-          <% if @points_dat[dat] < @itdcon.maturity%>
-            <%recomendation[dat] = @itdcon.maturity - @points_dat[dat]%>
-          <%else%>
-            <%recomendation[dat] = 0%>
+          <%= turbo_frame_tag "new_graph" do %>
+            <%= render "form", empresa: @empresa, aspiracion: @empresa.aspiracion.build %>
+            <br>
           <%end%>
-        <%end%>
-        <%= render "dat_graph", recomendation: recomendation, itdcon: @itdcon, points_dat: @points_dat %>
-        <div>
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-              <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>
-              <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment.to_i %></b></h3>
-              <b> Los capitales bajo el umbral son:</b>
-              <% @points_dat.keys().each do |dat|%>
-              <div>
-              <%if recomendation[dat] > 0 %>
-                <%= " - Te recomendamos subir el Capital #{dat} en #{recomendation[dat].to_i}" %>
-              <% end %>
-              </div>
-              <% end %>
-              </div>
-            </div>
-          </div>
         </div>
+        <script>
+          let label = [];
+          let values = [];
+          let maturity = [] ;
+          let recomendation = [];
+          let ctx;
+        </script>
+
+        <%= turbo_frame_tag "dat_graph" do %>
+          <%= render "dat_graph", recomendation: @recomendation, itdcon: @itdcon, points_dat: @points_dat %>
+          
+        <%end%>
 
       </div>
     </div>

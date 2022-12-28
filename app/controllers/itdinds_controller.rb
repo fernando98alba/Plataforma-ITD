@@ -11,7 +11,7 @@ class ItdindsController < ApplicationController
     respond_to do |format|
       if @itdind.save
         calculate_itdcon()
-        format.html { redirect_to empresa_itdcon_path(@empresa, @itdcon), notice: "El Itd se creó correctamente." }
+        format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), notice: "El Itd se creó correctamente." }
       else #REVISAR EL ELSE
         format.html { render :new, status: :unprocessable_entity }
       end

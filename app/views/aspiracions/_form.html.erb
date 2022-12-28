@@ -1,41 +1,43 @@
-<%= form_with(model: [empresa, aspiracion], url: update_hab_aspiracion_path, method: :get ) do |form| %>
-  <% if aspiracion.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
+<%= turbo_frame_tag "new_graph" do %>
+  <%= form_with(model: [empresa, aspiracion]) do |form| %>
+    <% if aspiracion.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
 
-      <ul>
-        <% aspiracion.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% aspiracion.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form.hidden_field :empresa_id, value: empresa.id %>
+    <div>
+      <%= form.label :estrategico, style: "display: block" %>
+      <%= form.number_field :estrategico %>
+    </div>
+
+    <div>
+      <%= form.label :estructural, style: "display: block" %>
+      <%= form.number_field :estructural %>
+    </div>
+
+    <div>
+      <%= form.label :humano, style: "display: block" %>
+      <%= form.number_field :humano %>
+    </div>
+
+    <div>
+      <%= form.label :relacional, style: "display: block" %>
+      <%= form.number_field :relacional %>
+    </div>
+
+    <div>
+      <%= form.label :natural, style: "display: block" %>
+      <%= form.number_field :natural %>
+    </div>
+    <div>
+      <%= form.submit %>
     </div>
   <% end %>
-  <%= form.hidden_field :empresa_id, value: empresa.id %>
-  <div>
-    <%= form.label :estrategico, style: "display: block" %>
-    <%= form.number_field :estrategico %>
-  </div>
-
-  <div>
-    <%= form.label :estructural, style: "display: block" %>
-    <%= form.number_field :estructural %>
-  </div>
-
-  <div>
-    <%= form.label :humano, style: "display: block" %>
-    <%= form.number_field :humano %>
-  </div>
-
-  <div>
-    <%= form.label :relacional, style: "display: block" %>
-    <%= form.number_field :relacional %>
-  </div>
-
-  <div>
-    <%= form.label :natural, style: "display: block" %>
-    <%= form.number_field :natural %>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

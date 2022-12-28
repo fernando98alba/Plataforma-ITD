@@ -3,7 +3,8 @@ class ItdconsController < ApplicationController
   before_action :get_points, only: [ :show]
   before_action :get_empresa
   def index
-    @itdcon = @empresa.itdcons
+    @itdcons = @empresa.itdcons.all
+
   end
   def create
     @itdcon = @empresa.itdcons.build()
@@ -17,6 +18,7 @@ class ItdconsController < ApplicationController
   end
 
   def show
+    puts @itdcon
   end
 
   private
