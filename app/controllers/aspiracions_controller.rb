@@ -1,16 +1,17 @@
 class AspiracionsController < ApplicationController
-  before_action :get_aspiracion, only: [ :show, :edit, :update, :destroy ]
+  before_action :get_aspiracion, only: [ :index, :show, :edit, :update, :destroy ]
   before_action :get_empresa
-  before_action :get_last_itdcon, only: [ :new ]
+  before_action :get_last_itdcon, only: [ :index ]
+  respond_to :js, :json, :html
+
   def new
-    @aspiracion = Aspiracion.new()
+    @aspiracion = @empresa.aspiracion.build()
+  end
+  def index
     get_points
   end
-
   def create
     @aspiracion = Aspiracion.new(aspiracion_params)
-    puts "PARAMS"
-    puts aspiracion_params
     respond_to do |format|
       if @aspiracion.save
         format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
@@ -21,48 +22,8 @@ class AspiracionsController < ApplicationController
     end
   end
 
-  def update_hab_aspiracio
-    if @aspiracion
-      aspiracion_params.keys.each do |param|
-        @aspiracion.param = aspiracion_params[param]
-      end
-    else
-      @aspiracion = Aspiracion.new(aspiracion_params)
-      @aspiracion.empresa = @empresa
-    end
-    if @aspiracion.save
-      update_aspiracion_params
-    end
-  end
-
-  def update_hab_aspiracion
-    if @aspiracion
-      @aspiracion.empresa = @empresa
-      @aspiracion.estrategico = 30
-    else
-      @aspiracion = Aspiracion.new()
-      @aspiracion.empresa = @empresa
-      @aspiracion.estrategico = 30
-    end
-    puts @aspiracion.empresa
-    puts "CCCCCCCCCCCCCCCCCCCCCCCCC"
-    if @aspiracion.save
-      puts"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      update_aspiracion_params
-    else
-      puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-    end
-  end
-
   private
 
-  def update_aspiracion_params
-    render turbo_stream:
-      turbo_stream.replace("dat_graph",
-        partial: "dat_graph",
-        locals: {empresa: @empresa, aspiracion: @aspiracion}
-      )
-  end
   def get_aspiracion
     @aspiracion = Aspiracion.find_by(id: params[:id])
   end
