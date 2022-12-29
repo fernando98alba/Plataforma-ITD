@@ -36,6 +36,9 @@
       <%= form.label :natural, style: "display: block" %>
       <%= form.number_field :natural %>
     </div>
+    <%= form.hidden_field :maturity_score, value: recomendation["maturity"] %>
+
+    <%= form.hidden_field :alignment_score, value: recomendation["alignment"] %>
     <div>
       <%= form.submit %>
     </div>

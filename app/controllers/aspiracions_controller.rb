@@ -19,11 +19,12 @@ class AspiracionsController < ApplicationController
         format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
         format.turbo_stream
       else
-        format.html { redirect_to new_empresa_aspiracion_path(@empresa.id), status: :unprocessable_entity }
+        format.html { redirect_to empresa_aspiracions_path(@empresa.id), status: :unprocessable_entity }
         format.json { render json: @aspiracion.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   private
 
@@ -37,24 +38,33 @@ class AspiracionsController < ApplicationController
         @recomendation[dat.downcase.gsub("é", "e")] = 0
       end
     end
+    @recomendation["maturity"] = 0
+    @recomendation["alignment"] = 0
   end
 
   def update_recomendation
-    print @recomendation
     puts
-    puts
-    print "NEW"
-    puts
-    puts
-
+    puts "PARAMS"
+    puts aspiracion_params
     @points_dat.keys.each do |dat|
-      if aspiracion_params[dat.downcase.gsub("é", "e")] != ""
-        @recomendation[dat.downcase.gsub("é", "e")] = aspiracion_params[dat.downcase.gsub("é", "e")].to_i
+      if aspiracion_params[dat.downcase.gsub("é", "e")] != "" and aspiracion_params[dat.downcase.gsub("é", "e")] != nil
+        @recomendation[dat.downcase.gsub("é", "e")] = aspiracion_params[dat.downcase.gsub("é", "e")].to_f
       else
-        @recomendation[dat.downcase.gsub("é", "e")] = @recomendation[dat.downcase.gsub("é", "e")].to_i
+        puts
+        @recomendation[dat.downcase.gsub("é", "e")] = @recomendation[dat.downcase.gsub("é", "e")].to_f
       end
     end
+    if aspiracion_params[:maturity_score] != "" and aspiracion_params[:maturity_score] != nil
+      @recomendation["maturity"] = aspiracion_params[:maturity_score].to_i
+    end
+    if aspiracion_params[:alignment_score] != "" and aspiracion_params[:maturity_score] != nil
+      @recomendation["alignment"] = aspiracion_params[:alignment_score].to_i
+    end
+    puts
+    puts "RECOMENDATION"
     puts @recomendation
+    puts
+    puts
   end
 
   def get_aspiracion
@@ -73,7 +83,7 @@ class AspiracionsController < ApplicationController
 
   def aspiracion_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :empresa_id)
+    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :empresa_id, :maturity_score, :alignment_score)
   end
 
   def get_points ##DRYS

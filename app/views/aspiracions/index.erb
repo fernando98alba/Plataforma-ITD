@@ -2,124 +2,29 @@
   <div class="main">
     <div class="shadow p-3 mb-5 bg-white rounded">  
       <div class="row">
-        <h3><b>Aspiración de madurez y alineamiento</b></h3> 
-        <p> Presione en el gráfico para definir la aspiración</p>
-        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 "> 
-          <div>
-            <canvas id="myChart2"></canvas>
-          </div>
+        <script>
+          let label = [];
+          let values = [];
+          let maturity = [] ;
+          let recomendation = [];
+          let ctx;
+          let ctx2;
+          let arbitratyLine;
+          let data;
+          let token;
+          var myChart;
+        </script>
 
-          <script>
-            var ctx2 = document.getElementById('myChart2');
-
-            const arbitratyLine = {
-              id: 'arbitratyLine',
-              beforeDraw(chart, args, options){
-                const { ctx2, charArea: { top, right, bottom, left, width, height }, scales: {x,y}
-              } = chart;
-              ctx2.save();
-              ctx2.strokeStyle = "green";
-              ctx2.strokeRect(x.getPixelForValue(2), top, 0, height);
-              ctx2.restore();
-            }};
-
-            const data = {
-                  labels: [0, 50],
-                  datasets: [
-                  { 
-                    label: 'Puntaje ITD',
-                    type: "scatter",
-                    data: [{
-                      y: <%= @itdcon.alignment %>,
-                      x: <%= @itdcon.maturity %>
-                    }],
-                    backgroundColor: "red",
-                    borderColor:'red'
-                  },
-                  {
-                    label: 'Rezagado',
-                    data: [0, 0],
-                    backgroundColor: 'rgba(0, 0, 50, 0.2)',
-                    borderColor:'rgba(0, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  },
-                  {
-                    label: 'Explorador Digital',
-                    data: [30, 30],
-                    backgroundColor: 'rgba(0, 0, 50, 0.3)',
-                    borderColor:'rgba(0, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  },
-                  {
-                    label: 'Adoptador Digital',
-                    data: [25, 25],
-                    backgroundColor: 'rgba(0, 0, 50, 0.2)',
-                    borderColor:'rgba(0, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  },
-                  {
-                    label: 'Líder Digital',
-                    data: [20, 20],
-                    backgroundColor: 'rgba(0, 0, 50, 0.3)',
-                    borderColor:'rgba(1, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  },
-                  {
-                    label: 'Disruptor Digital',
-                    data: [15, 15],
-                    backgroundColor: 'rgba(0, 0, 50, 0.3)',
-                    borderColor:'rgba(1, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  },
-                  {
-                    label: 'Disruptor Digital',
-                    data: [10, 10],
-                    backgroundColor: 'rgba(0, 0, 50, 0.3)',
-                    borderColor:'rgba(0, 0, 0, 0)',
-                    borderWidth: 1,
-                    fill: 1
-                  }
-                  ]
-                };
-
-                // render init block
-                var myChart = new Chart(
-                  document.getElementById('myChart2').getContext('2d'),
-                  {
-                    type: 'line',
-                    labels: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                    data,
-                    options: {
-                      indexAxis: 'y',
-                      scales: {
-                        x: {
-                          stacked: true,
-                          beginAtZero: true,
-                        }
-                      },
-                      onClick: (e) => {
-
-                        // Substitute the appropriate scale IDs
-                        const dataX = myChart.scales.x.getValueForPixel(e.x);
-                        const dataY = myChart.scales.y.getValueForPixel(e.y);
-                        console.log(dataX);
-                        console.log(dataY);
-                      }
-                    },
-                  }
-                );
-            </script>
-          </div>
-
-          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" style="margin-bottom: 30px">
-            <h3>Eres un <b>Adoptador Digital</b></h3>
-            <p> Madurez
-          </div>
+        <div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-xs-12 ">
+          <h3><b>Aspiración de madurez y alineamiento</b></h3>
+          <%= turbo_frame_tag "new_maturity_graph" do %>
+              <%= render "form_maturity", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation: @recomendation %>
+              <br>
+          <%end%>
+        </div>
+          <%= turbo_frame_tag "maturity_graph" do %>
+            <%= render "maturity_graph", recomendation: @recomendation, itdcon: @itdcon %>
+          <%end%>
         </div>
       </div>
 
@@ -128,18 +33,11 @@
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
           <h1>Nueva Aspiracion</h1>
           <%= turbo_frame_tag "new_graph" do %>
-            <%= render "form", empresa: @empresa, aspiracion: @empresa.aspiracion.build %>
+            <%= render "form_dat", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation: @recomendation %>
             <br>
           <%end%>
         </div>
-        <script>
-          let label = [];
-          let values = [];
-          let maturity = [] ;
-          let recomendation = [];
-          let ctx;
-        </script>
-
+        
         <%= turbo_frame_tag "dat_graph" do %>
           <%= render "dat_graph", recomendation: @recomendation, itdcon: @itdcon, points_dat: @points_dat %>
           
