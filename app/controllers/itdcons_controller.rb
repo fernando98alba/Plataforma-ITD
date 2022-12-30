@@ -18,7 +18,6 @@ class ItdconsController < ApplicationController
   end
 
   def show
-    puts @itdcon
   end
 
   private

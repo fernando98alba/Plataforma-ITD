@@ -1,7 +1,7 @@
-<%= turbo_frame_tag "dat_graph" do %>
-  <div class="shadow p-3 mb-5 bg-white rounded">
-    <div class="row">
-    
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <div class="row">
+    <%= turbo_frame_tag "dat_graph" do %>  
       <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
         <div>
           <canvas id="myChart"></canvas>
@@ -14,8 +14,8 @@
           <% points_dat.keys.each do |dat|%>
             label.push("Capital <%= dat %>");
             values.push(<%= points_dat[dat]%>);
-            maturity.push(<%= itdcon.maturity%>);
-            recomendation.push(<%= recomendation[dat.downcase.gsub("é", "e")]%>);
+            maturity.push(<%= recomendation_mat["maturity_score"]%>);
+            recomendation.push(<%= recomendation_dat[dat] -  points_dat[dat]%>);
           <%end%>
           console.log(label);
           console.log( values);
@@ -31,12 +31,12 @@
               fill: true,
             },
             {
-              label: 'Meta Umbral (Aún por definir limites)',
+              label: 'Meta Madurez',
               type: 'line',
               data: maturity,
             },
             {
-              label: 'Meta',
+              label: 'Meta de Aumento',
               type: 'bar',
               data: recomendation,
             }]
@@ -63,13 +63,13 @@
 
       <div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>
-            <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment.to_i %></b></h3>
+            <h3 class="text-center">El puntaje de madurez aspirado es <b><%= recomendation_mat["maturity_score"].to_i %></b></h3>
+            <h3 class="text-center">El alineamiento aspirado es  <b><%= recomendation_mat["alignment_score"].to_i %></b></h3>
             <b> Los capitales bajo el umbral son:</b>
             <% @points_dat.keys().each do |dat|%>
             <div>
-            <%if recomendation[dat.downcase.gsub("é", "e")] > 0 %>
-              <%= " - Te recomendamos subir el Capital #{dat} en #{recomendation[dat.downcase.gsub("é", "e")].to_i}" %>
+            <%if recomendation_dat[dat].to_i > 0 %>
+              <%= " - Te recomendamos subir el Capital #{dat} en #{recomendation_dat[dat].to_i - @points_dat[dat].to_i}" %>
             <% end %>
             </div>
             <% end %>
@@ -77,7 +77,6 @@
           </div>
         </div>
       </div>
-
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>

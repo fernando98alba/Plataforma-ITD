@@ -1,0 +1,38 @@
+<%= turbo_frame_tag "dat_form" do %>
+  <%= form_with(model: [empresa, aspiracion], url: update_hab_recomendation_path(empresa), method: :post) do |form| %>
+    <% if aspiracion.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
+
+        <ul>
+          <% aspiracion.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.hidden_field :dat, :value dat %>
+    <%recomendation_hab.keys.each do |new_dat|%> 
+      <%if new_dat == dat %>
+        <%recomendation_hab[dat].keys.each do |hab|%> 
+          <div>
+            <%= form.label hab, style: "display: block" %>
+            <%= form.number_field hab %>
+          </div>
+        <%end%>
+      <%else %>
+        <%recomendation_hab[dat].keys.each do |hab|%> 
+          <%= form.hidden_field hab, :value  recomendation_hab[dat][hab]%>
+        <%end%>
+      <%end%>
+      <div>
+        <%= form.label hab, style: "display: block" %>
+        <%= form.number_field hab %>
+      </div>
+    <%end%>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+<% end %>

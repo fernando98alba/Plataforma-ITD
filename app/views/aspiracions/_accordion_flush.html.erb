@@ -1,0 +1,64 @@
+<%= turbo_frame_tag "accordion_flush" do %>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item  shadow p-3 mb-1 bg-white rounded">
+      <h2 class="accordion-header " id="flush-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+          <h3><%= "Aspiración de madurez y alineamiento"%></h3> 
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="row">
+          <div class = "accordion-body">
+            <div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-xs-12 ">
+              <%= turbo_frame_tag "maturity_form" do %>
+                  <%= render "form_maturity", empresa: empresa, aspiracion: aspiracion, recomendation_mat: recomendation_mat %>
+                  <br>
+              <%end%>
+            </div>
+            <%= turbo_frame_tag "maturity_graph" do %>
+              <%= render "maturity_graph", recomendation_mat: recomendation_mat, itdcon: itdcon %>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item  shadow p-3 mb-1  bg-white rounded">
+      <h2 class="accordion-header" id="flush-headingTwo">
+        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            <h3><%= "Aspiración por capital"%></h3> 
+          </button>
+        <%else%>
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseTwo">
+            <h3><%= "Aspiración por capital"%></h3> 
+          </button>
+        <%end%>
+      </h2>
+      <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+      <%else%>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+      <%end%>
+        <div class="row">
+          <div class = "accordion-body">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+              <%= turbo_frame_tag "dat_form" do %>
+                <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat %>
+                <br>
+              <%end%>
+            </div>
+            
+            <%= turbo_frame_tag "dat_graph" do %>
+              <%= render "dat_graph", recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, points_dat: points_dat %>
+              
+            <%end%>
+          </div>
+        </div>
+        <%= turbo_frame_tag "hab_section" do %>
+          <%= render "hab_section", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, recomendation_hab: recomendation_hab, points_hab: points_hab, points_dat: points_dat%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+<%end%>

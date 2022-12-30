@@ -82,14 +82,14 @@
               }
               ]
             };
-            <% if recomendation["maturity"] > 0 or recomendation["alignment"] > 0 %>
+            <% if recomendation_mat["maturity_score"] > itdcon.maturity.to_i or (recomendation_mat["alignment_score"] < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
               data.datasets.push(
                 { 
                   label: 'Aspiracion',
                   type: "scatter",
                   data: [{
-                    y: <%= recomendation["alignment"] + itdcon.alignment + 0.00000001 %>,
-                    x: <%= recomendation["maturity"] + itdcon.maturity + 0.00000001 %>
+                    y: <%= recomendation_mat["alignment_score"] + 0.00000001 %>,
+                    x: <%= recomendation_mat["maturity_score"] + 0.00000001 %>
                   }],
                   backgroundColor: "black",
                   borderColor:'black'
@@ -129,8 +129,8 @@
       <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" style="margin-bottom: 30px">
         <h3>Eres un <b>Adoptador Digital</b></h3>
         <p> Madurez </p>
-        <%if recomendation["maturity"] > 0%>
-          <%= (recomendation["maturity"] + itdcon.maturity).to_i%>
+        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+          <%= recomendation_mat["maturity_score"].to_i %>
         <%else%>
           <%= "--"%>
         <%end%>
