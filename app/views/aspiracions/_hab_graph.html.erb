@@ -4,22 +4,21 @@
     <%= turbo_frame_tag "dat_graph" do %>  
       <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
         <div>
-          <canvas id="myChart"></canvas>
+          <canvas id="myChart <%=dat%>"></canvas>
         </div>
         <script>
           label = [];
           values = [];
           maturity = [] ;
           recomendation = [];
-          <% points_dat.keys.each do |dat|%>
-            label.push("Capital <%= dat %>");
-            values.push(<%= points_dat[dat]%>);
-            maturity.push(<%= aspiracion_mat["maturity_score"]%>);
-            recomendation.push(<%= recomendation_dat[dat]%>);
+          <% points_hab.keys.each do |hab|%>
+            label.push("<%= hab %>");
+            values.push(<%= points_hab[hab]%>);
+            maturity.push(<%= maturity%>);
+            recomendation.push(<%= recomendation_hab[hab]%>);
           <%end%>
-          ctx = document.getElementById('myChart');
           data = [{
-            label: 'Puntaje por capital',
+            label: 'Puntaje por habilitador',
             type: 'bar',
             data: values,
             fill: true,
@@ -38,10 +37,10 @@
             type: 'bar',
             data: recomendation,
           }];
-          <% if aspiracion_dat.keys.length > 0 %>
+          <% if aspiracion_hab %>
             aspiracion = [];
-            <% points_dat.keys.each do |dat|%>
-              aspiracion.push(<%= aspiracion_dat[dat]%>);
+            <% points_hab.keys.each do |hab|%>
+              aspiracion.push(<%= aspiracion_hab[hab]%>);
             <%end%>
             data.push({
             label: 'Aspiracion',
@@ -52,6 +51,7 @@
             backgroundColor: '#00000',
             })
           <%end%>
+          ctx = document.getElementById('myChart <%=dat%>');
           new Chart(ctx, {
             data: {
             labels: label,
@@ -79,13 +79,14 @@
 
       <div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-          <h3 class="text-center">El puntaje de madurez aspirado es <b><%= aspiracion_mat["maturity_score"].to_i %></b></h3>
-          <h3 class="text-center">El alineamiento con esa aspiración de madurez es  <b><%= aspiracion_mat["alignment_score"].to_i %></b></h3>
-          <b> Los capitales bajo el umbral son:</b>
-          <% @points_dat.keys().each do |dat|%>
+          <h3 class="text-center">El puntaje de madurez del capital aspirado es <b><%= maturity.to_i %></b></h3>
+          <h4 class="text-center">El puntaje de madurez aspirado es <b><%= aspiracion_mat["maturity_score"].to_i %></b></h4>
+          <h4 class="text-center">El alineamiento con esa aspiración de madurez es <b><%= aspiracion_mat["alignment_score"].to_i %></b></h4>
+          <b> Los habilitadores bajo el umbral son:</b>
+          <% points_hab.keys().each do |hab|%>
             <div>
-              <%if recomendation_dat[dat].to_i - @points_dat[dat].to_i > 0 %>
-                <%= " - Te recomendamos subir el Capital #{dat} a #{recomendation_dat[dat].to_i}" %>
+              <%if recomendation_hab[hab].to_i - points_hab[hab].to_i > 0 %>
+                <%= " - Te recomendamos subir el Habilitador #{hab} a #{recomendation_hab[hab].to_i}" %>
               <% end %>
             </div>
           <% end %>

@@ -22,10 +22,13 @@
           </div>
         <%end%>
       <%else %>
-        <%recomendation_hab[new_dat].keys.each do |hab|%> 
-          <%= form.hidden_field hab, value: recomendation_hab[dat][hab]%>
+        <%recomendation_hab[new_dat].keys.each do |hab|%>
+          <%= form.hidden_field hab, value: recomendation_hab[new_dat][hab]%>
         <%end%>
       <%end%>
+    <%end%>
+    <%aspiracion_dat.keys.each do |dat|%>
+      <%= form.hidden_field dat, value: aspiracion_dat[dat]%>
     <%end%>
     <div>
       <%= form.submit %>

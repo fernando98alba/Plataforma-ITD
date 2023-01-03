@@ -1,13 +1,13 @@
 <%= turbo_frame_tag "hab_section" do %>
   <div class="accordion-item  shadow p-3 mb-1  bg-white rounded">
     <h2 class="accordion-header" id="flush-headingThree">
-      <%available = 1%>
-      <%recomendation_dat.keys.each do |dat|%>
-        <%if recomendation_dat[dat] < points_dat[dat]%>
-          <%available = 0%>
+      <%available = 0%>
+      <%aspiracion_dat.keys.each do |dat|%>
+        <%if aspiracion_dat[dat] > points_dat[dat]%>
+          <%available = 1%>
         <%end%>
       <%end%>
-      <%if available==1 and recomendation_dat.keys.length>0 %>
+      <%if available==1 and recomendation_hab.keys.length>0 %>
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
           <h3><%= "Aspiración por habilitador por capital"%></h3> 
         </button>
@@ -17,7 +17,7 @@
         </button>
       <%end%>
     </h2>
-    <%if available == 1 and recomendation_dat.keys.length > 0 %>
+    <%if available == 1 and recomendation_hab.keys.length > 0 %>
     <div id="flush-collapseThree" class="accordion-collapse collapse show" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
     <%else%>
     <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -43,16 +43,19 @@
                 <% end %>
                   <div class="row">
                     <div class = "accordion-body">
-                      <div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-xs-12 ">
-                        <%= turbo_frame_tag dat do %>
-                          <%=render "ind_hab", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, dat: dat, recomendation_hab: recomendation_hab, points_dat: points_dat, points_hab: points_hab[dat]%>
-                        <%end%>
-                      </div>
+
+                      <%= turbo_frame_tag dat do %>
+                        <%=render "ind_hab", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, dat: dat, recomendation_hab: recomendation_hab, points_dat: points_dat, points_hab: points_hab[dat], aspiracion_hab: aspiracion_hab%>
+                      <%end%>
+
                     </div>
                   </div>
                 </div>
               </div>
             <%end%>
+          </div>
+          <div class = "d-flex justify-content-end marginright">
+            <%= render "form_create", aspiracion_hab: aspiracion_hab, aspiracion_mat: aspiracion_mat, aspiracion_dat: aspiracion_dat, empresa: empresa, aspiracion: aspiracion%>
           </div>
         </div>
       </div>

@@ -13,11 +13,9 @@ class AspiracionsController < ApplicationController
 
   def create
     @aspiracion = Aspiracion.new(aspiracion_params)
-    update_recomendation
     respond_to do |format|
       if @aspiracion.save
         format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
-        format.turbo_stream
       else
         format.html { redirect_to empresa_aspiracions_path(@empresa.id), status: :unprocessable_entity }
         format.json { render json: @aspiracion.errors, status: :unprocessable_entity }
@@ -26,12 +24,12 @@ class AspiracionsController < ApplicationController
   end
 
   def update_maturity_recomendation
-    puts params
-    puts maturity_params
-    puts
     @recomendation_mat = {}
     @recomendation_dat = {}
     @recomendation_hab = {}
+    @aspiracion_dat = {}
+    @aspiracion_mat = {}
+    @aspiracion_hab = {}
     maturity_params.keys.each do |mat|
       if maturity_params[mat] != "" and maturity_params[mat] != nil
         @recomendation_mat[mat] = maturity_params[mat].to_f
@@ -51,24 +49,33 @@ class AspiracionsController < ApplicationController
   def update_dat_recomendation
     get_points
     @recomendation_mat = {}
+    @recomendation_mat["alignment_score"] = dat_params["alignment_score"].to_i
+    @recomendation_mat["maturity_score"] = dat_params["maturity_score"].to_i
     @recomendation_dat = {}
+    calculate_recomendation
+    @aspiracion_dat = {}
+    @aspiracion_mat = {}
+    @aspiracion_hab = {}
     @recomendation_hab = {}
-    dat_params.keys.each do |dat|
+    puts @points_dat
+    @points_dat.keys.each do |dat|
       if dat_params[dat] != "" and dat_params[dat] != nil
-        @recomendation_dat[dat] = dat_params[dat].to_f
+        @aspiracion_dat[dat] = dat_params[dat].to_f
       else
-        @recomendation_dat[dat] = @points_dat[dat]
+        @aspiracion_dat[dat] = @points_dat[dat]
       end
     end
-    @recomendation_dat.keys.each do |dat|
-      if @recomendation_dat[dat] < @points_dat[dat]
-        @recomendation_dat[dat] = @points_dat[dat] #SHOW ERROR (?)
+    puts @aspiracion_dat
+    @aspiracion_dat.keys.each do |dat|
+      if @aspiracion_dat[dat] < @points_dat[dat]
+        @aspiracion_dat[dat] = @points_dat[dat] #SHOW ERROR (?)
       end
     end
-    @recomendation_mat["alignment_score"] = 0
-    @recomendation_mat["maturity_score"] = 0
+    @aspiracion_mat["alignment_score"] = 0
+    @aspiracion_mat["maturity_score"] = 0
+    
     Dat.all.each do |dat|
-      @recomendation_mat["maturity_score"] += @recomendation_dat[dat.name.downcase]*dat.ponderador
+      @aspiracion_mat["maturity_score"] += @aspiracion_dat[dat.name.downcase]*dat.ponderador
     end
     calculate_hab_recomendation
 
@@ -80,30 +87,45 @@ class AspiracionsController < ApplicationController
 
   def update_hab_recomendation
     get_points
-    @recomendation_mat = {}
-    @recomendation_dat = {}
+    @aspiracion_mat = {}
+    @aspiracion_dat = {}
+    @aspiracion_hab = {}
     @recomendation_hab = {}
-
+    habilitadores = []
     @points_hab.keys.each do |dat|
-      @recomendation_dat[dat] = 0
+      @aspiracion_dat[dat] = 0
+      @aspiracion_hab[dat] = {}
+      puts hab_params
       @points_hab[dat].keys.each do |hab|
         if hab_params[hab] != "" and hab_params[hab] != nil
-          @recomendation_hab[dat][hab] = dat_params[hab].to_f
+          @aspiracion_hab[dat][hab] = hab_params[hab].to_f
         else
-          @recomendation_hab[dat][hab] = @points_hab[dat][hab]
+          @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
         end
-        if @recomendation_hab[dat][hab] < @points_hab[dat][hab]
-          @recomendation_hab[dat][hab] = @points_hab[dat][hab]
+        if @aspiracion_hab[dat][hab] < @points_hab[dat][hab]
+          @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
           break
         end
+        habilitadores.push @aspiracion_hab[dat][hab]
+        @aspiracion_dat[dat] += @aspiracion_hab[dat][hab]/@points_hab[dat].keys.size
       end
-      @recomendation_dat[dat] += @recomendation_hab[dat][hab]/@recomendation_hab[dat][hab].length
     end
-    @recomendation_mat["alignment_score"] = 0
-    @recomendation_mat["maturity_score"] = 0
+
+    @points_dat.keys.each do |dat|
+      @aspiracion_dat[dat] = hab_params[dat].to_f 
+    end
+    @aspiracion_mat["alignment_score"] = 0
+    @aspiracion_mat["maturity_score"] = 0
+    calculate_hab_recomendation
+    @aspiracion_mat["alignment_score"] = 0
+    
     Dat.all.each do |dat|
-      @recomendation_mat["maturity_score"] += @recomendation_dat[dat.name.downcase]*dat.ponderador
+      @aspiracion_mat["maturity_score"] += @aspiracion_dat[dat.name.downcase]*dat.ponderador
     end
+    alignment_mean = habilitadores.sum(0.0)/habilitadores.size
+    num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
+    variance = num_sum / (habilitadores.size)  
+    @aspiracion_mat["alignment_score"] = Math.sqrt(variance)
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
       format.turbo_stream
@@ -189,16 +211,17 @@ class AspiracionsController < ApplicationController
     end
     @recomendation_dat = list
   end
+
   def calculate_hab_recomendation
     habilitadores = []
-    @recomendation_dat.keys.each do |dat|
+    @aspiracion_dat.keys.each do |dat|
       recomendation_sorted = @points_hab[dat].sort_by{|k, v| v}
       list = {}
       recomendation_sorted.each do |element|
         list[element[0]] = element[1]
       end
       keys = list.keys
-      ptos = (@recomendation_dat[dat] - @points_dat[dat])*@points_hab[dat].keys.length
+      ptos = (@aspiracion_dat[dat] - @points_dat[dat])*@points_hab[dat].keys.length
 
       while ptos >0
         diff = 0 #la diferencia entre un habilitador y el siguiente
@@ -257,7 +280,7 @@ class AspiracionsController < ApplicationController
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
-    @recomendation_mat["alignment_score"] = Math.sqrt(variance)
+    @aspiracion_mat["alignment_score"] = Math.sqrt(variance)
   end
   def get_recomendation
     @recomendation_mat = {}
@@ -265,6 +288,9 @@ class AspiracionsController < ApplicationController
     @recomendation_hab = {}
     @points_dat = {}
     @points_hab = {}
+    @aspiracion_dat = {}
+    @aspiracion_mat = {}
+    @aspiracion_hab = {}
     @recomendation_mat["maturity_score"] = 0
     @recomendation_mat["alignment_score"] = 0
   end
@@ -290,17 +316,17 @@ class AspiracionsController < ApplicationController
 
   def dat_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural)
+    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :maturity_score, :alignment_score)
   end
 
   def hab_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estrategia, :modelosdenegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevidadelcolaborador, :estructura, :stakeholderts, :marca, :clientes, :sustentabilidad)
+    params.require(:aspiracion).permit(:dat, :estrategia, :modelosdenegocios, :governance, :procesos, :tecnología, :datosyanalítica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevidadelcolaborador, :estructuraorganizacional, :stakeholders, :marca, :clientes, :sustentabilidad, :estrategico, :estructural, :humano, :relacional, :natural,)
   end
 
   def aspiracion_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :empresa_id, :maturity_score, :alignment_score)
+    params.require(:aspiracion).permit(:estrategico, :estructural, :humano, :relacional, :natural, :empresa_id, :maturity_score, :alignment_score, :estrategia, :modelosdenegocios, :governance, :procesos, :tecnología, :datosyanalítica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevidadelcolaborador, :estructuraorganizacional, :stakeholders, :marca, :clientes, :sustentabilidad)
   end
 
   def get_points ##DRYS
