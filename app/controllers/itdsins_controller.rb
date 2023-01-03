@@ -71,11 +71,11 @@ class ItdsinsController < ApplicationController
       point_dat = point_dat/dat.habilitadors.count.to_f
       madurez += point_dat*dat.ponderador
     end
-    @itdsin.maturity = madurez
+    @itdsin.maturity_score = madurez
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
-    @itdsin.alignment = Math.sqrt(variance)
+    @itdsin.alignment_score = Math.sqrt(variance)
   end
 
   private

@@ -1,0 +1,3 @@
+<%= turbo_stream.update hab_params[:dat] do %>
+  <%= render "hab_section" empresa: @empresa, aspiracion: empresa.aspiracion.build, recomendation_dat: @recomendation_dat, dat: hab_params[:dat], recomendation_hab: @recomendation_hab, points_dat: @points_dat, points_hab: @points_hab[hab_params[:dat]]%>
+<%end%>

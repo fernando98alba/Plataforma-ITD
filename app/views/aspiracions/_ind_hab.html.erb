@@ -1,8 +1,9 @@
 <%= turbo_frame_tag dat do %>
   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-    <%= render "form_hab", empresa: empresa, aspiracion: empresa.aspiracion.build, dat: dat, recomendation_hab: recomendation_hab %>
-    <br>
+    <%= turbo_frame_tag "hab_form" do %>
+      <%= render "form_hab", empresa: empresa, aspiracion: aspiracion, dat: dat, recomendation_hab: recomendation_hab %>
+      <br>  
+    <%end%>
+
   </div>
-  
-  
 <%end%>

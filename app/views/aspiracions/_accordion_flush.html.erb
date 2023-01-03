@@ -2,7 +2,7 @@
   <div class="accordion accordion-flush" id="accordionFlushExample">
     <div class="accordion-item  shadow p-3 mb-1 bg-white rounded">
       <h2 class="accordion-header " id="flush-headingOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
           <h3><%= "Aspiración de madurez y alineamiento"%></h3> 
         </button>
       </h2>
@@ -25,7 +25,7 @@
 
     <div class="accordion-item  shadow p-3 mb-1  bg-white rounded">
       <h2 class="accordion-header" id="flush-headingTwo">
-        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
             <h3><%= "Aspiración por capital"%></h3> 
           </button>
@@ -35,7 +35,7 @@
           </button>
         <%end%>
       </h2>
-      <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+      <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
       <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       <%else%>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">

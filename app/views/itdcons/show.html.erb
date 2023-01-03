@@ -31,7 +31,7 @@
                   <% @points_dat.keys.each do |dat|%>
                     label.push("Capital <%= dat %>");
                     values.push(<%= @points_dat[dat]%>);
-                    maturity.push(<%= @itdcon.maturity%>);
+                    maturity.push(<%= @itdcon.maturity_score%>);
                   <%end%>
                   const ctx = document.getElementById('myChart1');
                     new Chart(ctx, {
@@ -60,13 +60,13 @@
               </script>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>
-                <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment.to_i %></b></h3>
+                <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity_score.to_i %></b></h3>
+                <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment_score.to_i %></b></h3>
                   <b> Los capitales bajo el umbral son:</b>
                   <div>
                   <% @points_dat.keys().each do |dat|%>
                   <div>
-                  <%if @points_dat[dat] < @itdcon.maturity %>
+                  <%if @points_dat[dat] < @itdcon.maturity_score %>
                     <%= " - " + dat %>
                   <% end %>
                   </div>
@@ -106,8 +106,8 @@
                         label: 'Puntaje ITD',
                         type: "scatter",
                         data: [{
-                          y: <%= @itdcon.alignment %>,
-                          x: <%= @itdcon.maturity %>
+                          y: <%= @itdcon.alignment_score %>,
+                          x: <%= @itdcon.maturity_score %>
                         }],
                         backgroundColor: "red",
                         borderColor:'red'

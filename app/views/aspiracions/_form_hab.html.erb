@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "dat_form" do %>
+<%= turbo_frame_tag "hab_form" do %>
   <%= form_with(model: [empresa, aspiracion], url: update_hab_recomendation_path(empresa), method: :post) do |form| %>
     <% if aspiracion.errors.any? %>
       <div style="color: red">
@@ -12,24 +12,20 @@
       </div>
     <% end %>
 
-    <%= form.hidden_field :dat, :value dat %>
+    <%= form.hidden_field :dat, value: dat %>
     <%recomendation_hab.keys.each do |new_dat|%> 
       <%if new_dat == dat %>
-        <%recomendation_hab[dat].keys.each do |hab|%> 
+        <%recomendation_hab[new_dat].keys.each do |hab|%> 
           <div>
             <%= form.label hab, style: "display: block" %>
             <%= form.number_field hab %>
           </div>
         <%end%>
       <%else %>
-        <%recomendation_hab[dat].keys.each do |hab|%> 
-          <%= form.hidden_field hab, :value  recomendation_hab[dat][hab]%>
+        <%recomendation_hab[new_dat].keys.each do |hab|%> 
+          <%= form.hidden_field hab, value: recomendation_hab[dat][hab]%>
         <%end%>
       <%end%>
-      <div>
-        <%= form.label hab, style: "display: block" %>
-        <%= form.number_field hab %>
-      </div>
     <%end%>
     <div>
       <%= form.submit %>

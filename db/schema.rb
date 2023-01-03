@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_30_144254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
     t.integer "relacional"
     t.integer "natural"
     t.integer "estrategia"
-    t.integer "modelonegocio"
+    t.integer "modelosdenegocios"
     t.integer "governance"
     t.integer "procesos"
     t.integer "tecnologia"
@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
     t.integer "modelooperativo"
     t.integer "propiedadintelectual"
     t.integer "personas"
-    t.integer "ciclodevida"
+    t.integer "ciclodevidadelcolaborador"
     t.integer "estructura"
     t.integer "stakeholders"
     t.integer "marca"
@@ -218,8 +218,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
     t.integer "p91"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "maturity"
-    t.float "alignment"
+    t.float "maturity_score"
+    t.float "alignment_score"
     t.index ["alineamiento_id"], name: "index_itdcons_on_alineamiento_id"
     t.index ["empresa_id"], name: "index_itdcons_on_empresa_id"
     t.index ["madurez_id"], name: "index_itdcons_on_madurez_id"
@@ -323,6 +323,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "itdcon_id"
+    t.float "maturity_score"
+    t.float "alignment_score"
     t.index ["alineamiento_id"], name: "index_itdinds_on_alineamiento_id"
     t.index ["itdcon_id"], name: "index_itdinds_on_itdcon_id"
     t.index ["madurez_id"], name: "index_itdinds_on_madurez_id"
@@ -425,8 +427,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_30_130251) do
     t.integer "p91"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "maturity"
-    t.float "alignment"
+    t.float "maturity_score"
+    t.float "alignment_score"
     t.index ["alineamiento_id"], name: "index_itdsins_on_alineamiento_id"
     t.index ["madurez_id"], name: "index_itdsins_on_madurez_id"
   end

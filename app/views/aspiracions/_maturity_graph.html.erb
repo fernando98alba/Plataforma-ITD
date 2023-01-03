@@ -26,8 +26,8 @@
                 label: 'Puntaje ITD',
                 type: "scatter",
                 data: [{
-                  y: <%= itdcon.alignment %>,
-                  x: <%= itdcon.maturity %>
+                  y: <%= itdcon.alignment_score %>,
+                  x: <%= itdcon.maturity_score %>
                 }],
                 backgroundColor: "red",
                 borderColor:'red'
@@ -82,7 +82,7 @@
               }
               ]
             };
-            <% if recomendation_mat["maturity_score"] > itdcon.maturity.to_i or (recomendation_mat["alignment_score"] < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+            <% if recomendation_mat["maturity_score"] > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"] < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
               data.datasets.push(
                 { 
                   label: 'Aspiracion',
@@ -129,7 +129,7 @@
       <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" style="margin-bottom: 30px">
         <h3>Eres un <b>Adoptador Digital</b></h3>
         <p> Madurez </p>
-        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment.to_i and recomendation_mat["alignment_score"] > 0) %>
+        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
           <%= recomendation_mat["maturity_score"].to_i %>
         <%else%>
           <%= "--"%>

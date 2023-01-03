@@ -64,11 +64,11 @@
       <div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <h3 class="text-center">El puntaje de madurez aspirado es <b><%= recomendation_mat["maturity_score"].to_i %></b></h3>
-            <h3 class="text-center">El alineamiento aspirado es  <b><%= recomendation_mat["alignment_score"].to_i %></b></h3>
+            <h3 class="text-center">El alineamiento con esa aspiración de madurez es  <b><%= recomendation_mat["alignment_score"].to_i %></b></h3>
             <b> Los capitales bajo el umbral son:</b>
             <% @points_dat.keys().each do |dat|%>
             <div>
-            <%if recomendation_dat[dat].to_i > 0 %>
+            <%if recomendation_dat[dat].to_i - @points_dat[dat].to_i > 0 %>
               <%= " - Te recomendamos subir el Capital #{dat} en #{recomendation_dat[dat].to_i - @points_dat[dat].to_i}" %>
             <% end %>
             </div>
