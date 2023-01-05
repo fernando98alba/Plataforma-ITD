@@ -45,7 +45,7 @@
                     <div class = "accordion-body">
 
                       <%= turbo_frame_tag dat do %>
-                        <%=render "ind_hab", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, dat: dat, recomendation_hab: recomendation_hab, points_dat: points_dat, points_hab: points_hab[dat], aspiracion_hab: aspiracion_hab%>
+                        <%=render "ind_hab", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, dat: dat, recomendation_hab: recomendation_hab, points_dat: points_dat, points_hab: points_hab, aspiracion_hab: aspiracion_hab%>
                       <%end%>
 
                     </div>
@@ -55,7 +55,9 @@
             <%end%>
           </div>
           <div class = "d-flex justify-content-end marginright">
-            <%= render "form_create", aspiracion_hab: aspiracion_hab, aspiracion_mat: aspiracion_mat, aspiracion_dat: aspiracion_dat, empresa: empresa, aspiracion: aspiracion%>
+            <%= turbo_frame_tag "create_form" do %>
+              <%= render "form_create", aspiracion_hab: aspiracion_hab, aspiracion_mat: aspiracion_mat, aspiracion_dat: aspiracion_dat, empresa: empresa, aspiracion: aspiracion%>
+            <%end%>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@
   <% if aspiracion_hab.keys.length > 0 %>
     <% aspiracion_hab.keys.each do |dat|%>
       <%= form.hidden_field dat, value: aspiracion_dat[dat] %>
-      <% aspiracion_hab[dat][hab].keys.each do |dat|%>
+      <% aspiracion_hab[dat].keys.each do |hab|%>
         <%= form.hidden_field hab, value: aspiracion_hab[dat][hab] %>
       <% end %>
     <% end %>

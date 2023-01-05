@@ -1,7 +1,7 @@
 class AspiracionsController < ApplicationController
-  before_action :get_aspiracion, only: [ :index, :show, :edit, :update, :destroy ]
   before_action :get_empresa
-  before_action :get_last_itdcon, only: [ :index, :create, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation  ]
+  before_action :get_aspiracion, only: [ :index, :show, :edit, :update, :destroy ]
+  before_action :get_last_itdcon, only: [ :index, :show, :create, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation  ]
   before_action :get_recomendation, only: [:index, :create]
   respond_to :js, :json, :html
 
@@ -11,7 +11,15 @@ class AspiracionsController < ApplicationController
   def index
   end
 
+  def show
+    @itdcons = @empresa.itdcons.all
+    get_points
+    puts @points_hab
+    puts @aspiracion["estrategia"]
+  end
+
   def create
+    puts aspiracion_params
     @aspiracion = Aspiracion.new(aspiracion_params)
     respond_to do |format|
       if @aspiracion.save
@@ -92,40 +100,60 @@ class AspiracionsController < ApplicationController
     @aspiracion_hab = {}
     @recomendation_hab = {}
     habilitadores = []
-    @points_hab.keys.each do |dat|
-      @aspiracion_dat[dat] = 0
-      @aspiracion_hab[dat] = {}
-      puts hab_params
-      @points_hab[dat].keys.each do |hab|
-        if hab_params[hab] != "" and hab_params[hab] != nil
-          @aspiracion_hab[dat][hab] = hab_params[hab].to_f
-        else
-          @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
-        end
-        if @aspiracion_hab[dat][hab] < @points_hab[dat][hab]
-          @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
-          break
-        end
-        habilitadores.push @aspiracion_hab[dat][hab]
-        @aspiracion_dat[dat] += @aspiracion_hab[dat][hab]/@points_hab[dat].keys.size
-      end
-    end
-
+    
     @points_dat.keys.each do |dat|
       @aspiracion_dat[dat] = hab_params[dat].to_f 
     end
     @aspiracion_mat["alignment_score"] = 0
     @aspiracion_mat["maturity_score"] = 0
     calculate_hab_recomendation
+
+    @points_hab.keys.each do |dat|
+      if dat == hab_params[:dat]
+        @aspiracion_dat[dat] = 0
+        @aspiracion_hab[dat] = {}
+        @points_hab[dat].keys.each do |hab|
+          if hab_params[hab] != "" and hab_params[hab] != nil
+            @aspiracion_hab[dat][hab] = hab_params[hab].to_f
+          else
+            @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
+          end
+          print "#{@aspiracion_hab[dat][hab]} #{@points_hab[dat][hab]} #{dat} #{hab}\n\n"
+          if @aspiracion_hab[dat][hab] < @points_hab[dat][hab]
+            @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
+          end
+          habilitadores.push @aspiracion_hab[dat][hab]
+          @aspiracion_dat[dat] += @aspiracion_hab[dat][hab]/@points_hab[dat].keys.size
+        end
+      else
+        @points_hab[dat].keys.each do |hab|
+          if hab_params[hab] != "" and hab_params[hab] != nil
+            if !@aspiracion_hab.keys.include? dat
+              @aspiracion_dat[dat] = 0
+              @aspiracion_hab[dat] = {}
+            end
+            @aspiracion_hab[dat][hab] = hab_params[hab].to_f
+            habilitadores.push @aspiracion_hab[dat][hab]
+            @aspiracion_dat[dat] += @aspiracion_hab[dat][hab]/@points_hab[dat].keys.size
+          else
+            habilitadores.push @recomendation_hab[dat][hab]
+          end
+        end
+      end
+    end
+    puts @aspiracion_dat
+    puts @aspiracion_hab
     @aspiracion_mat["alignment_score"] = 0
     
     Dat.all.each do |dat|
       @aspiracion_mat["maturity_score"] += @aspiracion_dat[dat.name.downcase]*dat.ponderador
     end
+
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
     @aspiracion_mat["alignment_score"] = Math.sqrt(variance)
+
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
       format.turbo_stream
@@ -296,7 +324,7 @@ class AspiracionsController < ApplicationController
   end
 
   def get_aspiracion
-    @aspiracion = Aspiracion.find_by(id: params[:id])
+    @aspiracion = @empresa.aspiracion.last
   end
 
   def get_empresa

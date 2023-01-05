@@ -15,6 +15,8 @@
                 <br/>
                 <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
                 <br/>
+                <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>
+                <br/>
               <% else %>
                 <%= link_to 'Inicio', root_path, class:"navelement" %>
                 <br/>
