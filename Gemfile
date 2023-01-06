@@ -34,4 +34,10 @@ gem "groupdate", "~> 6.1"
 
 gem "humanize"
 
+<<<<<<< HEAD
 gem "spreadsheet"
+=======
+gem "spreadsheet"
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"
+>>>>>>> f560747... many gixes
