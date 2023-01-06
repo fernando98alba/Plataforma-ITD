@@ -5,5 +5,5 @@
 <%end%>
 
 <%= turbo_stream.update "create_form" do %>
-  <%= render "form_create", aspiracion_hab: @aspiracion_hab, aspiracion_mat: @aspiracion_mat, aspiracion_dat: @aspiracion_dat, empresa: @empresa, aspiracion: @empresa.aspiracion.build%>
+  <%= render "form_create", aspiracion_hab: @aspiracion_hab, aspiracion_mat: @aspiracion_mat, aspiracion_dat: @aspiracion_dat, empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_hab: @recomendation_hab%>
 <%end%>

@@ -14,11 +14,15 @@
   <%= form.hidden_field :empresa_id, value: empresa.id %>
   <%= form.hidden_field :alignment_score, value: aspiracion_mat["alignment_score"] %>
   <%= form.hidden_field :maturity_score, value: aspiracion_mat["maturity_score"] %>
-  <% if aspiracion_hab.keys.length > 0 %>
-    <% aspiracion_hab.keys.each do |dat|%>
-      <%= form.hidden_field dat, value: aspiracion_dat[dat] %>
+  <% aspiracion_dat.keys.each do |dat|%>
+    <%= form.hidden_field dat, value: aspiracion_dat[dat] %>
+    <% if aspiracion_hab.keys.include? dat %>
       <% aspiracion_hab[dat].keys.each do |hab|%>
         <%= form.hidden_field hab, value: aspiracion_hab[dat][hab] %>
+      <% end %>
+    <%else%>
+      <% recomendation_hab[dat].keys.each do |hab|%>
+        <%= form.hidden_field hab, value: recomendation_hab[dat][hab] %>
       <% end %>
     <% end %>
   <% end %>

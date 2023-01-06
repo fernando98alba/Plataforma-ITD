@@ -7,5 +7,5 @@
 <% end %>
 
 <%= turbo_stream.update "hab_section" do %>
-  <%= render "hab_section", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_dat: @recomendation_dat, recomendation_mat: @recomendation_mat, recomendation_hab: @recomendation_hab, points_hab: @points_hab, points_dat: @points_dat, aspiracion_dat: @aspiracion_dat, aspiracion_mat: @aspiracion_mat, aspiracion_hab: @aspiracion_hab%>
+  <%= render "hab_section", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_dat: @recomendation_dat, recomendation_mat: @recomendation_mat, recomendation_hab: @recomendation_hab, points_hab: @points_hab, points_dat: @points_dat, aspiracion_dat: @aspiracion_dat, aspiracion_mat: @aspiracion_mat, aspiracion_hab: @aspiracion_hab, recomendation_dat: @recomendation_dat%>
 <%end%>

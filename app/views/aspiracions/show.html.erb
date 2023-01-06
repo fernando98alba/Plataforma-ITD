@@ -24,16 +24,18 @@
             }];
 
           <% @itdcons.each do |itdcon|%>
-            data.push({ 
-              label: 'Puntaje ITD',
-              type: "scatter",
-              data: [{
-                y: <%= itdcon.alignment_score %>,
-                x: <%= itdcon.maturity_score %>
-              }],
-              backgroundColor: "black",
-              borderColor:'black'
-            });
+            <%if itdcon[:completed]%>
+              data.push({ 
+                label: 'Puntaje ITD',
+                type: "scatter",
+                data: [{
+                  y: <%= itdcon.alignment_score %>,
+                  x: <%= itdcon.maturity_score %>
+                }],
+                backgroundColor: "black",
+                borderColor:'black'
+              });
+            <%end%>
           <%end%>
           data.push(
             {

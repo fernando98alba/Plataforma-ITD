@@ -15,7 +15,13 @@
                 <br/>
                 <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
                 <br/>
-                <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>
+                <%if current_user.empresa.aspiracion.last%>
+                  <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>
+                <%elsif current_user.empresa.itdcons.last%>
+                  <%= link_to 'Aspiración', empresa_aspiracions_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+                <%else%>
+                  <%= link_to 'Aspiración', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+                <%end%>
                 <br/>
               <% else %>
                 <%= link_to 'Inicio', root_path, class:"navelement" %>

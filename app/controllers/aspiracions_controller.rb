@@ -14,13 +14,16 @@ class AspiracionsController < ApplicationController
   def show
     @itdcons = @empresa.itdcons.all
     get_points
-    puts @points_hab
-    puts @aspiracion["estrategia"]
+
   end
 
   def create
+    puts
+    puts
+    puts "AAAAAA"
     puts aspiracion_params
     @aspiracion = Aspiracion.new(aspiracion_params)
+    
     respond_to do |format|
       if @aspiracion.save
         format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
@@ -46,6 +49,7 @@ class AspiracionsController < ApplicationController
         @recomendation_mat[mat] = @itdcon[mat]
       end
     end
+    @aspiracion_mat = @recomendation_mat
     get_points
     calculate_recomendation
 
