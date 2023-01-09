@@ -1,0 +1,96 @@
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <div class="row">
+    <%= turbo_frame_tag "dat_graph" do %>  
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+        <script>
+          label = [];
+          values = [];
+          maturity = [] ;
+          recomendation = [];
+          <% points_dat.keys.each do |dat|%>
+            label.push("Capital <%= dat %>");
+            values.push(<%= points_dat[dat]%>);
+            maturity.push(<%= aspiracion_mat["maturity_score"]%>);
+            recomendation.push(<%= recomendation_dat[dat]%>);
+          <%end%>
+          ctx = document.getElementById('myChart');
+          data = [{
+            label: 'Puntaje por capital',
+            type: 'bar',
+            data: values,
+            fill: true,
+            borderColor: '#36A2EB',
+            backgroundColor: '#9BD0F5',
+            },
+            {
+            label: 'Meta Madurez',
+            type: 'line',
+            data: maturity,
+            borderColor: '#FF6384',
+            backgroundColor: '#FFB1C1',
+            },
+            {
+            label: 'Meta de Aumento',
+            type: 'bar',
+            data: recomendation,
+          }];
+          <% if aspiracion_dat.keys.length > 0 %>
+            aspiracion = [];
+            <% points_dat.keys.each do |dat|%>
+              aspiracion.push(<%= aspiracion_dat[dat]%>);
+            <%end%>
+            data.push({
+            label: 'Aspiracion',
+            type: 'bar',
+            data: aspiracion,
+            fill: true,
+            borderColor: '#FFFFF',
+            backgroundColor: '#00000',
+            })
+          <%end%>
+          new Chart(ctx, {
+            data: {
+            labels: label,
+            datasets: data,
+            },
+            options: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: false,
+                beginAtZero: true,
+                reverse: true
+              },
+              elements: {
+                line: {
+                  borderWidth: 3
+
+                }
+              }
+            },
+          });             
+        </script>
+      </div>
+
+      <div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+          <h3 class="text-center">El puntaje de madurez aspirado es <b><%= aspiracion_mat["maturity_score"].to_i %></b></h3>
+          <h3 class="text-center">El alineamiento con esa aspiración de madurez es  <b><%= aspiracion_mat["alignment_score"].to_i %></b></h3>
+          <b> Los capitales bajo el umbral son:</b>
+          <% @points_dat.keys().each do |dat|%>
+            <div>
+              <%if recomendation_dat[dat].to_i - @points_dat[dat].to_i > 0 %>
+                <%= " - Te recomendamos subir el Capital #{dat} a #{recomendation_dat[dat].to_i}" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

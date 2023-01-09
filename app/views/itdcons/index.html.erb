@@ -7,21 +7,44 @@
 
   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <div class="shadow p-3 mb-5 bg-white rounded">
-              <h4> ITDs Históricos </h4>
-              <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Nuevo ITD
-              </button>
-                 <% itds = @empresa.itdcons.all %>
-                 <% idcol = "id=flush-collapse" %>
-                    <% itds.each_with_index do |itd, index| %>
-                    <% num = (index).to_s %> 
-                    <% @str = idcol + (index).humanize.capitalize + ' class="accordion-collapse collapse" aria-labelledby="flush-heading' + num + '" data-bs-parent="#accordionFlushExample"' %>
+          <h4> ITDs Históricos </h4>
+          <%if @itdcons.where(completed: false).length >0%>
+            <div type="button" class="btn btn-dark">
+              Nuevo ITD
+            </div>
+          <%else%>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Nuevo ITD
+            </button>
+          <%end%>
+          <% @itdcons.each_with_index do |itd, index| %>
+            <%if itd[:completed]%>
+              <%=link_to empresa_itdcon_path(@empresa.id, itd.id), data: {turbo: false}, class:"itdlink" do %>
+                <div class=" shadow p-3 mt-2 bg-white">
+                  <b><%= 'ITD ' + l(itd.created_at.to_date, format: :custom_itd)%></b>
+                </div>
+              <%end%>
+            <%else%>
+              <div class="shadow p-3 mt-2 bg-white position-relative ">
+                <b><%='ITD ' + l(itd.created_at.to_date, format: :custom_itd) %></b>
+                <br>
+                <%= "Miembros restantes:" %>
+                <br>
+                <%itd.itdinds.each do |itdind|%>
+                  <%if !itdind[:completed]%>
+                    <%if itdind.user == current_user%>
+                      <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, itd.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                    <%end%>
+                    <%=itdind.user.name%>
+                    <br>
+                  <%end%>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
 
-                
-                    <div class="shadow p-3 mb-5 bg-white">
-                      <%= link_to 'ITD realizado el: ' + itd.created_at.to_s, empresa_itdcon_path(@empresa.id, itd.id), class:"itdlink" %>
-                    </div>
-                    <% end %>
-  </div>
+    </div>
   </div>
 </div>

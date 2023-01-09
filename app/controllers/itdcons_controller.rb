@@ -3,7 +3,8 @@ class ItdconsController < ApplicationController
   before_action :get_points, only: [ :show]
   before_action :get_empresa
   def index
-    @itdcon = @empresa.itdcons
+    @itdcons = @empresa.itdcons.all
+
   end
   def create
     @itdcon = @empresa.itdcons.build()
@@ -23,6 +24,7 @@ class ItdconsController < ApplicationController
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:id])
   end
+
   def get_points
     @points_dat = {}
     @points_hab = {}
@@ -44,9 +46,10 @@ class ItdconsController < ApplicationController
         point_dat += point_habilitador
       end
       point_dat = point_dat/dat.habilitadors.count.to_f
-      @points_dat['Capital ' + dat.name] = point_dat
+      @points_dat[dat.name] = point_dat
     end
   end
+  
   def get_empresa
     @empresa = Empresa.find_by(id:params[:empresa_id])
   end
