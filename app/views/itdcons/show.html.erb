@@ -29,9 +29,9 @@
                   let values = [];
                   let maturity = [] ;
                   <% @points_dat.keys.each do |dat|%>
-                    label.push("<%= dat %>");
+                    label.push("Capital <%= dat %>");
                     values.push(<%= @points_dat[dat]%>);
-                    maturity.push(<%= @itdcon.maturity%>);
+                    maturity.push(<%= @itdcon.maturity_score%>);
                   <%end%>
                   const ctx = document.getElementById('myChart1');
                     new Chart(ctx, {
@@ -60,13 +60,13 @@
               </script>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity.to_i %></b></h3>
-                <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment.to_i %></b></h3>
+                <h3 class="text-center">El puntaje de madurez es <b><%= @itdcon.maturity_score.to_i %></b></h3>
+                <h3 class="text-center">El alineamiento es  <b><%= @itdcon.alignment_score.to_i %></b></h3>
                   <b> Los capitales bajo el umbral son:</b>
                   <div>
                   <% @points_dat.keys().each do |dat|%>
                   <div>
-                  <%if @points_dat[dat] < @itdcon.maturity %>
+                  <%if @points_dat[dat] < @itdcon.maturity_score %>
                     <%= " - " + dat %>
                   <% end %>
                   </div>
@@ -106,8 +106,8 @@
                         label: 'Puntaje ITD',
                         type: "scatter",
                         data: [{
-                          y: <%= @itdcon.alignment %>,
-                          x: <%= @itdcon.maturity %>
+                          y: <%= @itdcon.alignment_score %>,
+                          x: <%= @itdcon.maturity_score %>
                         }],
                         backgroundColor: "red",
                         borderColor:'red'
@@ -174,7 +174,6 @@
                           x: {
                             stacked: true,
                             beginAtZero: true,
-                            
                           }
                         }
                       },
@@ -190,8 +189,8 @@
               </script>
           </div>
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
-            <h3>Eres un <b>Adoptador Digital</b></h3>
-            <h3>con un nivel de alineamiento<b> desbalanceado </b></h3>
+            <h3>Eres un <b><%=@itdcon.madurez.name%></b></h3>
+            <h3>con un nivel de alineamiento<b> <%=@itdcon.alineamiento.name%> </b></h3>
             <b>Esto significa que:</b> En la organización han entendido que el rol de la Transformación Digital es impactar al negocio y lo están consiguiendo, trabajan consistentemente en mejorar la experiencia de clientes y algunos líderes relevantes están convencidos que este proceso debe acelerarse. Sin embargo, se muestra un desbalance entre la asignación de recursos y la estrategia de Transformación Digital, mostrando un mayor desarrollo en alguno de sus habilitadores, lo que puede impactar en obtener una transformación sostenible del negocio. Es posible que comience a trabarse el avance en las iniciaCvas digitales.
           </div>
         </div>
@@ -299,8 +298,6 @@
                           label.push("<%= hab.name %>");
                           values.push("<%= @points_hab[hab.name]%>");
                         <%end%>
-                        console.log(values);
-                        console.log(label);
                         ctx_cap= document.getElementById('myChart' + "<%=(index + 4)%>");
                         new Chart(ctx_cap, {
                           type: 'bar',
@@ -343,6 +340,6 @@
     </div>
   </div>
   <div class = "d-flex justify-content-end marginright">
-    <%= link_to 'Definir aspiración', root_path, class:"btn btn-primary" %>
+    <%= link_to 'Definir aspiración', empresa_aspiracions_path(@empresa), class:"btn btn-primary" , data: {turbo: false}%>
   </div>
 </div>

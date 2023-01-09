@@ -1,0 +1,238 @@
+<div class="container-fluid">
+  <div class="main">
+    <div class="shadow p-3 mb-5 bg-white rounded">  
+      <h3><%= "Evolución y aspiración de madurez y alineamiento"%></h3>
+
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 "> 
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+
+        <script>
+          let ctx = document.getElementById('myChart');
+
+          let data = [
+            { 
+              label: 'Puntaje ITD',
+              type: "scatter",
+              data: [{
+                y: <%= @aspiracion.alignment_score %>,
+                x: <%= @aspiracion.maturity_score %>
+              }],
+              backgroundColor: "red",
+              borderColor:'red'
+            }];
+
+          <% @itdcons.each do |itdcon|%>
+            <%if itdcon[:completed]%>
+              data.push({ 
+                label: 'Puntaje ITD',
+                type: "scatter",
+                data: [{
+                  y: <%= itdcon.alignment_score %>,
+                  x: <%= itdcon.maturity_score %>
+                }],
+                backgroundColor: "black",
+                borderColor:'black'
+              });
+            <%end%>
+          <%end%>
+          data.push(
+            {
+              label: 'Rezagado',
+              data: [0, 0],
+              backgroundColor: 'rgba(0, 0, 50, 0.2)',
+              borderColor:'rgba(0, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            },
+            {
+              label: 'Explorador Digital',
+              data: [30, 30],
+              backgroundColor: 'rgba(0, 0, 50, 0.3)',
+              borderColor:'rgba(0, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            },
+            {
+              label: 'Adoptador Digital',
+              data: [25, 25],
+              backgroundColor: 'rgba(0, 0, 50, 0.2)',
+              borderColor:'rgba(0, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            },
+            {
+              label: 'Líder Digital',
+              data: [20, 20],
+              backgroundColor: 'rgba(0, 0, 50, 0.3)',
+              borderColor:'rgba(1, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            },
+            {
+              label: 'Disruptor Digital',
+              data: [15, 15],
+              backgroundColor: 'rgba(0, 0, 50, 0.3)',
+              borderColor:'rgba(1, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            },
+            {
+              label: 'Disruptor Digital',
+              data: [10, 10],
+              backgroundColor: 'rgba(0, 0, 50, 0.3)',
+              borderColor:'rgba(0, 0, 0, 0)',
+              borderWidth: 1,
+              fill: true
+            }
+          );
+          // render init block
+          new Chart(ctx, {
+            type: 'line',
+            labels: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            data: {
+              labels: [0, 50],
+              datasets: data
+            },
+            options: {
+              indexAxis: 'y',
+              scales: {
+                x: {
+                  stacked: true,
+                  beginAtZero: true,
+                }
+              },
+            },
+          });
+        </script>
+      </div>
+
+    </div>
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <h3><%= "Brechas en los DATs"%></h3>
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+        <div>
+          <canvas id="myChart2"></canvas>
+        </div>
+        <script>
+          let label = [];
+          let values = [];
+          let brecha = [];
+          <% @points_dat.keys.each do |dat|%>
+            label.push("Capital <%= dat %>");
+            values.push(<%= @points_dat[dat]%>);
+            brecha.push(<%= @aspiracion[dat]%>);
+          <%end%>
+          console.log(values)
+          let ctx2 = document.getElementById('myChart2');
+          let data_dat = [{
+            label: 'Puntaje por capital',
+            type: 'bar',
+            data: values,
+            fill: true,
+            borderColor: '#D87DE7',
+            backgroundColor: '#D87DE7',
+            },
+            {
+            label: 'Aspiracion',
+            type: 'bar',
+            data: brecha,
+            fill: true,
+            borderColor: '#7DBAE7',
+            backgroundColor: '#7DBAE7',
+          }];
+          new Chart(ctx2, {
+            data: {
+            labels: label,
+            datasets: data_dat,
+            },
+            options: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: false,
+                beginAtZero: true,
+                reverse: true
+              },
+              elements: {
+                line: {
+                  borderWidth: 3
+
+                }
+              }
+            },
+          });             
+        </script>
+      </div>
+    </div>
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <h3><%= "Brechas en los habilitadores"%></h3>
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+        <div>
+          <canvas id="myChart3"></canvas>
+        </div>
+        <script>
+          label = [];
+          values = [];
+          brecha = [];
+          <% @points_hab.keys.each do |dat|%>
+            <%@points_hab[dat].keys.each do |hab|%>
+              label.push("<%= hab %>");
+              values.push(<%= @points_hab[dat][hab]%>);
+              brecha.push(<%= @aspiracion[hab]%>);
+            <%end%>
+          <%end%>
+          let ctx3 = document.getElementById('myChart3');
+          let data_hab = [{
+            label: 'Puntaje por habilitador',
+            data: values,
+            fill: true,
+            backgroundColor: 'rgba(130, 99, 132, 0)',
+            borderColor: 'rgb(130, 99, 132)',
+            pointBackgroundColor: 'rgb(130, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(130, 99, 132)'
+            },
+            {
+            label: 'Aspiracion',
+            data: brecha,
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+            },
+            {
+              label: 'cero',
+              data: [0]
+          }];
+          new Chart(ctx3, {
+            type: "radar",
+            data: {
+            labels: label,
+            datasets: data_hab,
+            },
+            options: {
+              scale: {
+                ticks: { min: 0 },
+              },
+              elements: {
+                line: {
+                  borderWidth: 3,
+                }
+              }
+            },
+          });             
+        </script>
+      </div>
+    </div>
+
+  </div>
+</div>

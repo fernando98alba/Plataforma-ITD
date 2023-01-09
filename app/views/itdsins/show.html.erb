@@ -1,0 +1,345 @@
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="main">
+    <h1 class="text-center" style="margin-bottom: 60px">ITD</h1>
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+        <div class="shadow p-3 mb-5 bg-white rounded">  
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+              <h3>Resultado General de la evaluación</h3>
+              Aquí estará la descripción de uno del ITD completo donde cada uno de los puntos a tratar se revisará de forma general
+            </div>
+          </div>
+        </div>
+
+        <div class="shadow p-3 mb-5 bg-white rounded">  
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+              <h3>Nivel de madurez de capitales intangibles</h3>
+              Lo ideal en esta sección es contar con un puntaje similar en los 5 capitales intangibles, ya que para lograr una transformación sostenible del negocio, se requiere de un incremento equilibrado o balanceado de estos.  
+            </div>
+          
+
+            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 "> 
+                <div>
+                  <canvas id="myChart1"></canvas>
+                </div>
+                <script>
+                  let label = [];
+                  let values = [];
+                  let maturity = [] ;
+                  <% @points_dat.keys.each do |dat|%>
+                    label.push("Capital <%= dat %>");
+                    values.push(<%= @points_dat[dat]%>);
+                    maturity.push(<%= @itdsin.maturity_score%>);
+                  <%end%>
+                  const ctx = document.getElementById('myChart1');
+                    new Chart(ctx, {
+                        
+                        data: {
+                        labels: label,
+                        datasets: [{
+                          label: 'Puntaje por capital',
+                          type: 'bar',
+                          data: values,
+                          fill: true,
+                        }, {
+                          label: 'Meta Umbral (Aún por definir limites)',
+                          type: 'line',
+                          data: maturity,
+                        }]
+                      },
+                        options: {
+                          elements: {
+                            line: {
+                              borderWidth: 3
+                            }
+                          }
+                        },
+                      });
+              </script>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                <h3 class="text-center">El puntaje de madurez es <b><%= @itdsin.maturity_score.to_i %></b></h3>
+                <h3 class="text-center">El alineamiento es  <b><%= @itdsin.alignment_score.to_i %></b></h3>
+                  <b> Los capitales bajo el umbral son:</b>
+                  <div>
+                  <% @points_dat.keys().each do |dat|%>
+                  <div>
+                  <%if @points_dat[dat] < @itdsin.maturity_score %>
+                    <%= " - " + dat %>
+                  <% end %>
+                  </div>
+                  <% end %>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="shadow p-3 mb-5 bg-white rounded">  
+        <div class="row">
+          <h3>Resultado general de la evaluación</h3> 
+        
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 "> 
+              <div>
+                <canvas id="myChart2"></canvas>
+              </div>
+
+              <script>
+                var ctx2 = document.getElementById('myChart2');
+
+                const arbitratyLine = {
+                  id: 'arbitratyLine',
+                  beforeDraw(chart, args, options){
+                    const { ctx2, charArea: { top, right, bottom, left, width, height }, scales: {x,y}
+                  } = chart;
+                  ctx2.save();
+                  ctx2.strokeStyle = "green";
+                  ctx2.strokeRect(x.getPixelForValue(2), top, 0, height);
+                  ctx2.restore();
+                }};
+
+                const data = {
+                      labels: [0, 50],
+                      datasets: [
+                      { 
+                        label: 'Puntaje ITD',
+                        type: "scatter",
+                        data: [{
+                          y: <%= @itdsin.alignment_score %>,
+                          x: <%= @itdsin.maturity_score %>
+                        }],
+                        backgroundColor: "red",
+                        borderColor:'red'
+                      },
+                      {
+                        label: 'Rezagado',
+                        data: [0, 0],
+                        backgroundColor: 'rgba(0, 0, 50, 0.2)',
+                        borderColor:'rgba(0, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      },
+                      {
+                        label: 'Explorador Digital',
+                        data: [30, 30],
+                        backgroundColor: 'rgba(0, 0, 50, 0.3)',
+                        borderColor:'rgba(0, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      },
+                      {
+                        label: 'Adoptador Digital',
+                        data: [25, 25],
+                        backgroundColor: 'rgba(0, 0, 50, 0.2)',
+                        borderColor:'rgba(0, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      },
+                      {
+                        label: 'Líder Digital',
+                        data: [20, 20],
+                        backgroundColor: 'rgba(0, 0, 50, 0.3)',
+                        borderColor:'rgba(1, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      },
+                      {
+                        label: 'Disruptor Digital',
+                        data: [15, 15],
+                        backgroundColor: 'rgba(0, 0, 50, 0.3)',
+                        borderColor:'rgba(1, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      },
+                      {
+                        label: 'Disruptor Digital',
+                        data: [10, 10],
+                        backgroundColor: 'rgba(0, 0, 50, 0.3)',
+                        borderColor:'rgba(0, 0, 0, 0)',
+                        borderWidth: 1,
+                        fill: 1
+                      }
+                      ]
+                    };
+
+                    // config 
+                    const config = {
+                      type: 'line',
+                      labels: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                      data,
+                      options: {
+                        indexAxis: 'y',
+                        scales: {
+                          x: {
+                            stacked: true,
+                            beginAtZero: true,
+                          }
+                        }
+                      },
+                    };
+
+                    // render init block
+                    var myChart = new Chart(
+                      document.getElementById('myChart2').getContext('2d'),
+                      config
+                    );
+
+
+              </script>
+          </div>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+            <h3>Eres un <b>Adoptador Digital</b></h3>
+            <h3>con un nivel de alineamiento<b> desbalanceado </b></h3>
+            <b>Esto significa que:</b> En la organización han entendido que el rol de la Transformación Digital es impactar al negocio y lo están consiguiendo, trabajan consistentemente en mejorar la experiencia de clientes y algunos líderes relevantes están convencidos que este proceso debe acelerarse. Sin embargo, se muestra un desbalance entre la asignación de recursos y la estrategia de Transformación Digital, mostrando un mayor desarrollo en alguno de sus habilitadores, lo que puede impactar en obtener una transformación sostenible del negocio. Es posible que comience a trabarse el avance en las iniciaCvas digitales.
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow p-3 mb-5 bg-white rounded">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <h3>Aquí podemos ver los distintos habilitadores</h3>
+                    El balance también puede apreciarse comparando la madurez entre habilitadores
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                  
+                  <div>
+                      <canvas id="myChart3"></canvas>
+                    </div>
+                    <script>
+                      let ctx3= document.getElementById('myChart3');
+
+                      new Chart(ctx3, {
+                        type: 'radar',
+                        data: {
+                        labels: [
+                          'Estrategia',
+                          'Modelo de negocios',
+                          'Gobernance',
+                          'Procesos',
+                          'Tecnología',
+                          'Datos y analítica',
+                          'Modelo operativo',
+                          'Propiedad intelectual',
+                          'Personas',
+                          'Ciclo de vida del colaborador',
+                          'Estructura Organizacional',
+                          'Stakeholders',
+                          'Marca',
+                          'Clientes',
+                          'Sustentabilidad'
+                        ],    
+
+                        datasets: [{
+                          label: 'Habilitadores valores reales',
+                          data: <%=@points_hab.values()%>,
+                          fill: true,
+                          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                          borderColor: 'rgb(255, 99, 132)',
+                          pointBackgroundColor: 'rgb(255, 99, 132)',
+                          pointBorderColor: '#fff',
+                          pointHoverBackgroundColor: '#fff',
+                          pointHoverBorderColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                          label: 'cero',
+                          data: [0]
+                        }]
+                      },
+                        options: {
+                          scale: {
+                            ticks: { min: 0 },
+                          },
+                          
+                          elements: {
+                            line: {
+                              borderWidth: 3,
+                            }
+                          }
+                        },
+                      });
+                    </script>
+
+                </div>
+              </div>
+      </div>
+
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <script>
+          let ctx_cap;
+        </script>
+        <%Dat.all.each_with_index do |dat, index|%>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id=<%="flush-heading" + index.humanize.capitalize%>>
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=<%="#flush-collapse" + index.humanize.capitalize%> aria-expanded="false" aria-controls=<%="flush-collapse" + index.humanize.capitalize%>>
+                <h4><b>Capital <%=dat.name%></b></h4>
+              </button>
+            </h2>
+            <div id=<%="flush-collapse" + index.humanize.capitalize%> class="accordion-collapse collapse" aria-labelledby=<%="flush-heading" + index.humanize.capitalize%> data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+                  <%= dat.description%>
+                </div>
+
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-4 col-sm-12 col-xs-12 ">
+                    <h5>Aquí podemos ver los distintos habilitadores</h5>
+                  </div>
+                    
+                    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                      <div>
+                        <canvas id=<%= "myChart" + (index+4).to_s%>></canvas>
+                      </div>
+                      <script>
+                        label = [];
+                        values = []; 
+                        <% dat.habilitadors.each do |hab|%>
+                          label.push("<%= hab.name %>");
+                          values.push("<%= @points_hab[hab.name]%>");
+                        <%end%>
+                        ctx_cap= document.getElementById('myChart' + "<%=(index + 4)%>");
+                        new Chart(ctx_cap, {
+                          type: 'bar',
+                          data: {
+                          labels: label,
+                          datasets: [{
+                            label: 'Capital estructural real',
+                            data: values,
+                            fill: true,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                          }]
+                        },
+                          options: {
+                            scale: {
+                              ticks: { min: 0 },
+                            },
+                            
+                            elements: {
+                              line: {
+                                borderWidth: 3,
+                              }
+                            }
+                          },
+                        });
+                      </script>
+                    </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+  <div class = "d-flex justify-content-end marginright">
+    <%= link_to 'Volver a inicio', root_path, class:"btn btn-primary"%>
+  </div>
+</div>
