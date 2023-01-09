@@ -1,34 +1,52 @@
 class ItdindsController < ApplicationController
-  before_action :set_itd, only: [ :show, :edit, :update, :destroy ]
+
   before_action :get_itdind
   before_action :get_itdcon
-  def new
-    @itdind = @itdcon.itdinds.build
+  def edit
   end
-  def create
-    @itdind = Itdind.new(itdind_params)
-    @itdind.user = current_user
+  def update
+    check_if_completed()
+    if @itdind[:completed] == true
+      calculate_itdind
+    end
     respond_to do |format|
       if @itdind.save
+<<<<<<< HEAD
         calculate_itdcon()
         format.html { redirect_to empresa_itdcon_path(@empresa, @itdcon), notice: "El Itd se creó correctamente." }
+=======
+        if @itdind[:completed] == true
+          calculate_itdcon()
+          if @itdcon[:completed] == true
+            format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), notice: "El Itd se creó correctamente." }
+          else
+            format.html { redirect_to empresa_itdcons_path(@itdcon.empresa), notice: "El Itd se creó correctamente." }
+          end
+        else
+          format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), notice: "Respuestas guardadas correctamente." }
+        end
+>>>>>>> f560747... many gixes
       else #REVISAR EL ELSE
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), status: :unprocessable_entity }
       end
     end
   end
 
   private
-
-  def calculate_itdcon
+  def check_if_completed
+    #if !itdind_params.values.include? ""
+     # @itdind[:completed] = true
+    #end
     (1..91).each do |index|
       question = "p" + index.to_s
-      if @itdind[question].is_a? Numeric
-        @itdcon[question] = @itdind[question]
-      else
-        @itdcon[question] = rand(1..4) #ELIMINAAAR
+      if !itdind_params.values.is_a? Numeric
+        @itdind[question] = rand(0..4) #ELIMINAAAR
       end
     end
+    @itdind[:completed] = true
+  end
+
+  def calculate_itdind
     madurez = 0
     habilitadores = []
     Dat.all.each do |dat|
@@ -38,7 +56,7 @@ class ItdindsController < ApplicationController
         habilitador.elementos.each do |elemento|
           point_elemento = 0
           elemento.drivers.each do |driver|
-            point_elemento += @itdcon[driver.identifier]
+            point_elemento += @itdind[driver.identifier]
             puts
           end
           point_elemento = point_elemento/elemento.drivers.count.to_f
@@ -52,19 +70,64 @@ class ItdindsController < ApplicationController
       point_dat = point_dat/dat.habilitadors.count.to_f
       madurez += point_dat*dat.ponderador
     end
+<<<<<<< HEAD
     @itdcon.maturity = madurez
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
     @itdcon.alignment = Math.sqrt(variance)
     Madurez.all.each do |level|
+=======
+    @itdind.maturity_score = madurez
+    alignment_mean = habilitadores.sum(0.0)/habilitadores.size
+    num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
+    variance = num_sum / (habilitadores.size)  
+    std_dev = Math.sqrt(variance)
+    @itdind.alignment_score = std_dev
+    Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
+>>>>>>> f560747... many gixes
       if madurez <= level.max and madurez >= level.min
+        @itdind.madurez = level
+        break
+      end
+    end
+    Alineamiento.all.each do |level|
+      if std_dev <= level.max and std_dev >= level.min
+        @itdind.alineamiento = level
+        break
+      end
+    end
+  end
+
+  def calculate_itdcon
+    itdinds = @itdcon.itdinds.where(completed: true)
+    if itdinds.length == @itdcon.itdinds.count
+      @itdcon[:completed] = true
+    end
+     #Atomicidad, y si dos cambian a true al mismo tiempo?
+    Driver.all.each do |driver|
+      @itdcon[driver.identifier] = 0
+      itdinds.each do |itdind|
+        @itdcon[driver.identifier] += itdind[driver.identifier]
+      end
+      @itdcon[driver.identifier] = @itdcon[driver.identifier]/itdinds.length.to_f
+    end
+    @itdcon["maturity_score"] = 0
+    @itdcon["alignment_score"] = 0
+    itdinds.each do |itdind|
+      @itdcon["maturity_score"] += itdind["maturity_score"]
+      @itdcon["alignment_score"] += itdind["alignment_score"]
+    end
+    @itdcon["maturity_score"] = @itdcon["maturity_score"]/itdinds.length.to_f
+    @itdcon["alignment_score"] = @itdcon["alignment_score"]/itdinds.length.to_f
+    Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
+      if @itdcon["maturity_score"] <= level.max and @itdcon["maturity_score"] >= level.min
         @itdcon.madurez = level
         break
       end
     end
     Alineamiento.all.each do |level|
-      if madurez <= level.max and madurez >= level.min
+      if @itdcon["alignment_score"] <= level.max and @itdcon["alignment_score"] >= level.min
         @itdcon.alineamiento = level
         break
       end
