@@ -15,17 +15,6 @@
                 <br/>
                 <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
                 <br/>
-<<<<<<< HEAD
-=======
-                <%if current_user.empresa.aspiracion.last%>
-                  <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>
-                <%elsif current_user.empresa.itdcons.last%>
-                  <%= link_to 'Aspiración', empresa_aspiracions_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
-                <%else%>
-                  <%= link_to 'Aspiración', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
-                <%end%>
-                <br/>
->>>>>>> f560747... many gixes
               <% else %>
                 <%= link_to 'Inicio', root_path, class:"navelement" %>
                 <br/>
