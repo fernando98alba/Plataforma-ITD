@@ -1,0 +1,72 @@
+<div class="container">
+<div class = "main">
+     <div class="row aligncenter">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-14 col-xs-8">
+        <div class="shadow p-3 mb-5 bg-light rounded">
+          <div class="shadow p-3 mb-5 bg-light rounded">
+            <%= link_to image_tag("logos/logo-akloe-v5.png"), root_path %>
+          </div>
+
+          <% if user_signed_in? %>
+          <p class="text-center"> ¡Comienza tu transformación! Te invitamos a inscribir empresa en el siguiente enlace:</p>
+          <div class="d-grid gap-2 col-8 mx-auto">
+            <%= link_to 'Inscribir empresa', new_empresa_path, class:"btn btn-primary" %>
+          </div>
+          <% else %>
+          <p class="text-center">Aquí podrás responder las preguntas del ITD e ingresar a tu cuenta. Si no tienes cuenta, podrás registrarte.</p>
+
+                <div class="d-grid gap-2 col-8 mx-auto">
+
+                  <%= link_to 'Ingresar', new_user_session_path, class:"btn btn-primary" %>
+              
+                  <%= link_to 'Registrarse', new_user_registration_path, class:"btn btn-primary" %>
+                </div>
+
+          <p class="text-center"> ¡Evalúa tu nivel de transformación digital aquí!</p>
+          <div class="d-grid gap-2 col-8 mx-auto">
+            <%= link_to 'REALIZAR ITD (sin registro)', new_itdsin_path, class: "btn btn-primary btn"  %>
+          </div> 
+          <% end %>
+
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+          <div id="carouselExampleInterval" class="carousel carousel-dark slide " data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active img-fluid" data-bs-interval="10000">
+                <%= image_tag("inicio/itdakloe.png") %>
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>ITD AKLOE</h5>
+                  <p>Aquí podrás responder las preguntas del ITD e ingresar a tu cuenta. Si no tienes cuenta, podrás registrarte.</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <%= image_tag("inicio/midetuitd.png") %>
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Transformación Digital</h5>
+                  <p>Aquí podrás responder las preguntas del ITD e ingresar a tu cuenta. Si no tienes cuenta, podrás registrarte.</p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <%= image_tag("inicio/brainstorm.png") %>
+                <div class="carousel-caption d-none d-md-block" style="font-color: black;">
+                  <h5>¡Organiza tu propia tranformación!</h5>
+                  <p>Aquí podrás responder las preguntas del ITD e ingresar a tu cuenta. Si no tienes cuenta, podrás registrarte.</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+      </div>
+      
+
+     </div>
+</div>
+</div>

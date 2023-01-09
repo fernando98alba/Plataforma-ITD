@@ -1,0 +1,85 @@
+<!--<p style="color: green"><%= notice %></p>
+mx-lg-auto -->
+<% if @empresa.id == current_user.empresa_id %>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container-fluid">
+<div class = "main">
+  <div class="row aligncenter">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+              <div class="shadow p-3 mb-5 bg-white rounded">
+                  
+                  <h4> Datos Empresa </h4>
+                  <%= render @empresa %>
+                  <div>
+                  <span style="margin: 5px; margin-top: 10px">
+                  <%= link_to "Volver a empresas", root_path, class:"btn btn-outline-dark" %>
+                  </span>
+                  
+                  </div>          
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="shadow p-3 mb-5 bg-white rounded">
+                      <h4> Participantes </h4>
+                      <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                              Participantes de la empresa
+                            </button>
+                          </h2>
+                          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                              <div>
+                                
+                                
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Nombre</th>
+                                      <th scope="col">Apellido</th>
+                                      <th scope="col">Email</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="table-group-divider">
+                                    <% @empresa.users.each_with_index do |usuario, index| %>
+                                    <tr>
+                                      <th scope="row"><%= "#{index}".to_i + 1 %></th>
+                                      <td><%= usuario.name %></td>
+                                      <td><%= usuario.lastname %></td>
+                                      <td><%= usuario.email %></td>
+                                    </tr>
+                                    <% end %>
+                                  </tbody>
+                                </table>
+
+                                
+                              </div>
+                              <% if current_user.is_admin = 1 %>
+                              <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label"><b>¡Agrega un colega!</b> Ingresa su correo para admitirlo en esta empresa </label>
+                                <!--<%= form_for "", url: empresa_path, role: "search", method: :get do %>
+                                <%= text_field_tag  :search, @nuevointegrante, autofocus: true, autocomplete: "email", class: "form-control form-control-lg" , placeholder: "Email del nuevo integrante" %>
+                                --><% end %>
+                              </div>
+                              <%=  %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+              </div> 
+        </div>
+        <%= link_to "Borrar empresa", @empresa, data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" },class:"btn btn-outline-dark" %>
+    </div>
+  </div>
+</div>
+</div>
+<% else %>
+    <% redirect_back_or_to homes_example_url, notice: "No tienes ese permiso." %>
+<% end %>

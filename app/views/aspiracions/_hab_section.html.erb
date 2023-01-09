@@ -1,0 +1,66 @@
+<%= turbo_frame_tag "hab_section" do %>
+  <div class="accordion-item  shadow p-3 mb-1  bg-white rounded">
+    <h2 class="accordion-header" id="flush-headingThree">
+      <%available = 0%>
+      <%aspiracion_dat.keys.each do |dat|%>
+        <%if aspiracion_dat[dat] > points_dat[dat]%>
+          <%available = 1%>
+        <%end%>
+      <%end%>
+      <%if available==1 and recomendation_hab.keys.length>0 %>
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <h3><%= "Aspiración por habilitador por capital"%></h3> 
+        </button>
+      <%else%>
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseThree">
+          <h3><%= "Aspiración por habilitador por capital"%></h3> 
+        </button>
+      <%end%>
+    </h2>
+    <%if available == 1 and recomendation_hab.keys.length > 0 %>
+    <div id="flush-collapseThree" class="accordion-collapse collapse show" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+    <%else%>
+    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+    <%end%>
+      <div class="row">
+        <div class = "accordion-body">
+          <div class="accordion accordion-flush" id="accordionFlushExample2">
+            <% recomendation_hab.keys.each do |dat|%>
+              <div class="accordion-item  shadow p-3 mb-1 bg-white rounded">
+                <h3 class="accordion-header " id="flush-heading<%= dat%>">
+                  <% if dat == recomendation_hab.keys[0]%>
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= dat%>" aria-expanded="true" aria-controls="flush-collapse<%= dat%>">
+                  <%else%>
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= dat%>" aria-expanded="false" aria-controls="flush-collapse<%= dat%>">
+                  <%end%>
+                    <h4><%= dat.capitalize%></h4> 
+                  </button>
+                </h3>
+                <% if dat == recomendation_hab.keys[0]%>
+                <div id="flush-collapse<%= dat%>" class="accordion-collapse collapse show" aria-labelledby="flush-heading<%= dat%>" data-bs-parent="#accordionFlushExample2">
+                <% else %>
+                <div id="flush-collapse<%= dat%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%= dat%>" data-bs-parent="#accordionFlushExample2">
+                <% end %>
+                  <div class="row">
+                    <div class = "accordion-body">
+
+                      <%= turbo_frame_tag dat do %>
+                        <%=render "ind_hab", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, dat: dat, recomendation_hab: recomendation_hab, points_dat: points_dat, points_hab: points_hab, aspiracion_hab: aspiracion_hab%>
+                      <%end%>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <%end%>
+          </div>
+          <div class = "d-flex justify-content-end marginright">
+            <%= turbo_frame_tag "create_form" do %>
+              <%= render "form_create", aspiracion_hab: aspiracion_hab, aspiracion_mat: aspiracion_mat, aspiracion_dat: aspiracion_dat, empresa: empresa, aspiracion: aspiracion, recomendation_hab: recomendation_hab%>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>
