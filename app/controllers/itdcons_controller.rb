@@ -2,45 +2,18 @@ class ItdconsController < ApplicationController
   before_action :get_itdcon, only: [ :show, :edit, :update, :destroy ]
   before_action :get_points, only: [ :show]
   before_action :get_empresa
-  before_action :get_participants, only: [ :index, :create]
-
   def index
-    @itdcons = @empresa.itdcons.all
-
+    @itdcon = @empresa.itdcons
   end
   def create
     @itdcon = @empresa.itdcons.build()
-    puts itdcon_params
-    @itdind = nil
-    #ADD any_participant_selected
     #respond_to do |format|
-    if itdcon_params.values.include? "1"
-      if @itdcon.save
-        itdcon_params.keys.each do |param|
-          if itdcon_params[param].to_i == 1
-            user = User.find_by(id: param.to_i) #Cambiar a paerticipants
-            if user != current_user 
-              itdind = user.itdinds.build()
-              itdind.itdcon = @itdcon
-              itdind.save()
-            else
-              @itdind = current_user.itdinds.build()
-              @itdind.itdcon = @itdcon
-              @itdind.save
-            end
-          end
-        end
-        if @itdind
-          redirect_to edit_empresa_itdcon_itdind_path(@empresa, @itdcon, @itdind)
-        else
-          redirect_to empresa_itdcons_path(@empresa.id)
-        end
-      else #REVISAR EL ELSE
-        redirect_to empresa_itdcons_path(@empresa.id)
-      end
-    else
-      redirect_to empresa_itdcons_path(@empresa.id), notice: "Debe elegir al menos un miembro para realizar el ITD"
+    if @itdcon.save
+      redirect_to new_empresa_itdcon_itdind_path(@empresa.id, @itdcon.id)
+    else #REVISAR EL ELSE
+      redirect_to new_empresa_itdcon_path(@empresa.id)
     end
+    #end
   end
 
   def show
@@ -50,7 +23,6 @@ class ItdconsController < ApplicationController
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:id])
   end
-
   def get_points
     @points_dat = {}
     @points_hab = {}
@@ -72,23 +44,10 @@ class ItdconsController < ApplicationController
         point_dat += point_habilitador
       end
       point_dat = point_dat/dat.habilitadors.count.to_f
-      @points_dat[dat.name] = point_dat
+      @points_dat['Capital ' + dat.name] = point_dat
     end
   end
-  
   def get_empresa
     @empresa = Empresa.find_by(id:params[:empresa_id])
-  end
-
-  def get_participants
-    @participants = @empresa.users.all
-  end
-
-  def itdcon_params
-    permited = []
-    @participants.each do |participant|
-      permited.push(participant.id.to_s)
-    end
-    params.require(:itdcon).permit(permited)
   end
 end
