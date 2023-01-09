@@ -1,4 +1,4 @@
-<%= form_with(model: [empresa, itdcon, itdind], data: {turbo: false}) do |form| %>
+<%= form_with(model: [empresa, itdcon, itdind]) do |form| %>
   <% if itdind.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(itdind.errors.count, "error") %> prohibited this itd from being saved:</h2>
@@ -67,28 +67,28 @@ function topFunction() {
 
   </div>
   <div class="carousel-inner">
-    <div class="carousel-item active carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+  <div class="carousel-item active carrouselitem" data-bs-interval="100000000000000">
+      <div class="container-fluid">
         <h1 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Índice de Transformación Digital</h1>
         
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
-          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 text-center" style="margin-bottom: 50px;">
-            La presente encuesta se efectúa en un ámbito privado, los datos entregados son de carácter confidencial. Su uso estará limitado al programa que se esta desarrollando con la Universidad Adolfo Ibáñez.
-          </div>
-        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
-      </div>
-        
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 text-center" style="margin-bottom: 50px;">
+              La presente encuesta se efectúa en un ámbito privado, los datos entregados son de carácter confidencial. Su uso estará limitado al programa que se esta desarrollando con la Universidad Adolfo Ibáñez.
+            </div>
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
         </div>
-      </div>
+        
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            
+          </div>
+        </div>
 
-    </div>  
+      </div>  
   </div>
   <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h1 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Índice de Transformación Digital</h1>
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
@@ -112,7 +112,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
   </div>
   
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
       <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estratégico</h3>
       <h5 class="text-center" style="margin-bottom: 30px;">Estrategia (1/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -435,7 +435,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
 
     </div>
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estratégico</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Estrategia (2/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -752,7 +752,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
       </div>
     </div>
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estratégico</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Modelo de negocios</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -1127,7 +1127,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estratégico</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Governance</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -1402,7 +1402,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h2 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h2>
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
@@ -1415,7 +1415,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Procesos</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -1790,7 +1790,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Tecnología (1/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -2063,7 +2063,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Tecnología (2/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -2336,7 +2336,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Datos y Analítica</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -2609,7 +2609,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Modelo Operativo</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -2729,7 +2729,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Estructural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Propiedad Intelectual</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -2951,7 +2951,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h2 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Humano</h2>
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
@@ -2964,7 +2964,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital humano</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Personas (1/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -3237,7 +3237,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital humano</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Personas (1/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -3510,7 +3510,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital humano</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Ciclo de Vida del colaborador</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -3834,7 +3834,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital humano</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Estructura Organizacional</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -4158,7 +4158,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h2 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Relacional</h2>
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
@@ -4171,7 +4171,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Relacional</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">StakeHolders</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -4342,7 +4342,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Relacional</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Marca</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -4462,7 +4462,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Relacional</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Clientes (1/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -4684,7 +4684,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Relacional</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Clientes (2/2)</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -4906,7 +4906,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h2 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Natural</h2>
         <div class="row" style="margin-bottom: 50px;">
           <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
@@ -4919,7 +4919,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
     </div>
 
     <div class="carousel-item carrouselitem" data-bs-interval="100000000000000">
-      <div class="container">
+      <div class="container-fluid">
         <h3 class="text-center" style="margin-bottom: 50px; margin-top: 50px;">Capital Natural</h3>
         <h5 class="text-center" style="margin-bottom: 30px;">Sustentabilidad</h5>
         <div class="row" style="margin-bottom: 50px;">
@@ -5134,7 +5134,7 @@ Tanto nivel mínimo y máximo cuenta con una descripción para facilitar la iden
                         <%= form.number_field :itdcon_id, id: :itd_itdcon_id, class:"form-control", value:itdcon.id, type: :hidden %>
                     </div>
                       <div>
-                        <%= form.submit  %>
+                        <%= form.submit %>
                       </div>
 
 
