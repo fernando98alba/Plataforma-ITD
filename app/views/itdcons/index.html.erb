@@ -1,11 +1,10 @@
 <div class = "container-fluid">
   <div class="main">
-  <div class="row">
+    <div class="row">
 
-  <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build}%>
+      <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
       
-
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
         <div class="shadow p-3 mb-5 bg-white rounded">
           <h4> ITDs Históricos </h4>
           <%if @itdcons.where(completed: false).length >0%>
