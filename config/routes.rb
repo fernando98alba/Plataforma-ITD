@@ -13,10 +13,12 @@ Rails.application.routes.draw do
   root "homes#index"
   resources :empresas do 
     resources :itdcons do
-      resources :itdinds
+      resources :itdinds do 
+        resources :verificadors
+      end
     end
     resources :aspiracions
   end
-  resources :itdsins
+  resources :itdsins 
   get "homes/example"
 end

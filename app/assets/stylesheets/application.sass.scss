@@ -1,28 +1,7 @@
-// app/assets/stylesheets/application.sass.scss
-
-// Mixins
-//@import "mixins/media";
-
-// Configuration
-//@import "config/variables";
-//@import "config/reset";
-
-// Components
-//@import "components/btn";
-//@import "components/error_message";
-//@import "components/form";
-//@import "components/visually_hidden";
-//@import "components/quote";
-//@import "components/turbo_progress_bar";
-
-// Layouts
-//@import "layouts/container";
-//@import "layouts/header";
-
-
+// Entry point for your Sass build
 
 .carousel-control-next {
-    right: -30px;
+  right: -30px;
 }
 
 .sidenav {
@@ -35,10 +14,10 @@
   padding-top: 20px;
 }
 .carousel-item {
-    height: 32rem;
-    width: auto;
-    position: relative;
-  }
+  height: 32rem;
+  width: auto;
+  position: relative;
+}
 .navelement {
   text-decoration: none;
   text-align: center;
@@ -48,13 +27,19 @@
   color: white;
   display: block;
 }
-.navbuttonelement {
-  background-color: transparent;
-  border-color: transparent;
-}
 .navelement:hover{
   text-decoration: none;
   color: white;
+}
+.navimage {
+  text-decoration: none;
+  text-align: center;
+  height: 70px;
+  width: 70px;
+}
+.navbuttonelement {
+  background-color: transparent;
+  border-color: transparent;
 }
 .main {
   flex: 1;
