@@ -1,0 +1,38 @@
+<%= form_with(model: [empresa, itdcon, itdind, verificador]) do |f| %>
+  <% if verificador.errors.any? %>
+    <div>
+      <h2><%= pluralize(verificador.errors.count, "error") %>, necesitas llenar los siguientes campos: </h2>
+
+      <ul>
+        <% verificador.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="modal fade" id="exampleModal<%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%>" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Verificador: <%= driver.verifier%></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class = "container">
+            <div class= "main">
+              <%= f.label driver.identifier, style: "display: block" %>
+              <%= f.text_field driver.identifier %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div data-bs-dismiss="modal">
+            <%= f.submit%>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

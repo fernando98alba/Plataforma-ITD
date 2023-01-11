@@ -23,10 +23,16 @@ class ItdconsController < ApplicationController
               itdind = user.itdinds.build()
               itdind.itdcon = @itdcon
               itdind.save()
+              verifier = Verificador.new
+              verifier.itdind = itdind
+              verifier.save
             else
               @itdind = current_user.itdinds.build()
               @itdind.itdcon = @itdcon
               @itdind.save
+              verifier = Verificador.new
+              verifier.itdind = @itdind
+              verifier.save
             end
           end
         end

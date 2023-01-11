@@ -2,13 +2,19 @@ class ItdindsController < ApplicationController
 
   before_action :get_itdind
   before_action :get_itdcon
+  before_action :get_empresa
+  before_action :get_verificador
   def edit
+
   end
   def update
+    puts "AAAAAA"
+    puts params
     check_if_completed()
     if @itdind[:completed] == true
       calculate_itdind
     end
+    @verificador.update(itdind_params[:verificador_attributes])
     respond_to do |format|
       if @itdind.save
         if @itdind[:completed] == true
@@ -34,8 +40,10 @@ class ItdindsController < ApplicationController
     #end
     (1..91).each do |index|
       question = "p" + index.to_s
-      if !itdind_params.values.is_a? Numeric
+      if !itdind_params[question] 
         @itdind[question] = rand(0..4) #ELIMINAAAR
+      else
+        @itdind[question] = itdind_params[question].to_i
       end
     end
     @itdind[:completed] = true
@@ -124,8 +132,18 @@ class ItdindsController < ApplicationController
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:itdcon_id])
   end
+  def get_empresa
+    @empresa = Empresa.find_by(id: params[:empresa_id])
+  end
+  def get_verificador
+    @verificador = @itdind.verificador
+  end
   def itdind_params
-    params.require(:itdind).permit(:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17, :p18, :p19, :p20, :p21, :p22, :p23, :p24, :p25, :p26, :p27, :p28, :p29, :p30, :p31, :p32, :p33, :p34, :p35, :p36, :p37, :p38, :p39, :p40, :p41, :p42, :p43, :p44, :p45, :p46, :p47, :p48, :p49, :p50, :p51, :p52, :p53, :p54, :p55, :p56, :p57, :p58, :p59, :p60, :p61, :p62, :p63, :p64, :p65, :p66, :p67, :p68, :p69, :p70, :p71, :p72, :p73, :p74, :p75, :p76, :p77, :p78, :p79, :p80, :p81, :p82, :p83, :p84, :p85, :p86, :p87, :p88, :p89, :p90, :p91, :itdcon_id)
+    permited = []
+    Driver.all.each do |driver|
+      permited.push(driver.identifier)
+    end
+    params.require(:itdind).permit(permited, verificador_attributes: permited)
   end
   def get_itdind
     @itdind = Itdind.find_by(id: params[:id])

@@ -5,13 +5,13 @@
 }
 
 .sidenav {
-height: 100%;
-width: 110px;
-position: fixed;
-top: 0;
-left: 0;
-background-color: #808080;
-padding-top: 20px;
+  height: 100%;
+  width: 110px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #808080;
+  padding-top: 20px;
 }
 .carousel-item {
   height: 32rem;
@@ -19,49 +19,55 @@ padding-top: 20px;
   position: relative;
 }
 .navelement {
-text-decoration: none;
-text-align: center;
-padding: 6px 8px 6px 16px;
-font-size: 12px;
-font-weight: bold;
-color: white;
-display: block;
-}
-.navbuttonelement {
-background-color: transparent;
-border-color: transparent;
+  text-decoration: none;
+  text-align: center;
+  padding: 6px 8px 6px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  display: block;
 }
 .navelement:hover{
-text-decoration: none;
-color: white;
+  text-decoration: none;
+  color: white;
+}
+.navimage {
+  text-decoration: none;
+  text-align: center;
+  height: 70px;
+  width: 70px;
+}
+.navbuttonelement {
+  background-color: transparent;
+  border-color: transparent;
 }
 .main {
-flex: 1;
-margin-top: 110px;
-margin-left: 110px; /* Same as the width of the sidenav */
+  flex: 1;
+  margin-top: 110px;
+  margin-left: 110px; /* Same as the width of the sidenav */
 }
 
 .aligncenter {
-align-items: center;
+  align-items: center;
 }
 
 .carrouselitem {
-height:100%;
+  height:100%;
 }
 
 .itdlink {
-text-decoration: none;
-color: black;
-display: block;
+  text-decoration: none;
+  color: black;
+  display: block;
 }
 .itdlink:hover{
-text-decoration: none;
-color: black;
+  text-decoration: none;
+  color: black;
 }
 .marginright {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
 .back {
-background-color: red;
+  background-color: red;
 }

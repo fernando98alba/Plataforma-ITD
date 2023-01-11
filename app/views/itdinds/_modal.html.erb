@@ -1,0 +1,25 @@
+<%= form.fields_for :verificador do |form| %>
+  <div class="modal fade" id="exampleModal<%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%>" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Verificador: <%= driver.verifier%></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class = "container">
+            <div class= "main">
+              <%= form.label driver.identifier, style: "display: block" %>
+              <%= form.text_field driver.identifier %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
