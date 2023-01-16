@@ -2,9 +2,9 @@ class HomesController < ApplicationController
 
   def index
     if user_signed_in?
-      if current_user.empresa_id
+      if current_user.empresa_id and current_user.accepted_or_not_invited?
         redirect_to empresa_path(current_user.empresa_id)
-      else
+      else 
         render
       end
     else

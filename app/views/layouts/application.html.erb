@@ -21,9 +21,11 @@
     <div class="container-fluid">
 
     <% if notice %>  
+        <%= render 'layouts/notices' %>
+    <% end %>
+    <% if alert %>  
         <%= render 'layouts/alerts' %>
     <% end %>
-
  
       <%= yield %>
     </div>
