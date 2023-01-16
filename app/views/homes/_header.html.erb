@@ -7,10 +7,10 @@
       <br/>
         <div class="offcanvas-header">
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body ">
 
             <% if user_signed_in? %>
-              <% if current_user.empresa_id %>
+              <% if current_user.empresa_id and current_user.accepted_or_not_invited?%>
                 <%= link_to 'Inicio', empresa_path(current_user.empresa_id), class:"navelement" %>
                 <br/>
                 <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
@@ -23,6 +23,8 @@
                   <%= link_to 'Aspiración', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
                 <%end%>
                 <br/>
+                <%= link_to 'Equipo', empresa_users_path(current_user.empresa_id), class:"navelement" %>
+                <br/>
               <% else %>
                 <%= link_to 'Inicio', root_path, class:"navelement" %>
                 <br/>
@@ -31,11 +33,14 @@
               <br/>
               <%= link_to 'Editar Perfil', edit_user_registration_path, class:"navelement" %>
               <br/>
-              <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class:"navbuttonelement navelement" %>
+              <div class="d-flex justify-content-center">
+                <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class:"navbuttonelement navelement" %>
+              </div>
+              <br/>
               <!-- aquí se puede usar el metodo "data { turbo_method: :delete }-->
-
-
-
+              <%= link_to user_path(current_user) do%>
+                <%= image_tag "logos/profile.png", height: 60, class:"navelement position-absolute bottom-0 start-50 translate-middle mb-10 "%>
+              <%end%>
             <% else %>
               <%= link_to 'Inicio', root_path, class:"navelement" %>
               <br/>
