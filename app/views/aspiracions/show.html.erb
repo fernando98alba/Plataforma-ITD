@@ -233,6 +233,31 @@
         </script>
       </div>
     </div>
-
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <h3> Brechas drivers </h3>
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+        <%Dat.all.each do |dat|%>
+          <div>
+            <h4><%="Capital #{dat.name}"%> </h4>
+            <%dat.habilitadors.all.each do |hab|%>
+              <div>
+                <h5> <%=hab.name%> </h5>
+                <%hab.elementos.all.each do |ele|%>
+                  <div>
+                    <h6> <%=ele.name%> </h6>
+                    <br>
+                    <%ele.drivers.all.each do |driver|%>
+                      <%if @recomendation_driver[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")][driver.identifier] != @itdcon[driver.identifier]%> 
+                        <p>El driver <b><%=driver.name%></b> debe subir desde <b><%=@itdcon[driver.identifier]%></b> a <b><%=@recomendation_driver[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")][driver.identifier]%> </b></p>
+                      <%end%>
+                    <%end%>
+                  </div>
+                <%end%>
+              </div>
+            <%end%>
+          </div>
+        <%end%>
+      </div>
+    </div>
   </div>
 </div>

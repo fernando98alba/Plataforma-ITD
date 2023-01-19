@@ -76,7 +76,6 @@ group :test do
   gem "webdrivers"
 end
 
-gem "chartkick"
 
 gem "simple_form", "~> 5.1.0"
 

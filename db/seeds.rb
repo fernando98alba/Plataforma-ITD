@@ -53,7 +53,7 @@ modelo.each 1 do |row|
   if cap
     hab = Habilitador.find_by(name: row[1])
     if hab
-      ele = Elemento.find_by(name: row[2])
+      ele = Elemento.find_by(name: row[2], habilitador_id: hab.id)
       if ele
         dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
       else
