@@ -4,8 +4,8 @@
 
       <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
       
-      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-        <div class="shadow p-3 mb-5 bg-white rounded">
+      <div class="row d-flex ">
+        <div class="shadow p-3 mb-5 bg-white rounded col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
           <h4> ITDs Históricos </h4>
           <%if @itdcons.where(completed: false).length >0%>
             <div type="button" class="btn btn-dark">
@@ -17,28 +17,36 @@
             </button>
           <%end%>
           <% @itdcons.each_with_index do |itd, index| %>
-            <%if itd[:completed]%>
+            <%if itd[:completed] and itd != @last_itdcon%>
               <%=link_to empresa_itdcon_path(@empresa.id, itd.id), data: {turbo: false}, class:"itdlink" do %>
                 <div class=" shadow p-3 mt-2 bg-white">
                   <b><%= 'ITD ' + l(itd.created_at.to_date, format: :custom_itd)%></b>
                 </div>
               <%end%>
-            <%else%>
-              <div class="shadow p-3 mt-2 bg-white position-relative ">
-                <b><%='ITD ' + l(itd.created_at.to_date, format: :custom_itd) %></b>
-                <br>
-                <%= "Miembros restantes:" %>
-                <br>
-                <%itd.itdinds.each do |itdind|%>
-                  <%if !itdind[:completed]%>
-                    <%if itdind.user == current_user%>
-                      <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, itd.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
-                    <%end%>
-                    <%=itdind.user.name%>
-                    <br>
-                  <%end%>
-                <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="shadow p-3 mb-5 bg-white rounded col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 position-relative">
+
+          <%if @last_itdcon[:completed] %>
+            <%=link_to empresa_itdcon_path(@empresa.id, @last_itdcon.id), data: {turbo: false}, class:"itdlink" do %>
+              <div class=" shadow p-3 mt-2 bg-white">
+                <b><%= 'ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd)%></b>
               </div>
+            <%end%>
+          <%else%>
+            <b><%='ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd) %></b>
+            <br>
+            <%= "Miembros restantes:" %>
+            <br>
+            <%@last_itdcon.itdinds.each do |itdind|%>
+              <%if !itdind[:completed]%>
+                <%if itdind.user == current_user%>
+                  <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                <%end%>
+                <%=itdind.user.name%>
+                <br>
+              <%end%>
             <% end %>
           <% end %>
         </div>

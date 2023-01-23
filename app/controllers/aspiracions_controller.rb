@@ -383,21 +383,23 @@ class AspiracionsController < ApplicationController
     end
     @points_dri = {}
     Dat.all.each do |dat|
+      @recomendation_driver[dat.name.downcase] = {}
+      @points_dri[dat.name.downcase] = {}
       dat.habilitadors.all.each do |hab|
-        @points_dri[hab.name.downcase.gsub(" ", "")] = {}
-        @recomendation_driver[hab.name.downcase.gsub(" ", "")] = {}
+        @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "")] = {}
+        @recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "")] = {}
         hab.elementos.all.each do |ele|
-          @points_dri[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] = {}
+          @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] = {}
           ele.drivers.all.each do |driver|
-            @points_dri[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")][driver.identifier] = @itdcon[driver.identifier]
+            @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")][driver.identifier] = @itdcon[driver.identifier]
           end
-          recomendation_sorted = @points_dri[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")].sort_by{|k, v| v}
+          recomendation_sorted = @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")].sort_by{|k, v| v}
           list = {}
           recomendation_sorted.each do |element|
             list[element[0]] = element[1]
           end
           keys = list.keys
-          ptos = (@recomendation_element[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] - @points_ele[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")])*@points_dri[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")].keys.length
+          ptos = (@recomendation_element[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] - @points_ele[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")])*@points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")].keys.length
           ptos = ptos*4.to_f/100
           while ptos >0
             diff = 0 #la diferencia entre un habilitador y el siguiente
@@ -448,7 +450,8 @@ class AspiracionsController < ApplicationController
               end
             end
           end
-          @recomendation_driver[hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] = list
+
+          @recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "")][ele.name.downcase.gsub(" ", "_")] = list
         end
       end
     end

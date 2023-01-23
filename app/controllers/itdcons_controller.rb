@@ -5,8 +5,8 @@ class ItdconsController < ApplicationController
   before_action :get_participants, only: [ :index, :create]
 
   def index
-    @itdcons = @empresa.itdcons.all
-
+    @itdcons = @empresa.itdcons.order(id: :asc)
+    @last_itdcon = @itdcons.last
   end
   def create
     @itdcon = @empresa.itdcons.build()
