@@ -455,14 +455,6 @@ class AspiracionsController < ApplicationController
         end
       end
     end
-    puts "recomendation_ele"
-    puts @recomendation_element
-    puts "points elements"
-    puts @points_ele
-    puts "recomendation_drvers"
-    puts @recomendation_driver
-    puts "points driver"
-    puts @points_dri
   end
 
   def get_recomendation
@@ -488,7 +480,7 @@ class AspiracionsController < ApplicationController
   end
 
   def get_last_itdcon
-    @itdcon = @empresa.itdcons.last
+    @itdcon = @empresa.itdcons.where(completed: true).last
   end
 
   def maturity_params

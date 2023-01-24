@@ -27,26 +27,27 @@
           <% end %>
         </div>
         <div class="shadow p-3 mb-5 bg-white rounded col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 position-relative">
-
-          <%if @last_itdcon[:completed] %>
-            <%=link_to empresa_itdcon_path(@empresa.id, @last_itdcon.id), data: {turbo: false}, class:"itdlink" do %>
-              <div class=" shadow p-3 mt-2 bg-white">
-                <b><%= 'ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd)%></b>
-              </div>
-            <%end%>
-          <%else%>
-            <b><%='ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd) %></b>
-            <br>
-            <%= "Miembros restantes:" %>
-            <br>
-            <%@last_itdcon.itdinds.each do |itdind|%>
-              <%if !itdind[:completed]%>
-                <%if itdind.user == current_user%>
-                  <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
-                <%end%>
-                <%=itdind.user.name%>
-                <br>
+          <%if @last_itdcon%>
+            <%if @last_itdcon[:completed] %>
+              <%=link_to empresa_itdcon_path(@empresa.id, @last_itdcon.id), data: {turbo: false}, class:"itdlink" do %>
+                <div class=" shadow p-3 mt-2 bg-white">
+                  <b><%= 'ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd)%></b>
+                </div>
               <%end%>
+            <%else%>
+              <b><%='ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd) %></b>
+              <br>
+              <%= "Miembros restantes:" %>
+              <br>
+              <%@last_itdcon.itdinds.each do |itdind|%>
+                <%if !itdind[:completed]%>
+                  <%if itdind.user == current_user%>
+                    <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                  <%end%>
+                  <%=itdind.user.name%>
+                  <br>
+                <%end%>
+              <% end %>
             <% end %>
           <% end %>
         </div>
