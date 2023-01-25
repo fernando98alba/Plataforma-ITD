@@ -43,7 +43,6 @@
 }
 .main {
   flex: 1;
-  margin-top: 110px;
   margin-left: 110px; /* Same as the width of the sidenav */
 }
 
@@ -70,4 +69,14 @@
 
 .back {
   background-color: red;
+}
+
+.accordion-button:not(.collapsed) {
+  border-color: white;
+  color: black;
+  background-color: white;
+}
+
+input::placeholder{
+  font-style: italic;
 }

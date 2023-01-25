@@ -1,57 +1,107 @@
 <%= turbo_frame_tag "accordion_flush" do %>
   <div class="accordion accordion-flush" id="accordionFlushExample">
-    <div class="accordion-item  shadow p-3 mb-1 bg-white rounded">
-      <h2 class="accordion-header " id="flush-headingOne">
+    <div class="accordion-item  border border-dark">
+      <h4 class="accordion-header" id="flush-headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-          <h3><%= "Aspiración de madurez y alineamiento"%></h3> 
+          <h4><%= "Aspiración de madurez y alineamiento"%></h4> 
         </button>
-      </h2>
+      </h4>
       <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-        <div class="row">
-          <div class = "accordion-body">
-            <div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-xs-12 ">
-              <%= turbo_frame_tag "maturity_form" do %>
-                <%= render "form_maturity", empresa: empresa, aspiracion: aspiracion, recomendation_mat: recomendation_mat %>
-                <br>
+        <p class="ms-4", style="font-size:14px;"> Defina su aspiración del nivel de madurez y alineamiento.</p>
+        <div class="accordion-body">
+          <div class = "row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 "> 
+              <%= turbo_frame_tag "maturity_graph" do %>
+                <%= render "maturity_graph", recomendation_mat: recomendation_mat, itdcon: itdcon %>
               <%end%>
             </div>
-            <%= turbo_frame_tag "maturity_graph" do %>
-              <%= render "maturity_graph", recomendation_mat: recomendation_mat, itdcon: itdcon %>
-            <%end%>
+            <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex align-items-center w-100">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
+                  <%= render "form_maturity", empresa: empresa, aspiracion: aspiracion, recomendation_mat: recomendation_mat, itdcon: itdcon %>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 " >
+                  <%= turbo_frame_tag "maturity_graph" do %>
+                    <div class="d-flex justify-content-around">
+                      <div>
+                        <p class="text-center"><b>Aspiración<br>de Madurez</b></p>
+                        <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
+                          <h4 class="text-center"><b><%= recomendation_mat["maturity_score"].round %></b></h4>
+                        <%else%>
+                          <h6 class="text-center"><b> -- </b></h6>
+                        <%end%>
+                      </div>
+                      <div>
+                        <p class="text-center"><b>Aspiración de<br>Alineamiento</b></p>
+                        <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
+                          <h4 class="text-center"><b><%= recomendation_mat["alignment_score"].round %></b></h4>
+                        <%else%>
+                          <h6 class="text-center"><b> -- </b></h6>
+                        <%end%>
+                      </div>
+                    </div>
+                  <%end%>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end w-100">
+                <input type="submit" value="Enviar" form="maturity_form" class="btn btn-primary border border-dark me-4 mt-2">
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="accordion-item  shadow p-3 mb-1  bg-white rounded">
-      <h2 class="accordion-header" id="flush-headingTwo">
-        <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
+    <div class="accordion-item  border-bottom border-end border-start border-dark">
+      <h4 class="accordion-header" id="flush-headingTwo">
+        <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-            <h3><%= "Aspiración por capital"%></h3> 
+            <h4><%= "Aspiración por DATs"%></h4> 
           </button>
         <%else%>
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseTwo">
-            <h3><%= "Aspiración por capital"%></h3> 
+            <h4><%= "Aspiración por DATs"%></h4> 
           </button>
         <%end%>
-      </h2>
-      <%if recomendation_mat["maturity_score"].to_i > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"].to_i < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
+      </h4>
+      <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
       <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       <%else%>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
       <%end%>
-        <div class="row">
-          <div class = "accordion-body">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-              <%= turbo_frame_tag "dat_form" do %>
-                <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat %>
-                <br>
+        <p class="ms-4", style="font-size:14px;"> Defina su aspiración para cada capital.</p>
+        <div class="accordion-body">
+          <div class = "row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+              <%= turbo_frame_tag "dat_graph" do %>
+                <%= render "dat_graph", recomendation_dat: recomendation_dat, points_dat: points_dat, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat %>
               <%end%>
             </div>
-            
-            <%= turbo_frame_tag "dat_graph" do %>
-              <%= render "dat_graph", recomendation_dat: recomendation_dat, points_dat: points_dat, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat %>
-            <%end%>
+            <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex align-items-center w-100">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
+                  <%= turbo_frame_tag "dat_form" do %>
+                    <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, keys: points_dat.keys  %>
+                  <%end%>
+                  <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor alineamiento entre DATs debes subir los DATs a:</p>
+                  <% points_dat.keys().each do |dat|%>
+                    <div>
+                      <%if recomendation_dat[dat].round - points_dat[dat].round > 0 %>
+                        <p style="margin-bottom: -2px; font-size: 12px"><b><%= "Capital #{dat}: #{recomendation_dat[dat].round}" %></b></p>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="ms-1 col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
+                  <%= turbo_frame_tag "result_dat" do %>
+                    <%= render "result_dat", aspiracion_mat: aspiracion_mat  %>
+                  <%end%>
+                  <div class="d-flex justify-content-end w-100">
+                    <input type="submit" value="Enviar" form="submit_dat_form" class="btn btn-primary border border-dark me-4 mt-2">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

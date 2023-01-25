@@ -1,0 +1,170 @@
+<div class="accordion accordion-flush mt-3" id="accordionFlushExample<%=dat.name%>">
+  <%dat.habilitadors.each do |habilitador|%>
+    <div class="accordion-item">
+      <h3 class="accordion-header" id=<%="flush-heading" + habilitador.id.to_s%>>
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=<%="#flush-collapse" + habilitador.id.to_s%> aria-expanded="false" aria-controls=<%="flush-collapse" + habilitador.id.to_s%>>
+          <h5><b><%=habilitador.name%></b></h5>
+        </button>
+      </h3>
+
+      <div id=<%="flush-collapse" + habilitador.id.to_s%> class="accordion-collapse collapse" aria-labelledby=<%="flush-heading" + habilitador.id.to_s%> data-bs-parent="#accordionFlushExample<%=dat.name%>">
+        <div class="accordion-body">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+            <p><%= habilitador.description%></p>
+            <div style="font-size: 10px">
+              <div style="height: 10px;
+                width: 10px;
+                background-color: red;
+                border-radius: 50%;
+                display: inline-block;"
+              >
+              </div>
+              Drivers que <b>ralentizan</b> la Transformación Digital de la organización. Su puntaje está <b>bajo el 40% del intervalo</b> de puntajes del nivel de madurez obtenido.
+            </div>
+            <div style="font-size: 10px">
+              <div style="height: 10px;
+                width: 10px;
+                background-color: gray;
+                border-radius: 50%;
+                display: inline-block;"
+              >
+              </div>
+              Drivers que <b>no impactan significativamente</b> la Transformación Digital de la organización. Su puntaje está <b>entre el 40% y el 75% del intervalo</b> de puntajes del nivel de madurez obtenido.
+            </div>
+            <div style="font-size: 10px">
+              <div style="height: 10px;
+                width: 10px;
+                background-color: green;
+                border-radius: 50%;
+                display: inline-block;"
+              >
+              </div>
+              Drivers que <b>impulsan</b> la Transformación Digital de la organización. Su puntaje está <b>sobre el 75% más alto del intervalo</b> de puntajes del nivel de madurez obtenido.
+            </div>
+          </div>
+          <div class="row">
+            <%habilitador.elementos.each do |elemento|%>
+              <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                  <canvas id=<%= "myChart" + elemento.name.gsub(/\s+/, "") + habilitador.id.to_s%> height="210px"></canvas>
+                </div>
+
+                <script>
+                  function formatLabel(str, maxwidth){
+                    var sections = [];
+                    var words = str.split(" ");
+                    var temp = "";
+
+                    words.forEach(function(item, index){
+                      if(temp.length > 0)
+                      {
+                        var concat = temp + ' ' + item;
+
+                        if(concat.length > maxwidth){
+                          sections.push(temp);
+                          temp = "";
+                        }
+                        else{
+                          if(index == (words.length-1)) {
+                            sections.push(concat);
+                            return;
+                          }
+                          else {
+                            temp = concat;
+                            return;
+                          }
+                        }
+                      }
+
+                      if(index == (words.length-1)) {
+                        sections.push(item);
+                        return;
+                      }
+
+                      if(item.length < maxwidth) {
+                        temp = item;
+                      }
+                      else {
+                        sections.push(item);
+                      }
+                    })
+                    return sections
+                  };
+                  label = [];
+                  values = []; 
+                  colors = [];
+                  <% elemento.drivers.each do |driver|%>
+                    label.push(formatLabel("<%= driver.name %>", 23));
+                    values.push("<%= itd[driver.identifier]%>");
+                    <% if itd[driver.identifier] < (itd.madurez.min + ((itd.madurez.max - itd.madurez.min)*0.4))/100*4%>
+                      colors.push("red");
+                    <% elsif itd[driver.identifier] < (itd.madurez.min + ((itd.madurez.max - itd.madurez.min)*0.4))/100*4%>
+                      colors.push("gray");
+                    <% else %>
+                      colors.push("green");
+                    <% end %>
+                  <%end%>
+                  
+                  new Chart(document.getElementById('myChart' + "<%=elemento.name.gsub(/\s+/, "") + habilitador.id.to_s%>"), {
+                    type: 'bar',
+                    data: {
+                    labels: label,
+                    datasets: [{
+                      data: values,
+                      fill: true,
+                      backgroundColor: colors,
+                      borderColor: colors,
+
+                    }]
+                  },
+                    options: {
+                      plugins: {
+                        maintainAspectRatio: false,
+                        title: {
+                          display: true,
+                          text: "<%=elemento.name%>"
+                        },
+                        legend: {
+                          display: false
+                        }
+                      },
+                      indexAxis: "y",
+                      scales:{ 
+                        x: {
+                          ticks: {
+                            count: 5,
+                          },
+                          min: 0,
+                          max: 4
+                        },
+                        y: {
+                          ticks: {
+                            font:{
+                              size: 8
+                            }            
+                          }, 
+                          afterFit: function(scaleInstance) {
+                            scaleInstance.width = 120; // sets the width to 100px
+                          },
+                        }
+                      },
+                      
+                      elements: {
+                        line: {
+                          borderWidth: 3,
+                        }
+                      }
+                    },
+                  });
+                </script>
+
+              </div>
+            <%end%>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

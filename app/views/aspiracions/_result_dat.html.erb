@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "result_dat" do %>
+  <div class="d-flex justify-content-around">
+    <div>
+      <p class="text-center"><b>Aspiración<br>de Madurez</b></p>
+      <%if aspiracion_mat["maturity_score"]%>
+        <h4 class="text-center"><b><%= aspiracion_mat["maturity_score"].round %></b></h4>
+      <%end%>
+    </div>
+    <div>
+      <p class="text-center"><b>Aspiración de<br>Alineamiento</b></p>
+      <%if aspiracion_mat["alignment_score"]%>
+        <h4 class="text-center"><b><%= aspiracion_mat["alignment_score"].round %></b></h4>
+      <%end%>
+    </div>
+  </div>
+<%end%>

@@ -1,0 +1,133 @@
+<div class="shadow p-3 mb-5 bg-white rounded">  
+  <h3>Nivel de madurez de capitales intangibles</h3>
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+    Lo ideal en esta sección es contar con un puntaje similar en los 5 capitales intangibles, ya que para lograr una transformación sostenible del negocio, se requiere de un incremento equilibrado o balanceado de estos.  
+  </div>
+  <div class=" row justify-content-between"> 
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 "> 
+      <div>
+        <canvas id="myChart1" height="380px"></canvas>
+      </div>
+      <script>
+        let label = [];
+        let colors;
+        let values = [];
+        let maturity = [] ;
+        <% points_dat.keys.each do |dat|%>
+          label.push("Capital <%= dat %>");
+          values.push(<%= points_dat[dat]%>);
+          maturity.push(<%= itd.maturity_score%>);
+        <%end%>
+        const ctx = document.getElementById('myChart1');
+          new Chart(ctx, {
+              
+              data: {
+              labels: label,
+              datasets: [{
+                label: 'Puntaje Obtenido',
+                type: 'line',
+                data: maturity,
+                backgroundColor: "red",
+                borderColor:'red',
+                pointRadius: 1,
+              },{
+                label: 'Puntaje por Capital',
+                type: 'bar',
+                data: values,
+                fill: true,
+                backgroundColor: "blue",
+                borderColor:'blue'
+              }]
+            },
+              options: {
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    onClick: null,
+                  }
+                },
+                scales: {
+                  y: { 
+                    ticks: {
+                      count: 101,
+                      callback: (value, index, values ) => {
+                        if ([0,30,55,75,90,100].includes(value)) {
+                          return value
+                        };
+                        if (value == 15) {
+                          return "Rezagado Digital"
+                        };
+                        if (value == 42) {
+                          return "Explorador Digital"
+                        };
+                        
+                        if (value == 65) {
+                          return "Adoptador Digital"
+                        };
+                        
+                        if (value == 82) {
+                          return "Líder Digital"
+                        };
+                        
+                        if (value == 95) {
+                          return "Disruptor Digital"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      }
+                    },
+                    min: 0, 
+                    max: 100,
+                  },
+                },
+                elements: {
+                  line: {
+                    borderWidth: 3
+                  }
+                }
+              },
+            });
+      </script>
+    </div>
+    <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 border border-dark ps-3 pe-3">
+      <h4 class="text-center text-uppercase"> INSIGHTS </h4>
+      <ul>
+        <li style="text-align: justify;">
+          El puntaje total de madurez es <b><%=itd.maturity_score.round%></b>
+        </li>
+        <li style="text-align: justify;">
+          Las Dimensiones de Activos Transformacionales (DATs) impulsores (sobre el nivel de madurez) de la Transformación Digital de la organización son: 
+          <ul>
+            <% points_dat.keys.each do |dat|%>
+              <% if points_dat[dat] > itd.maturity_score %>
+                <li><b>Capital <%=dat.capitalize%></b></li>
+              <%end%>
+            <%end%>
+          </ul>
+        </li>
+        <li style="text-align: justify;">
+          Las Dimensiones de Activos Transformacionales (DATs) ralentizadores (bajo el nivel de madurez) de la Transformación Digital de la organización son: 
+          <ul>
+            <% points_dat.keys.each do |dat|%>
+              <% if points_dat[dat] < itd.maturity_score %>
+                <li><b>Capital <%=dat.capitalize%></b></li>
+              <%end%>
+            <%end%>
+          </ul>
+        </li>
+      </ul> 
+    </div>
+  </div>
+</div>
