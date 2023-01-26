@@ -1,39 +1,53 @@
-
-<div class="container-fluid">
-  <div class="main">
-    <%= render partial: "form", locals: {empresa: @empresa, user: @empresa.users.build}%>
-    <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Invitar Miembro
-    </button>
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column">
-        <h1 class="title has-text-black has-text-centered">Usuarios</h1>
-        <div  class="box">
-          <div id="size_fixed" class="container">
-            <table class="table">
-              <tbody>
-                <% @users.each do |user| %>
-                  <tr>
-                    <td> <%= user.name %> </td>
-                    <td><%= user.email %></td>
+<div class="main position-relative">
+  <%= render partial: "form", locals: {empresa: @empresa, user: @empresa.users.build}%>
+  <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Invitar Miembro
+  </button>
+  <h3 >Equipo</h3>
+  <div  class="row">
+    <div id="size_fixed" class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+      <table class="table">
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                <div class=" d-flex flex-wrap justify-content-start align-items-center">
+                  <%= image_tag "logos/profile.png", height: 45%>
+                  <div class= "ms-2">
+                    <%= "#{user.name} #{user.lastname}" %> 
+                    <br>
+                    <%= user.email %>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class=" d-flex flex-wrap me-3 justify-content-end ">
+                  <div class="align-self-center">
                     <% if !user.accepted_or_not_invited?%>
-                      <td> Pendiente </td>
+                      Pendiente
                     <% else%>
-                      <td> </td>
+                      <%if user.is_admin%>
+                        Administrador
+                      <%else%>
+                        Aceptado
+                      <%end%>
                     <%end%>
-                    <td> <%= link_to "Ver perfil", user_path(user.id), class:"button is-info"%> </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <button id="buttonuser" class="button">
-          <%= link_to "Volver a la pagina principal", root_path %>
-        </button>
-      </div>
-      <div class="column"></div>
+                  </div>
+                  <div class="dropend">
+                    <div type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      <%= image_tag "logos/options.png", height: 40, class: "ms-3 " %>
+                    </div>
+                    
+                    <ul class="dropdown-menu ms-3" aria-labelledby="dropdownMenuButton1">
+                      <%= link_to "Ver Perfil", user_path(user.id), class:"profileoptions" %>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

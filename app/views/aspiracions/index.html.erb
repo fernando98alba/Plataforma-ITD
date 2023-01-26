@@ -1,22 +1,20 @@
-<div class="container-fluid  mt-4 mb-4">
-  <div class="main">  
-    <script>
-      let label = [];
-      let values = [];
-      let maturity = [] ;
-      let recomendation = [];
-      let ctx;
-      let ctx2;
-      let arbitratyLine;
-      let data;
-      let token;
-      var myChart;
-      let aspiracion;
-    </script>
-    <%= turbo_frame_tag "accordion_flush" do %>
-      <%= render "accordion_flush", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_mat: @recomendation_mat, itdcon: @itdcon, recomendation_dat: @recomendation_dat,  recomendation_hab: @recomendation_hab, points_dat: @points_dat, points_hab: @points_hab, aspiracion_mat: @aspiracion_mat, aspiracion_dat: @aspiracion_dat, aspiracion_hab: @aspiracion_hab %>
-    <%end%>
-      
-  </div>
-</div>
 
+<div class="main mb-4">  
+  <script>
+    let label = [];
+    let values = [];
+    let maturity = [] ;
+    let recomendation = [];
+    let ctx;
+    let ctx2;
+    let arbitratyLine;
+    let data;
+    let token;
+    var myChart;
+    let aspiracion;
+  </script>
+  <%= turbo_frame_tag "accordion_flush" do %>
+    <%= render "accordion_flush", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_mat: @recomendation_mat, itdcon: @itdcon, recomendation_dat: @recomendation_dat,  recomendation_hab: @recomendation_hab, points_dat: @points_dat, points_hab: @points_hab, aspiracion_mat: @aspiracion_mat, aspiracion_dat: @aspiracion_dat, aspiracion_hab: @aspiracion_hab %>
+  <%end%>
+    
+</div>

@@ -150,11 +150,11 @@ class ItdindsController < ApplicationController
           point_habilitador += point_elemento 
         end
         point_habilitador = point_habilitador/habilitador.elementos.count.to_f
-        @points_hab[habilitador.name] = point_habilitador
+        @points_hab[habilitador.name.downcase] = point_habilitador
         point_dat += point_habilitador
       end
       point_dat = point_dat/dat.habilitadors.count.to_f
-      @points_dat[dat.name] = point_dat
+      @points_dat[dat.name.downcase] = point_dat
     end
   end
 

@@ -49,7 +49,7 @@ modelo.each 1 do |row|
   if row[0].nil?
     break
   end
-  cap = Dat.find_by(name: row[0].downcase.gsub("é", "e"))
+  cap = Dat.find_by(name: row[0])
   if cap
     hab = Habilitador.find_by(name: row[1])
     if hab
@@ -66,7 +66,7 @@ modelo.each 1 do |row|
       dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)
     end
   else
-    cap = Dat.create(name: row[0].downcase.gsub("é", "e"), description: descripciones[row[0]], ponderador: ponderadores[row[0]])
+    cap = Dat.create(name: row[0], description: descripciones[row[0]], ponderador: ponderadores[row[0]])
     hab = Habilitador.create(name: row[1], dat_id: cap.id, description: descripciones[row[1]])
     ele = Elemento.create(name: row[2], habilitador_id: hab.id)
     dri = Driver.create(name: row[3], elemento_id: ele.id, verifier: row[6], min_description: row[4], max_description: row[5], identifier: "p" + index.to_s)

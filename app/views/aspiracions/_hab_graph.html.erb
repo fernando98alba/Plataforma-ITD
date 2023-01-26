@@ -38,10 +38,11 @@
           backgroundColor: "gray",
           borderColor:'gray',
       }];
-      <% if aspiracion_hab %>
+
+      <% if aspiracion_hab[dat] %>
         aspiracion = [];
         <% points_hab.keys.each do |hab|%>
-          aspiracion.push(<%= aspiracion_hab[hab]%>);
+          aspiracion.push(<%= aspiracion_hab[dat][hab]%>);
         <%end%>
         data.splice(2,0,{
         label: 'Aspiración Establecida',

@@ -5,9 +5,7 @@
   </div>
   <div class=" row justify-content-between"> 
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 "> 
-      <div>
-        <canvas id="myChart1" height="380px"></canvas>
-      </div>
+      <canvas id="myChart1" height="380px"></canvas>
       <script>
         let label = [];
         let colors;
@@ -15,8 +13,8 @@
         let maturity = [] ;
         <% points_dat.keys.each do |dat|%>
           label.push("Capital <%= dat %>");
-          values.push(<%= points_dat[dat]%>);
-          maturity.push(<%= itd.maturity_score%>);
+          values.push(<%= points_dat[dat].round%>);
+          maturity.push(<%= itd.maturity_score.round%>);
         <%end%>
         const ctx = document.getElementById('myChart1');
           new Chart(ctx, {
@@ -112,7 +110,7 @@
           <ul>
             <% points_dat.keys.each do |dat|%>
               <% if points_dat[dat] > itd.maturity_score %>
-                <li><b>Capital <%=dat.capitalize%></b></li>
+                <li><b>Capital <%="#{dat.capitalize} (#{points_dat[dat].round})"%></b></li>
               <%end%>
             <%end%>
           </ul>
@@ -122,7 +120,7 @@
           <ul>
             <% points_dat.keys.each do |dat|%>
               <% if points_dat[dat] < itd.maturity_score %>
-                <li><b>Capital <%=dat.capitalize%></b></li>
+                <li><b>Capital <%="#{dat.capitalize} (#{points_dat[dat].round})"%></b></li>
               <%end%>
             <%end%>
           </ul>

@@ -81,7 +81,7 @@
               <div class="d-flex align-items-center w-100">
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
                   <%= turbo_frame_tag "dat_form" do %>
-                    <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, keys: points_dat.keys  %>
+                    <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, points_dat: points_dat  %>
                   <%end%>
                   <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor alineamiento entre DATs debes subir los DATs a:</p>
                   <% points_dat.keys().each do |dat|%>

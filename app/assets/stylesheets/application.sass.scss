@@ -44,6 +44,7 @@
 .main {
   flex: 1;
   margin-left: 110px; /* Same as the width of the sidenav */
+  margin-top: 50px;
 }
 
 .aligncenter {
@@ -79,4 +80,14 @@
 
 input::placeholder{
   font-style: italic;
+}
+.profileoptions {
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  display: block;
+}
+.profileoptions:hover{
+  text-decoration: none;
+  color: black;
 }

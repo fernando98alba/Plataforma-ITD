@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_13_210029) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_26_160948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,22 +30,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_210029) do
     t.bigint "empresa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "estrategico"
+    t.integer "estratégico"
     t.integer "estructural"
     t.integer "humano"
     t.integer "relacional"
     t.integer "natural"
     t.integer "estrategia"
-    t.integer "modelosdenegocios"
+    t.integer "modelos_de_negocios"
     t.integer "governance"
     t.integer "procesos"
     t.integer "tecnología"
-    t.integer "datosyanalítica"
-    t.integer "modelooperativo"
-    t.integer "propiedadintelectual"
+    t.integer "datos_y_analítica"
+    t.integer "modelo_operativo"
+    t.integer "propiedad_intelectual"
     t.integer "personas"
-    t.integer "ciclodevidadelcolaborador"
-    t.integer "estructuraorganizacional"
+    t.integer "ciclo_de_vida_del_colaborador"
+    t.integer "estructura_organizacional"
     t.integer "stakeholders"
     t.integer "marca"
     t.integer "clientes"

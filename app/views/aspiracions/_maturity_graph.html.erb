@@ -6,17 +6,6 @@
   <script>
     ctx2 = document.getElementById('myChart2');
 
-    arbitratyLine = {
-      id: 'arbitratyLine',
-      beforeDraw(chart, args, options){
-        const { ctx2, charArea: { top, right, bottom, left, width, height }, scales: {x,y}
-      } = chart;
-      ctx2.save();
-      ctx2.strokeStyle = "green";
-      ctx2.strokeRect(x.getPixelForValue(2), top, 0, height);
-      ctx2.restore();
-    }};
-
     data = {
           labels: [0,10,20,40],
           datasets: [
@@ -24,8 +13,8 @@
             label: 'Puntaje Último ITD',
             type: "scatter",
             data: [{
-              y: <%= itdcon.alignment_score %>,
-              x: <%= itdcon.maturity_score %>
+              y: <%= itdcon.alignment_score.round %>,
+              x: <%= itdcon.maturity_score.round %>
             }],
             backgroundColor: "red",
             borderColor:'red'

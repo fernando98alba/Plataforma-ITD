@@ -10,31 +10,19 @@
       </div>
       <script>
         let ctx3= document.getElementById('myChart3');
-
+        label = [];
+        values = [];
+        <% @points_hab.keys.each do |hab|%>
+          label.push("<%= hab %>");
+          values.push(<%= @points_hab[hab].round%>);
+        <%end%>
         new Chart(ctx3, {
           type: 'radar',
           data: {
-          labels: [
-            'Estrategia',
-            'Modelo de negocios',
-            'Gobernance',
-            'Procesos',
-            'Tecnología',
-            'Datos y analítica',
-            'Modelo operativo',
-            'Propiedad intelectual',
-            'Personas',
-            'Ciclo de vida del colaborador',
-            'Estructura Organizacional',
-            'Stakeholders',
-            'Marca',
-            'Clientes',
-            'Sustentabilidad'
-          ],    
-
+          labels: label,    
           datasets: [{
-            label: 'Habilitadores valores reales',
-            data: <%=points_hab.values()%>,
+            label: 'Puntaje por habilitador',
+            data: values,
             fill: false,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgb(255, 99, 132)',

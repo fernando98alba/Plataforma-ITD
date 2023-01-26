@@ -27,9 +27,9 @@
                   values = []; 
                   maturity = [];
                   <% dat.habilitadors.each do |hab|%>
-                    label.push("<%= hab.name %>");
-                    values.push("<%= points_hab[hab.name]%>");
-                    maturity.push(<%= points_dat[dat.name.downcase]%>);
+                    label.push("<%= hab.name.capitalize.gsub("_", " ") %>");
+                    values.push("<%= points_hab[hab.name.downcase].round%>");
+                    maturity.push(<%= points_dat[dat.name.downcase].round%>);
                   <%end%>
                   ctx_cap= document.getElementById('myChart' + "<%=(index + 4)%>");
                   new Chart(ctx_cap, {
@@ -127,13 +127,13 @@
                     <%else%>
                       ralentizador
                     <%end%>
-                    </b> de la Transformación digital de la organización
+                    </b> de la Transformación digital de la organización.
                   </li>
                   <li style="text-align: justify;">
                     Los habilitadores claves impulsores del DAT Capital <%=dat.name.capitalize%> son: 
                     <ul>
                       <% points_hab.sort_by{|k, v| -v}.each do |hab, points|%>
-                        <% if dat.habilitadors.find_by(name: hab)%>
+                        <% if dat.habilitadors.find_by(name: hab.capitalize)%>
                           <% if points > points_dat[dat.name.downcase] %>
                             <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
                           <%end%>
@@ -145,7 +145,7 @@
                     Los habilitadores claves ralentizadores del DAT Capital <%=dat.name.capitalize%> son: 
                     <ul>
                       <% points_hab.sort_by{|k, v| v}.each do |hab, points|%>
-                        <% if dat.habilitadors.find_by(name: hab)%>
+                        <% if dat.habilitadors.find_by(name: hab.capitalize)%>
                           <% if points < points_dat[dat.name.downcase] %>
                             <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
                           <%end%>

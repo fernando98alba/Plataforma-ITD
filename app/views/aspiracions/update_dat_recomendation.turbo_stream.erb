@@ -3,7 +3,7 @@
 <% end %>
 
 <%= turbo_stream.update "dat_form" do %>
-  <%= render "form_dat", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_mat: @recomendation_mat, recomendation_dat: @recomendation_dat, keys: @points_dat.keys%>
+  <%= render "form_dat", empresa: @empresa, aspiracion: @empresa.aspiracion.build, recomendation_mat: @recomendation_mat, recomendation_dat: @recomendation_dat, points_dat: @points_dat%>
 <% end %>
 
 <%= turbo_stream.update "result_dat" do %>

@@ -1,58 +1,205 @@
-<div class = "container-fluid">
-  <div class="main">
-    <div class="row">
 
-      <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
-      
-      <div class="row d-flex ">
-        <div class="shadow p-3 mb-5 bg-white rounded col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
-          <h4> ITDs Históricos </h4>
-          <%if @itdcons.where(completed: false).length >0%>
-            <div type="button" class="btn btn-dark">
-              Nuevo ITD
-            </div>
-          <%else%>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Nuevo ITD
-            </button>
-          <%end%>
-          <% @itdcons.each_with_index do |itd, index| %>
-            <%if itd[:completed] and itd != @last_itdcon%>
-              <%=link_to empresa_itdcon_path(@empresa.id, itd.id), data: {turbo: false}, class:"itdlink" do %>
-                <div class=" shadow p-3 mt-2 bg-white">
-                  <b><%= 'ITD ' + l(itd.created_at.to_date, format: :custom_itd)%></b>
+<div class="main">
+  <div class="row">
+    <script>
+      let label;
+      let value;
+      let color;
+      let ctx;
+    </script>
+    <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
+    <div class="row d-flex ">
+      <div class="shadow p-3 mb-5 bg-white rounded col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
+        <h4> ITDs Históricos </h4>
+        <%if @itdcons.where(completed: false).length >0%>
+          <div type="button" class="btn btn-dark">
+            Nuevo ITD
+          </div>
+        <%else%>
+          <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Nuevo ITD
+          </button>
+        <%end%>
+        <% @itdcons.each_with_index do |itd, index| %>
+          <%if itd[:completed] and itd != @last_itdcon%>
+            <%=link_to empresa_itdcon_path(@empresa.id, itd.id), data: {turbo: false}, class:"itdlink" do %>
+              <div class="row rounded border border-dark">
+                <b><%= 'ITD ' + l(itd.created_at.to_date, format: :custom_itd)%></b>
+                <div class="d-flex flex-wrap justify-content-center align-items-around col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="d-flex w-100 align-items-end justify-content-around ">
+                    <div>
+                      <h3 class="text-center"><b><%= itd["maturity_score"].round %></b></h3>
+                      <p class="text-center" style="font-size: 12px">Madurez</p>
+                    </div>
+                    <div>
+                      <h3 class="text-center"><b><%= itd["alignment_score"].round %></b></h3>
+                      <p class="text-center" style="font-size: 12px">Alineamiento</p>
+                    </div>
+                  </div>
+                  <b class="text-center"><%= "#{itd.madurez.name.titleize} con #{itd.alineamiento.name.capitalize}" %></b>
                 </div>
-              <%end%>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="shadow p-3 mb-5 bg-white rounded col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 position-relative">
-          <%if @last_itdcon%>
-            <%if @last_itdcon[:completed] %>
-              <%=link_to empresa_itdcon_path(@empresa.id, @last_itdcon.id), data: {turbo: false}, class:"itdlink" do %>
-                <div class=" shadow p-3 mt-2 bg-white">
-                  <b><%= 'ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd)%></b>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 "> 
+                  
+                  <canvas id="myChart<%=itd.id%>" height="200px"></canvas>
+                  <script>
+                    label = [];
+                    colors = [];
+                    values = [];
+                    <% @all_points_dat[itd.id].keys.each do |dat|%>
+                      label.push("<%=dat.capitalize%>");
+                      values.push(<%= @all_points_dat[itd.id][dat].round%>);
+                    <%end%>
+                    ctx = document.getElementById('myChart<%=itd.id%>');
+                      new Chart(ctx, {
+                          
+                          data: {
+                          labels: label,
+                          datasets: [{
+                            label: 'Puntaje por Capital',
+                            type: 'bar',
+                            data: values,
+                            fill: true,
+                            backgroundColor: "blue",
+                            borderColor:'blue'
+                          }]
+                        },
+                          options: {
+                            maintainAspectRatio: false,
+                            plugins: {
+                              legend: {
+                                onClick: null,
+                                display: false,
+                              }
+                            },
+                            scales: {
+                              y: { 
+                                ticks: {
+                                  count: 101,
+                                  callback: (value, index, values ) => {
+                                    if ([0,30,55,75,90,100].includes(value)) {
+                                      return value
+                                    };
+                                  }
+                                },
+                                min: 0, 
+                                max: 100,
+                              },
+                            },
+                            elements: {
+                              line: {
+                                borderWidth: 3
+                              }
+                            }
+                          },
+                        });
+                  </script>
+
                 </div>
-              <%end%>
-            <%else%>
-              <b><%='ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd) %></b>
-              <br>
-              <%= "Miembros restantes:" %>
-              <br>
-              <%@last_itdcon.itdinds.each do |itdind|%>
-                <%if !itdind[:completed]%>
-                  <%if itdind.user == current_user%>
-                    <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
-                  <%end%>
-                  <%=itdind.user.name%>
-                  <br>
-                <%end%>
-              <% end %>
-            <% end %>
+              </div>
+            <%end%>
           <% end %>
-        </div>
+        <% end %>
       </div>
+      <div class="shadow p-3 mb-5 bg-white rounded col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 position-relative">
+        <%if @last_itdcon%>
+          <%if @last_itdcon[:completed] %>
+            <%=link_to empresa_itdcon_path(@empresa.id, @last_itdcon.id), data: {turbo: false}, class:"itdlink" do %>
+              <div class="row rounded border border-dark">
+                <b><%= 'ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd)%></b>
+                <div class="d-flex flex-wrap justify-content-center align-items-around col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="d-flex w-100 align-items-end justify-content-around ">
+                    <div>
+                      <h3 class="text-center"><b><%= @last_itdcon["maturity_score"].round %></b></h3>
+                      <p class="text-center" style="font-size: 12px">Madurez</p>
+                    </div>
+                    <div>
+                      <h3 class="text-center"><b><%= @last_itdcon["alignment_score"].round %></b></h3>
+                      <p class="text-center" style="font-size: 12px">Alineamiento</p>
+                    </div>
+                    <div>
+                      <h3 class="text-center"><b><%= @last_itdcon.itdinds.count %></b></h3>
+                      <p class="text-center" style="font-size: 12px">Respuestas</p>
+                    </div>
+                  </div>
+                  <b class="text-center"><%= "#{@last_itdcon.madurez.name.titleize} con #{@last_itdcon.alineamiento.name.capitalize}" %></b>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 "> 
+                  
+                  <canvas id="myChart<%=@last_itdcon.id%>" height="250px"></canvas>
+                  <script>
+                    label = [];
+                    colors = [];
+                    values = [];
+                    <% @all_points_dat[@last_itdcon.id].keys.each do |dat|%>
+                      label.push("<%=dat.capitalize%>");
+                      values.push(<%= @all_points_dat[@last_itdcon.id][dat].round%>);
+                    <%end%>
+                    ctx = document.getElementById('myChart<%=@last_itdcon.id%>');
+                      new Chart(ctx, {
+                          
+                          data: {
+                          labels: label,
+                          datasets: [{
+                            label: 'Puntaje por Capital',
+                            type: 'bar',
+                            data: values,
+                            fill: true,
+                            backgroundColor: "blue",
+                            borderColor:'blue'
+                          }]
+                        },
+                          options: {
+                            maintainAspectRatio: false,
+                            plugins: {
+                              legend: {
+                                onClick: null,
+                                display: false,
+                              }
+                            },
+                            scales: {
+                              y: { 
+                                ticks: {
+                                  count: 101,
+                                  callback: (value, index, values ) => {
+                                    if ([0,30,55,75,90,100].includes(value)) {
+                                      return value
+                                    };
+                                  }
+                                },
+                                min: 0, 
+                                max: 100,
+                              },
+                            },
+                            elements: {
+                              line: {
+                                borderWidth: 3
+                              }
+                            }
+                          },
+                        });
+                  </script>
 
+                </div>
+              </div>
+            <%end%>
+          <%else%>
+            <b><%='ITD ' + l(@last_itdcon.created_at.to_date, format: :custom_itd) %></b>
+            <br>
+            <%= "Miembros restantes:" %>
+            <br>
+            <%@last_itdcon.itdinds.each do |itdind|%>
+              <%if !itdind[:completed]%>
+                <%if itdind.user == current_user%>
+                  <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                <%end%>
+                <%=itdind.user.name%>
+                <br>
+              <%end%>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
+
   </div>
 </div>
