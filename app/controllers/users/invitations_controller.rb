@@ -15,10 +15,15 @@ class Users::InvitationsController < DeviseController
 
   # GET /resource/accept?invitation_token=abcdef
   def edit
+    puts "aaaaaaaaa"
+    puts resource.created_by_invite?
+    puts !resource.invitation_accepted?
     if resource.created_by_invite? and !resource.invitation_accepted?
       set_minimum_password_length
       resource.invitation_token = params[:invitation_token]
       render :edit
+    elsif resource.invitation_accepted?
+      redirect_to new_user_session_path
     else
       puts resource.empresa_id
       resource.accept_invitation()

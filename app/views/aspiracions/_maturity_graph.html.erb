@@ -2,8 +2,17 @@
   <div>
     <canvas id="myChart2" height="200px"></canvas>
   </div>
-
+  
+  <div class="position-absolute" style="display:none;">
+    <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
+  </div>
+  
+  <div class="position-absolute" style="display:none;">
+    <img id="location_red" src=<%=image_path("logos/location_red.png")%> width="15" height="20"/>
+  </div>
   <script>
+    img = document.getElementById("location");
+    img_red = document.getElementById("location_red");
     ctx2 = document.getElementById('myChart2');
 
     data = {
@@ -16,15 +25,16 @@
               y: <%= itdcon.alignment_score.round %>,
               x: <%= itdcon.maturity_score.round %>
             }],
-            backgroundColor: "red",
-            borderColor:'red'
+            backgroundColor: "black",
+            borderColor:'black',
+            pointStyle: img,
           },
           {
             label: 'Rezagado Digital',
             type: "line",
             data: [30, 30, 30, 30],
-            backgroundColor: 'rgba(0, 0, 50, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(127, 164, 213, 1)',
+            borderColor:'rgba(127, 164, 213, 1)',
             borderWidth: 1,
             pointRadius: 0,
             fill: "origin"
@@ -33,46 +43,70 @@
             label: 'Explorador Digital',
             type: "line",
             data: [55, 55, 55, 55],
-            backgroundColor: 'rgba(0, 50, 0, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(168, 183, 255, 1)',
+            borderColor:'rgba(168, 183, 255, 1)',
             borderWidth: 1,
             pointRadius: 0,
-            fill: 1
+            fill: () => {
+              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+                return 2
+              <%else%>
+                return 1
+              <%end%>
+            }
           },
           {
             label: 'Adoptador Digital',
             type: "line",
             data: [75, 75, 75, 75],
-            backgroundColor: 'rgba(50, 0, 0, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(155, 218, 255, 1)',
+            borderColor:'rgba(155, 218, 255, 1)',
             borderWidth: 1,
             pointRadius: 0,
-            fill: 1
+            fill: () => {
+              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+                return 2
+              <%else%>
+                return 1
+              <%end%>
+            }
           },
           {
             label: 'Líder Digital',
             type: "line",
             data: [90, 90, 90, 90],
-            backgroundColor: 'rgba(0, 50, 50, 0.2)',
-            borderColor:'rgba(1, 0, 0, 0)',
+            backgroundColor: 'rgba(127, 224, 228, 1)',
+            borderColor:'rgba(127, 224, 228, 1)',
             borderWidth: 1,
             pointRadius: 0,
-            fill: 1
+            fill: () => {
+              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+                return 2
+              <%else%>
+                return 1
+              <%end%>
+            }
           },
           {
             label: 'Disruptor Digital',
             type: "line",
             data: [100, 100, 100, 100],
-            backgroundColor: 'rgba(50, 0, 50, 0.2)',
-            borderColor:'rgba(1, 0, 0, 0)',
+            backgroundColor: 'rgba(173, 239, 242, 1)',
+            borderColor:'rgba(173, 239, 242, 1)',
             borderWidth: 1,
             pointRadius: 0,
-            fill: 1
+            fill: () => {
+              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+                return 2
+              <%else%>
+                return 1
+              <%end%>
+            }
           },
           ]
         };
-        <% if recomendation_mat["maturity_score"] > itdcon.maturity_score.to_i or (recomendation_mat["alignment_score"] < itdcon.alignment_score.to_i and recomendation_mat["alignment_score"] > 0) %>
-          data.datasets.push(
+        <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0) %>
+          data.datasets.splice(1,0,
             { 
               label: 'Aspiración',
               type: "scatter",
@@ -80,8 +114,9 @@
                 y: <%= recomendation_mat["alignment_score"] %>,
                 x: <%= recomendation_mat["maturity_score"] %>
               }],
-              backgroundColor: "black",
-              borderColor:'black'
+              backgroundColor: "rgba(255,0,0)",
+              borderColor:'rgba(255,0,0)',
+              pointStyle: img_red,
             }
           );
         <%end%>
@@ -96,6 +131,7 @@
                 legend: {
                   onClick: null,
                   labels: {
+                      usePointStyle: true,
                       filter: (legendItem, data) => {
                           return legendItem.text == null || !legendItem.text.includes('Digital');
                       }
@@ -143,7 +179,8 @@
                           }
                         }
                       };
-                    }
+                    },
+                    z: 10
                   },
                   min: 0, 
                   max: 100,
@@ -179,7 +216,8 @@
                           }
                         }
                       };
-                    }
+                    },
+                    z: 10
                   },
                   reverse: true
                 }

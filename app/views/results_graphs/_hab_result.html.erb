@@ -13,7 +13,7 @@
         label = [];
         values = [];
         <% @points_hab.keys.each do |hab|%>
-          label.push("<%= hab %>");
+          label.push("<%= hab.capitalize %>");
           values.push(<%= @points_hab[hab].round%>);
         <%end%>
         new Chart(ctx3, {
@@ -24,29 +24,25 @@
             label: 'Puntaje por habilitador',
             data: values,
             fill: false,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgb(255, 99, 132)',
-            pointBackgroundColor: 'rgb(255, 99, 132)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(255, 99, 132)'
+            backgroundColor: 'rgba(29, 70, 243)',
+            borderColor: 'rgba(29, 70, 243)',
+            pointBackgroundColor: 'rgba(29, 70, 243)',
+            pointBorderColor: 'rgba(29, 70, 243)',
           },
           {
             label: 'Rezagado Digital',
             data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
-            backgroundColor: 'rgba(0, 0, 50, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(127, 164, 213, 1)',
+            borderColor:'rgba(127, 164, 213, 1)',
             borderWidth: 1,
             pointRadius: 0,
             fill: "origin"
           },
-          
-          
           {
             label: 'Explorador Digital',
             data: [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
-            backgroundColor: 'rgba(0, 50, 0, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(168, 183, 255, 1)',
+            borderColor:'rgba(168, 183, 255, 1)',
             borderWidth: 1,
             pointRadius: 0,
             fill: 1
@@ -54,8 +50,8 @@
           {
             label: 'Adoptador Digital',
             data: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75],
-            backgroundColor: 'rgba(50, 0, 0, 0.2)',
-            borderColor:'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(155, 218, 255, 1)',
+            borderColor:'rgba(155, 218, 255, 1)',
             borderWidth: 1,
             pointRadius: 0,
             fill: 1
@@ -63,8 +59,8 @@
           {
             label: 'Líder Digital',
             data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90],
-            backgroundColor: 'rgba(0, 50, 50, 0.2)',
-            borderColor:'rgba(1, 0, 0, 0)',
+            backgroundColor: 'rgba(127, 224, 228, 1)',
+            borderColor:'rgba(127, 224, 228, 1)',
             borderWidth: 1,
             pointRadius: 0,
             fill: 1
@@ -72,8 +68,8 @@
           {
             label: 'Disruptor Digital',
             data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-            backgroundColor: 'rgba(50, 0, 50, 0.2)',
-            borderColor:'rgba(1, 0, 0, 0)',
+            backgroundColor: 'rgba(173, 239, 242, 1)',
+            borderColor:'rgba(173, 239, 242, 1)',
             borderWidth: 1,
             pointRadius: 0,
             hideable: true,
@@ -102,7 +98,9 @@
                     if ([0,30,55,75,90,100].includes(value)) {
                       return value
                     };
-                  }
+                  },
+                  backdropColor: "rgba(0,0,0,0)",
+                  z: 10
                 },
                 grid: {
                   color: function(context) {
@@ -116,7 +114,8 @@
                         }
                       }
                     };
-                  }
+                  },
+                  z: 10
                 },
               }
             },

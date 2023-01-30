@@ -1,11 +1,13 @@
-<div class="main">
-<h1>New empresa</h1>
-
-<%= render "form", empresa: @empresa %>
-
-<br>
-
-<div>
-  <%= link_to "Back to empresas", root_path %>
-</div>
+<div class="main col-lg-4 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Incribe tu Empresa</h2>
+    </div>
+    <div class="card-body">
+      <%= render "form", empresa: @empresa %>
+      <div>
+        <%= link_to "Volver al inicio", root_path %>
+      </div>
+    </div>
+  </div>
 </div>

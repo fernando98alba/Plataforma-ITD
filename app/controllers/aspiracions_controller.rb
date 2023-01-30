@@ -86,6 +86,9 @@ class AspiracionsController < ApplicationController
       @aspiracion_mat["maturity_score"] += @aspiracion_dat[dat.name.downcase.downcase]*dat.ponderador
     end
     calculate_hab_recomendation
+    puts "habbb"
+    puts @aspiracion_dat
+    puts @recomendation_hab
     if @aspiracion_dat == @points_dat
       @recomendation_hab = {}
       @aspiracion_dat = {}
@@ -106,11 +109,15 @@ class AspiracionsController < ApplicationController
     habilitadores = []
     
     @points_dat.keys.each do |dat|
-      @aspiracion_dat[dat] = hab_params[dat].to_f.round 
+      @aspiracion_dat[dat] = hab_params[dat].to_f 
     end
+    puts "@aspiracion_dat"
+    puts @aspiracion_dat
     @aspiracion_mat["alignment_score"] = 0
     @aspiracion_mat["maturity_score"] = 0
     calculate_hab_recomendation
+    puts "@recomendation_hab"
+    puts @recomendation_hab
     @points_hab.keys.each do |dat|
       if dat == hab_params[:dat]
         @aspiracion_dat[dat] = 0
@@ -126,7 +133,7 @@ class AspiracionsController < ApplicationController
           @aspiracion_dat[dat] += @aspiracion_hab[dat][hab]/@points_hab[dat].keys.size
         end
         if @aspiracion_hab[dat] == @points_hab[dat]
-          @aspiracion_hab = {}
+          @aspiracion_hab[dat] = @recomendation_hab[dat] 
           @aspiracion_dat[dat] = hab_params[dat].to_f 
         end
       else
@@ -177,7 +184,7 @@ class AspiracionsController < ApplicationController
     end
     madurez = @itdcon["maturity_score"]
     ptos = (@recomendation_mat["maturity_score"] - madurez)/ponderators[keys[0]]
-    while ptos > 0
+    while ptos.to_i > 0
       madurez = 0
       keys.each do |key|
         madurez += list[key]*ponderators[key]
@@ -252,7 +259,7 @@ class AspiracionsController < ApplicationController
       end
       keys = list.keys
       ptos = (@aspiracion_dat[dat] - @points_dat[dat])*@points_hab[dat].keys.length
-      while ptos >0
+      while ptos.to_i >0
         diff = 0 #la diferencia entre un habilitador y el siguiente
         list_aux = [] #habilitadores a subir puntaje
         (0...keys.length-1).each do |key|

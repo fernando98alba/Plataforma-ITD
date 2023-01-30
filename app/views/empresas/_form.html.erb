@@ -1,7 +1,7 @@
-<%= form_with(model: empresa) do |form| %>
+<%= form_with(model: empresa) do |f| %>
   <% if empresa.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(empresa.errors.count, "error") %>, necesitas llenar los siguientes campos: </h2>
+      <h4><%= pluralize(empresa.errors.count, "error") %>, necesitas llenar los siguientes campos: </h4>
 
       <ul>
         <% empresa.errors.each do |error| %>
@@ -10,28 +10,27 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group mb-2 ">
+    <%= f.label "Nombre", class: "me-2"%><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control "%>
   </div>
 
-  <div>
-    <%= form.label :rut, style: "display: block" %>
-    <%= form.text_field :rut %>
+  <div class="form-group mb-2 ">
+    <%= f.label "Rut", class: "me-2" %><br />
+    <%= f.text_field :rut, autofocus: true, class: "form-control "%>
   </div>
 
-  <div>
-    <%= form.label :sector, style: "display: block" %>
-    <%= form.text_field :sector %>
-  </div>
-  
-  <div>
-    <%= form.label :income, style: "display: block" %>
-    <%= form.text_field :income %>
+  <div class="form-group mb-2 ">
+    <%= f.label "Sector", class: "me-2" %><br />
+    <%= f.text_field :sector, autofocus: true, class: "form-control "%>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group mb-2 ">
+    <%= f.label "Ingresos", class: "me-2" %><br />
+    <%= f.text_field :income, autofocus: true, class: "form-control "%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Inscribir empresa", class: "btn btn-primary"%>
   </div>
 <% end %>

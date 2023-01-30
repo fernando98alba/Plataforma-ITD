@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @empresa.users.all
+    @users = @empresa.users.order(id: :asc).all
   end
   def destroy
     @user = User.find(params[:id])
@@ -19,14 +19,20 @@ class UsersController < ApplicationController
   def invite_member #ALERT IF INVITED_USER = CURRENT_USER #AGREGAR CASOS EN QUE ESTE INVITADO Y NO HAYA ACEPTADO
     user = User.find_by(email: invitation_param[:email])
     if user
-      if user.empresa_id == nil or (user.empresa_id == current_user.empresa_id and !user.invitation_accepted?) #ALERTA SI EXISTE
-        user.empresa = current_user.empresa
-        user.save
-        user.invite!(current_user)
-      elsif user.empresa_id != current_user.empresa_id
-        #ADD ALERT
+      if user != current_user
+        if user.empresa_id == nil or (user.empresa_id == current_user.empresa_id and !user.accepted_or_not_invited?) #ALERTA SI EXISTE
+          user.empresa = current_user.empresa
+          user.save
+          user.invite!(current_user)
+        elsif user.empresa_id != current_user.empresa_id
+          #ADD ALERT
+          flash[:alert] = "Usuario ya pertenece a otra organización"
+        else
+          #ADD ALERT
+          flash[:alert] = "Usuario ya fue agregado a la organización"
+        end
       else
-        #ADD ALERT
+        flash[:alert] = "No puedes agregarte a ti mismo"
       end
     else
       User.invite!({email: invitation_param[:email], empresa: current_user.empresa}, current_user)

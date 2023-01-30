@@ -13,7 +13,7 @@
               <% if current_user.empresa_id and current_user.accepted_or_not_invited?%>
                 <%= link_to 'Inicio', empresa_path(current_user.empresa_id), class:"navelement" %>
                 <br/>
-                <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
+                <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
                 <br/>
                 <%if current_user.empresa.aspiracion.last%>
                   <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>

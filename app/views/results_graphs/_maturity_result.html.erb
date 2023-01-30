@@ -5,8 +5,12 @@
       <div>
         <canvas id="myChart2" height="180px"></canvas>
       </div>
+      <div class="position-absolute" style="display:none;">
+        <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
+      </div>
 
       <script>
+        const img = document.getElementById("location");
         var ctx2 = document.getElementById('myChart2');
         const data = {
               labels: [0,10,20,40],
@@ -18,15 +22,16 @@
                   y: <%= itd.alignment_score.round %>,
                   x: <%= itd.maturity_score.round %>
                 }],
-                backgroundColor: "red",
-                borderColor:'red'
+                backgroundColor: "black",
+                borderColor:'black',
+                pointStyle: img,
               },
               {
                 label: 'Rezagado Digital',
                 type: "line",
                 data: [30, 30, 30, 30],
-                backgroundColor: 'rgba(0, 0, 50, 0.2)',
-                borderColor:'rgba(0, 0, 0, 0)',
+                backgroundColor: 'rgba(127, 164, 213, 1)',
+                borderColor:'rgba(127, 164, 213, 1)',
                 borderWidth: 1,
                 pointRadius: 0,
                 fill: "origin"
@@ -36,8 +41,8 @@
                 label: 'Explorador Digital',
                 type: "line",
                 data: [55, 55, 55, 55],
-                backgroundColor: 'rgba(0, 50, 0, 0.2)',
-                borderColor:'rgba(0, 0, 0, 0)',
+                backgroundColor: 'rgba(168, 183, 255, 1)',
+                borderColor:'rgba(168, 183, 255, 1)',
                 borderWidth: 1,
                 pointRadius: 0,
                 fill: 1
@@ -46,8 +51,8 @@
                 label: 'Adoptador Digital',
                 type: "line",
                 data: [75, 75, 75, 75],
-                backgroundColor: 'rgba(50, 0, 0, 0.2)',
-                borderColor:'rgba(0, 0, 0, 0)',
+                backgroundColor: 'rgba(155, 218, 255, 1)',
+                borderColor:'rgba(155, 218, 255, 1)',
                 borderWidth: 1,
                 pointRadius: 0,
                 fill: 1
@@ -56,8 +61,8 @@
                 label: 'Líder Digital',
                 type: "line",
                 data: [90, 90, 90, 90],
-                backgroundColor: 'rgba(0, 50, 50, 0.2)',
-                borderColor:'rgba(1, 0, 0, 0)',
+                backgroundColor: 'rgba(127, 224, 228, 1)',
+                borderColor:'rgba(127, 224, 228, 1)',
                 borderWidth: 1,
                 pointRadius: 0,
                 fill: 1
@@ -66,8 +71,8 @@
                 label: 'Disruptor Digital',
                 type: "line",
                 data: [100, 100, 100, 100],
-                backgroundColor: 'rgba(50, 0, 50, 0.2)',
-                borderColor:'rgba(1, 0, 0, 0)',
+                backgroundColor: 'rgba(173, 239, 242, 1)',
+                borderColor:'rgba(173, 239, 242, 1)',
                 borderWidth: 1,
                 pointRadius: 0,
                 hideable: true,
@@ -86,6 +91,7 @@
                   legend: {
                     onClick: null,
                     labels: {
+                        usePointStyle: true,
                         filter: (legendItem, data) => {
                             return legendItem.text == null || !legendItem.text.includes('Digital');
                         }
@@ -133,7 +139,8 @@
                             }
                           }
                         };
-                      }
+                      },
+                      z: 10
                     },
                     min: 0, 
                     max: 100,
@@ -169,7 +176,8 @@
                             }
                           }
                         };
-                      }
+                      },
+                      z: 10
                     },
                     reverse: true
                   }

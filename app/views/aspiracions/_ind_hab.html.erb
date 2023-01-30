@@ -6,7 +6,7 @@
       <%= render "hab_graph", empresa: empresa, aspiracion: aspiracion, recomendation_hab: recomendation_hab[dat], points_hab: points_hab[dat], maturity: aspiracion_dat[dat], aspiracion_mat: aspiracion_mat, dat: dat, aspiracion_hab: aspiracion_hab %>
     </div>
     <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-      <div class="d-flex align-items-center w-100">
+      <div class="d-flex flex-wrap align-items-center w-100">
         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
           <%= render "form_hab", empresa: empresa, aspiracion: aspiracion, dat: dat, points_hab: points_hab, aspiracion_dat: aspiracion_dat, aspiracion_hab: aspiracion_hab, recomendation_hab: recomendation_hab %>
           <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor nivel de alineamiento debes subir los habilitadores a:</p>

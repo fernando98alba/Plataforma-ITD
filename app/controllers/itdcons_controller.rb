@@ -7,7 +7,8 @@ class ItdconsController < ApplicationController
   def index
     @itdcons = @empresa.itdcons.order(id: :asc)
     get_all_points
-    @last_itdcon = @itdcons.last
+    @last_itdcon = @itdcons.where(completed: true).last
+    @last_not_completed_itdcon = @itdcons.find_by(completed: false)
   end
   def create
     @itdcon = @empresa.itdcons.build()
@@ -85,7 +86,7 @@ class ItdconsController < ApplicationController
 
   def get_all_points
     @all_points_dat = {}
-    @itdcons.each do |itd|
+    @itdcons.where(completed: true).each do |itd|
       @all_points_dat[itd.id] = {}
       Dat.all.each do |dat|
         point_dat = 0
