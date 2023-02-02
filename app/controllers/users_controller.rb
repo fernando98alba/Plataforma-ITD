@@ -24,6 +24,7 @@ class UsersController < ApplicationController
           user.empresa = current_user.empresa
           user.save
           user.invite!(current_user)
+          flash[:alert] = "Invitación enviada con exito"
         elsif user.empresa_id != current_user.empresa_id
           #ADD ALERT
           flash[:alert] = "Usuario ya pertenece a otra organización"
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
       end
     else
       User.invite!({email: invitation_param[:email], empresa: current_user.empresa}, current_user)
+      flash[:alert] = "Usuario invitado con exito"
     end
     redirect_to empresa_users_path(current_user.empresa_id)
   end

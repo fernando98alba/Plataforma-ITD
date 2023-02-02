@@ -134,7 +134,7 @@
         <li style="text-align: justify;">
           Los habilitadores claves que impulsan la Transformación Digital de la organización son: 
           <ul>
-            <% points_hab.sort_by{|k, v| -v}[0..3].each do |hab, points|%>
+            <% points_hab.sort_by{|k, v| -v}[0..2].each do |hab, points|%>
               <% if points > itd.maturity_score %>
                 <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
               <%end%>
@@ -144,7 +144,7 @@
         <li style="text-align: justify;">
           Los habilitadores claves que ralentizan la Transformación Digital de la organización son: 
           <ul>
-            <% points_hab.sort_by{|k, v| v}[0..3].each do |hab, points|%>
+            <% points_hab.sort_by{|k, v| v}[0..2].each do |hab, points|%>
               <% if points < itd.maturity_score %>
                 <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
               <%end%>

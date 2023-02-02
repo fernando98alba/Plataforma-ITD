@@ -1,4 +1,4 @@
-<%= form_with(model: [empresa, itdcon, itdind], data: {turbo: false}) do |form| %>
+<%= form_with(model: [empresa, itdcon, itdind]) do |form| %>
   <% if itdind.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(itdind.errors.count, "error") %> prohibited this itd from being saved:</h2>

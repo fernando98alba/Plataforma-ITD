@@ -1,6 +1,6 @@
-<div class="main position-relative">
+<div class="main mt-4 position-relative">
   <%= render partial: "form", locals: {empresa: @empresa, user: @empresa.users.build}%>
-  <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEquipo">
     Invitar Miembro
   </button>
   <h3 >Equipo</h3>
@@ -33,12 +33,12 @@
                       <%end%>
                     <%end%>
                   </div>
-                  <div class="dropstart">
-                    <div type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="dropend">
+                    <div type="button" id="dropdownMenuButtonEquipo1" data-bs-toggle="dropdown" aria-expanded="false">
                       <%= image_tag "logos/options.png", height: 40, class: "ms-3" %>
                     </div>
                     
-                    <ul class="dropdown-menu ms-3" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu ms-3" aria-labelledby="dropdownMenuButtonEquipo1">
                       <%= link_to "Ver Perfil", user_path(user.id), class:"profileoptions" %>
                     </ul>
                   </div>

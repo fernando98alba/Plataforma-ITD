@@ -208,7 +208,7 @@
         <% elsif (itd.maturity_score-itd.madurez.min).to_f/(itd.madurez.max-itd.madurez.min) <=0.9%>
           Esto significa que están <b>consolidados como <%=itd.madurez.name%></b>.
         <%else%>
-          <% if itd.madurez.min == 100%>
+          <% if itd.madurez.max == 100%>
             Esto significa que están <b>fuertemente consolidados como <%=itd.madurez.name%></b>.
           <%else%>
             Esto significa que están <b>en transición a <%=Madurez.find_by(min: itd.madurez.max).name%></b>.

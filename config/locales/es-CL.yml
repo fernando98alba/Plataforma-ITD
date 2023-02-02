@@ -170,7 +170,7 @@ es-CL:
     mailer:
       invitation_instructions:
         subject: "Instruciones de la invitación"
-        hello: "Estimada/o %{name lastname}"
+        hello: "Estimada/o %{name} %{lastname}"
         someone_invited_you: "Has sido invitado a ser parte de %{empresa} en la Plataforma ITD, puedes aceptarlo siguiendo el siguiente enlace"
         accept: "Aceptar la invitación"
         accept_until: "Esta invitación expirará en %{due_date}."

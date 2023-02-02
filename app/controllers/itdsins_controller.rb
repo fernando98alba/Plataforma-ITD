@@ -7,12 +7,8 @@ class ItdsinsController < ApplicationController
 
   def create
     @itdsin = Itdsin.new(itdsin_params)
-    (1..91).each do |index|
-      question = "p" + index.to_s
-      if !@itdsin[question].is_a? Numeric
-        @itdsin[question] = rand(0..4) #ELIMINAAAR
-      end
-    end
+    check_if_completed()
+    calculate_itdsin
     respond_to do |format|
       if @itdsin.save
         format.html { redirect_to itdsin_path(@itdsin), notice: "El Itd se creó correctamente." }
@@ -23,31 +19,26 @@ class ItdsinsController < ApplicationController
   end
 
   def show
+    
   end
 
-  def get_points
-    @points_dat = {}
-    @points_hab = {}
-    Dat.all.each do |dat|
-      point_dat = 0
-      dat.habilitadors.each do |habilitador|
-        point_habilitador = 0
-        habilitador.elementos.each do |elemento|
-          point_elemento = 0
-          elemento.drivers.each do |driver|
-            point_elemento += @itdsin[driver.identifier]
-          end
-          point_elemento = point_elemento/elemento.drivers.count.to_f
-          point_elemento = point_elemento*100/4.to_f
-          point_habilitador += point_elemento 
-        end
-        point_habilitador = point_habilitador/habilitador.elementos.count.to_f
-        @points_hab[habilitador.name.downcase] = point_habilitador
-        point_dat += point_habilitador
+  private 
+  
+  def check_if_completed
+    #if !itdsin_params.values.include? ""
+     # @itdsin[:completed] = true
+    #end
+    (1..91).each do |index|
+      question = "p" + index.to_s
+      if !itdsin_params[question] 
+        @itdsin[question] = rand(0..4) #ELIMINAAAR
+      else
+        @itdsin[question] = itdsin_params[question].to_i
       end
-      point_dat = point_dat/dat.habilitadors.count.to_f
-      @points_dat[dat.name.downcase] = point_dat
     end
+  end
+
+  def calculate_itdsin
     madurez = 0
     habilitadores = []
     Dat.all.each do |dat|
@@ -75,10 +66,46 @@ class ItdsinsController < ApplicationController
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
-    @itdsin.alignment_score = Math.sqrt(variance)
+    std_dev = Math.sqrt(variance)
+    @itdsin.alignment_score = std_dev
+    Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
+      if madurez <= level.max and madurez >= level.min
+        @itdsin.madurez = level
+        break
+      end
+    end
+    Alineamiento.all.each do |level|
+      if std_dev <= level.max and std_dev >= level.min
+        @itdsin.alineamiento = level
+        break
+      end
+    end
   end
 
-  private
+  def get_points
+    @points_dat = {}
+    @points_hab = {}
+    Dat.all.each do |dat|
+      point_dat = 0
+      dat.habilitadors.each do |habilitador|
+        point_habilitador = 0
+        habilitador.elementos.each do |elemento|
+          point_elemento = 0
+          elemento.drivers.each do |driver|
+            point_elemento += @itdsin[driver.identifier]
+          end
+          point_elemento = point_elemento/elemento.drivers.count.to_f
+          point_elemento = point_elemento*100/4.to_f
+          point_habilitador += point_elemento 
+        end
+        point_habilitador = point_habilitador/habilitador.elementos.count.to_f
+        @points_hab[habilitador.name.downcase] = point_habilitador
+        point_dat += point_habilitador
+      end
+      point_dat = point_dat/dat.habilitadors.count.to_f
+      @points_dat[dat.name.downcase] = point_dat
+    end
+  end
 
   def get_itdsin
     @itdsin = Itdsin.find_by(id: params[:id])

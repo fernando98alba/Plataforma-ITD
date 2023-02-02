@@ -10,16 +10,16 @@
       </ul>
     </div>
   <% end %>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModalEquipo" tabindex="-1" aria-labelledby="exampleModalEquipoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Invitar miembro</h1>
+          <h1 class="modal-title fs-5" id="exampleModalEquipoLabel">Invitar miembro</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class = "container">
-            <div class= "main">
+            <div class="main mt-4">
               <%= form.label "Email del invitado" %> <br />
               <%= form.email_field :email, autofocus: true, autocomplete: "email" %>
             </div>

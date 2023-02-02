@@ -24,9 +24,9 @@ class ItdindsController < ApplicationController
         if @itdind[:completed] == true
           calculate_itdcon()
           if @itdcon[:completed] == true
-            format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), notice: "El Itd se creó correctamente." }
+            format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           else
-            format.html { redirect_to empresa_itdcons_path(@itdcon.empresa), notice: "El Itd se creó correctamente." }
+            format.html { redirect_to empresa_itdcons_path(@itdcon.empresa), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           end
         else
           format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), notice: "Respuestas guardadas correctamente." }

@@ -7,20 +7,20 @@
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 "> 
       <canvas id="myChart1" height="380px"></canvas>
       <script>
-        let label = [];
+        let label2 = [];
         let colors;
         let values = [];
         let maturity = [] ;
         <% points_dat.keys.each do |dat|%>
-          label.push("Capital <%= dat %>");
+          label2.push("Capital <%= dat %>");
           values.push(<%= points_dat[dat].round%>);
           maturity.push(<%= itd.maturity_score.round%>);
         <%end%>
-        const ctx = document.getElementById('myChart1');
-          new Chart(ctx, {
+        const ctx4 = document.getElementById('myChart1');
+          new Chart(ctx4, {
               
               data: {
-              labels: label,
+              labels: label2,
               datasets: [{
                 label: 'Puntaje Obtenido',
                 type: 'line',
@@ -108,9 +108,9 @@
         <li style="text-align: justify;">
           Las Dimensiones de Activos Transformacionales (DATs) impulsores (sobre el nivel de madurez) de la Transformación Digital de la organización son: 
           <ul>
-            <% points_dat.keys.each do |dat|%>
-              <% if points_dat[dat] > itd.maturity_score %>
-                <li><b>Capital <%="#{dat.capitalize} (#{points_dat[dat].round})"%></b></li>
+            <% points_dat.sort_by{|k, v| -v}.each do |dat, points|%>
+              <% if points > itd.maturity_score %>
+                <li><b>Capital <%="#{dat.capitalize} (#{points.round})"%></b></li>
               <%end%>
             <%end%>
           </ul>
@@ -118,9 +118,9 @@
         <li style="text-align: justify;">
           Las Dimensiones de Activos Transformacionales (DATs) ralentizadores (bajo el nivel de madurez) de la Transformación Digital de la organización son: 
           <ul>
-            <% points_dat.keys.each do |dat|%>
-              <% if points_dat[dat] < itd.maturity_score %>
-                <li><b>Capital <%="#{dat.capitalize} (#{points_dat[dat].round})"%></b></li>
+            <% points_dat.sort_by{|k, v| v}.each do |dat, points|%>
+              <% if points<= itd.maturity_score %>
+                <li><b>Capital <%="#{dat.capitalize} (#{points.round})"%></b></li>
               <%end%>
             <%end%>
           </ul>
