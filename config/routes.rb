@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'itdcons/index'
-  get 'homes/index'
+  root "homes#index"
   post 'empresas/:empresa_id/aspiracions/update_maturity_recomendation', to: 'aspiracions#update_maturity_recomendation', as: 'update_maturity_recomendation'
   post 'empresas/:empresa_id/aspiracions/update_dat_recomendation', to: 'aspiracions#update_dat_recomendation', as: 'update_dat_recomendation'
   post 'empresas/:empresa_id/aspiracions/update_hab_recomendation', to: 'aspiracions#update_hab_recomendation', as: 'update_hab_recomendation'
@@ -13,17 +12,18 @@ Rails.application.routes.draw do
   }, path: '', path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
-  root "homes#index"
   get "empresas/:empresa_id/users", to: "users#index", as: "empresa_users"
   get "users/:id", to: "users#show", as: "user"
   resources :empresas do 
-    resources :itdcons do
-      resources :itdinds do 
-        resources :verificadors
+    resources :itdcons, only: [:index, :show, :create] do
+      resources :itdinds, only: [:show, :edit, :update] do 
+        resources :verificadors, only: [:show]
       end
     end
     resources :aspiracions
   end
   resources :itdsins 
   get "homes/example"
+
+  get '/*paths', to: 'unhandled#show'
 end

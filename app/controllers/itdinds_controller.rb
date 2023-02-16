@@ -5,15 +5,21 @@ class ItdindsController < ApplicationController
   before_action :get_empresa
   before_action :get_points, only: [ :show]
   before_action :get_verificador
-  
+  before_action :authenticate_user!
+  before_action :correct_user_edit, only: [:edit, :update] #CHECK QUE ITDIND.ITDCON = @ITDCON
+  before_action :correct_user_show, only: [:show]
+  before_action :correct_empresa_itdcon
+
   def show
   end
   
   def edit
-
+    if @itdind[:completed]
+      redirect_to empresa_itdcons_path(@itdcon.empresa), notice: "Medición ya esta completada."
+    end
   end
-  def update
 
+  def update
     check_if_completed()
     if @itdind[:completed] == true
       calculate_itdind
@@ -38,6 +44,19 @@ class ItdindsController < ApplicationController
   end
 
   private
+
+  def correct_user_edit
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if current_user != @itdind.user
+  end
+
+  def correct_user_show
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if (current_user != @itdind.user and !current_user.is_admin)
+  end
+  
+  def correct_empresa_itdcon
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if !(@itdind.itdcon == @itdcon and @itdcon.empresa == @empresa)
+  end
+
   def check_if_completed
     #if !itdind_params.values.include? ""
      # @itdind[:completed] = true
@@ -160,21 +179,29 @@ class ItdindsController < ApplicationController
 
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:itdcon_id])
+    redirect_to root_path, notice: "Acción invalida." if !@itdcon
   end
+
   def get_empresa
     @empresa = Empresa.find_by(id: params[:empresa_id])
+    redirect_to root_path, notice: "Acción invalida." if !@empresa
   end
+
+  def get_itdind
+    @itdind = Itdind.find_by(id: params[:id])
+    redirect_to root_path, notice: "Acción invalida." if !@itdind
+  end
+
   def get_verificador
     @verificador = @itdind.verificador
+    puts @verificador
   end
+
   def itdind_params
     permited = []
     Driver.all.each do |driver|
       permited.push(driver.identifier)
     end
-    params.require(:itdind).permit(permited, verificador_attributes: permited)
-  end
-  def get_itdind
-    @itdind = Itdind.find_by(id: params[:id])
+    params.require(:itdind).permit([:itdcon_id].concat(permited), verificador_attributes: [:id].concat(permited))
   end
 end

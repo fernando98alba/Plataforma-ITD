@@ -22,7 +22,7 @@
       <% end %>
     <%else%>
       <% recomendation_hab[dat].keys.each do |hab|%>
-        <%= form.hidden_field hab, value: recomendation_hab[dat][hab].round %>
+        <%= form.hidden_field hab, value: recomendation_hab[dat][hab] %>
       <% end %>
     <% end %>
   <% end %>

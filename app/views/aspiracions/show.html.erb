@@ -1,5 +1,7 @@
 <div class="main mt-4">
-  <%= link_to 'Definir nueva aspiración', empresa_aspiracions_path(@empresa), data: {turbo: false}, class:"btn btn-primary mb-2 me-2"%>
+  <% if current_user.is_admin%>
+    <%= link_to 'Definir nueva aspiración', empresa_aspiracions_path(@empresa), data: {turbo: false}, class:"btn btn-primary mb-2 me-2"%>
+  <%end%>
   <div class="row">
     <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <div class="shadow p-3 mb-5 bg-white rounded ">  
@@ -338,7 +340,7 @@
               <%@points_hab[dat].keys.each do |hab|%>
                 label.push("<%= hab.gsub("_", " ").capitalize %>");
                 values.push(<%= @points_hab[dat][hab].round%>);
-                brecha.push(<%= @aspiracion[hab]%>);
+                brecha.push(<%= @aspiracion[hab].round%>);
               <%end%>
             <%end%>
             let ctx3 = document.getElementById('myChart3');
@@ -508,8 +510,8 @@
                                           <tr>
                                             <td class="text-center"><%=hab.name%></td>
                                             <td class="text-center"><%=driver.name%></td>
-                                            <td class="text-center"><%=@itdcon[driver.identifier]%></td>
-                                            <td class="text-center"><%=@recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")][driver.identifier]%></td>
+                                            <td class="text-center"><%=@itdcon[driver.identifier].round(1)%></td>
+                                            <td class="text-center"><%=@recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")][driver.identifier].round(1)%></td>
                                           </tr>
                                         <%end%>
                                       <%end%>

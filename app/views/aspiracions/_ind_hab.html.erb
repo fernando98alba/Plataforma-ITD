@@ -1,32 +1,28 @@
-<%= turbo_frame_tag dat do %>
-  <div class = "row">
-    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 h-100">
-    <%puts "aspiracion_hab"%>
-    <%puts aspiracion_hab%>
-      <%= render "hab_graph", empresa: empresa, aspiracion: aspiracion, recomendation_hab: recomendation_hab[dat], points_hab: points_hab[dat], maturity: aspiracion_dat[dat], aspiracion_mat: aspiracion_mat, dat: dat, aspiracion_hab: aspiracion_hab %>
-    </div>
-    <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-      <div class="d-flex flex-wrap align-items-center w-100">
-        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
-          <%= render "form_hab", empresa: empresa, aspiracion: aspiracion, dat: dat, points_hab: points_hab, aspiracion_dat: aspiracion_dat, aspiracion_hab: aspiracion_hab, recomendation_hab: recomendation_hab %>
-          <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor nivel de alineamiento debes subir los habilitadores a:</p>
-          <% points_hab[dat].keys().each do |hab|%>
-            <div>
-              <%if recomendation_hab[dat][hab].round - points_hab[dat][hab].round > 0 %>
-                <p style="margin-bottom: -2px; font-size: 12px"><b><%= "#{hab.capitalize.gsub("_", " ")}: #{recomendation_hab[dat][hab].round}" %></b></p>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-        <div class="ms-1 col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
-          <%= turbo_frame_tag "result_#{dat}" do %>
-            <%= render "result_hab", aspiracion_dat: aspiracion_dat, dat: dat  %>
-          <%end%>
-          <div class="d-flex justify-content-end w-100">
-            <input type="submit" value="Enviar" form="submit_<%=dat%>_form" class="btn btn-primary border border-dark me-4 mt-2">
+<div class = "row">
+  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 h-100">
+  <%puts "aspiracion_hab"%>
+  <%puts aspiracion_hab%>
+    <%= render "hab_graph", empresa: empresa, aspiracion: aspiracion, recomendation_hab: recomendation_hab[dat], points_hab: points_hab[dat], maturity: aspiracion_dat[dat], aspiracion_mat: aspiracion_mat, dat: dat, aspiracion_hab: aspiracion_hab %>
+  </div>
+  <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="d-flex flex-wrap align-items-center w-100">
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
+        <%= render "form_hab", empresa: empresa, aspiracion: aspiracion, dat: dat, points_hab: points_hab, aspiracion_dat: aspiracion_dat, aspiracion_hab: aspiracion_hab, recomendation_hab: recomendation_hab, recomendation_mat: recomendation_mat %>
+        <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor nivel de alineamiento debes subir los habilitadores a:</p>
+        <% points_hab[dat].keys().each do |hab|%>
+          <div>
+            <%if recomendation_hab[dat][hab].round - points_hab[dat][hab].round > 0 %>
+              <p style="margin-bottom: -2px; font-size: 12px"><b><%= "#{hab.capitalize.gsub("_", " ")}: #{recomendation_hab[dat][hab].round}" %></b></p>
+            <% end %>
           </div>
+        <% end %>
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
+        <%= render "result_hab", aspiracion_dat: aspiracion_dat, dat: dat  %>
+        <div class="d-flex justify-content-end w-100">
+          <input type="submit" value="Enviar" form="submit_<%=dat%>_form" class="btn btn-primary border border-dark me-4 mt-2">
         </div>
       </div>
     </div>
   </div>
-<%end%>
+</div>

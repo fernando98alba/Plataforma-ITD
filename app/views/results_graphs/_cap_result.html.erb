@@ -114,44 +114,70 @@
               </div>
               <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 border border-dark ps-3 pe-3">
                 <h4 class="text-center text-uppercase"> INSIGHTS </h4>
-                <ul>
-                  <li style="text-align: justify;"> 
-                    El puntaje promedio del DAT <b>Capital <%=dat.name.capitalize%></b> es: <b><%=points_dat[dat.name.downcase].round%></b>
-                  </li>
-                  <li style="text-align: justify;"> 
-                    El DAT <b>Capital <%=dat.name.capitalize%> es 
-                    <%if points_dat[dat.name.downcase] > itd.maturity_score%>
-                      impulsor
-                    <%else%>
-                      ralentizador
-                    <%end%>
-                    </b> de la Transformación digital de la organización.
-                  </li>
-                  <li style="text-align: justify;">
-                    Los habilitadores claves impulsores del DAT Capital <%=dat.name.capitalize%> son: 
-                    <ul>
-                      <% points_hab.sort_by{|k, v| -v}.each do |hab, points|%>
-                        <% if dat.habilitadors.find_by(name: hab.capitalize)%>
-                          <% if points > points_dat[dat.name.downcase] %>
-                            <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
+                <%if dat.name.downcase != "natural"%>
+                  <ul>
+                    <li style="text-align: justify;"> 
+                      El puntaje promedio del DAT <b>Capital <%=dat.name.capitalize%></b> es: <b><%=points_dat[dat.name.downcase].round%></b>
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El DAT <b>Capital <%=dat.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
+                      <%end%>
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                    <li style="text-align: justify;">
+                      Los habilitadores claves impulsores del DAT Capital <%=dat.name.capitalize%> son: 
+                      <ul>
+                        <% points_hab.sort_by{|k, v| -v}.each do |hab, points|%>
+                          <% if dat.habilitadors.find_by(name: hab.capitalize)%>
+                            <% if points >= points_dat[dat.name.downcase] %>
+                              <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
+                            <%end%>
                           <%end%>
                         <%end%>
-                      <%end%>
-                    </ul>
-                  </li>
-                  <li style="text-align: justify;">
-                    Los habilitadores claves ralentizadores del DAT Capital <%=dat.name.capitalize%> son: 
-                    <ul>
-                      <% points_hab.sort_by{|k, v| v}.each do |hab, points|%>
-                        <% if dat.habilitadors.find_by(name: hab.capitalize)%>
-                          <% if points < points_dat[dat.name.downcase] %>
-                            <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
+                      </ul>
+                    </li>
+                    <li style="text-align: justify;">
+                      Los habilitadores claves ralentizadores del DAT Capital <%=dat.name.capitalize%> son: 
+                      <ul>
+                        <% points_hab.sort_by{|k, v| v}.each do |hab, points|%>
+                          <% if dat.habilitadors.find_by(name: hab.capitalize)%>
+                            <% if points < points_dat[dat.name.downcase] %>
+                              <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
+                            <%end%>
                           <%end%>
                         <%end%>
+                      </ul>
+                    </li>
+                  </ul> 
+                <%else%>
+                  <ul>
+                    <li style="text-align: justify;"> 
+                      El puntaje promedio del DAT <b>Capital <%=dat.name.capitalize%></b> es: <b><%=points_dat[dat.name.downcase].round%></b>
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El DAT <b>Capital <%=dat.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
                       <%end%>
-                    </ul>
-                  </li>
-                </ul> 
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El habilitador <b><%=dat.habilitadors.first.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
+                      <%end%>
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                  </ul>
+                <%end%>
               </div>
             </div>
 

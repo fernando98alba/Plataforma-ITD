@@ -2,14 +2,16 @@
 <div class="main mt-4">
   <div class="d-flex flex-wrap justify-content-between mb-3 align-items-center w-100 me-5 ">
     <h3> Mediciones Históricas </h3>
-    <%if @itdcons.where(completed: false).length >0%>
-      <button class="btn btn-dark" disabled >
-        Nuevo ITD
-      </button>
-    <%else%>
-      <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Nuevo ITD
-      </button>
+    <% if current_user.is_admin%>
+      <%if @itdcons.where(completed: false).length >0%>
+        <button class="btn btn-dark" disabled >
+          Nuevo ITD
+        </button>
+      <%else%>
+        <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Nuevo ITD
+        </button>
+      <%end%>
     <%end%>
   </div>
   <script>

@@ -1,126 +1,124 @@
-<%= turbo_frame_tag "dat_graph" do %>  
-  
-    <div>
-      <canvas id="myChart <%=dat%>" height="350px"></canvas>
-    </div>
-    <script>
-      label = [];
-      values = [];
-      maturity = [] ;
-      recomendation = [];
-      <% points_hab.keys.each do |hab|%>
-        label.push("<%= hab %>");
-        values.push(<%= points_hab[hab].round%>);
-        maturity.push(<%= maturity.round%>);
-        recomendation.push(<%= recomendation_hab[hab].round%>);
-      <%end%>
-      data = [{
-          label: 'Puntaje Aspirado Capital <%=dat.capitalize%>',
-          type: 'line',
-          data: maturity,
-          backgroundColor: "red",
-          borderColor:'red',
-          pointRadius: 1,
-        },
-        {
-          label: 'Puntaje por Habilitador',
-          type: 'bar',
-          data: values,
-          fill: true,
-          backgroundColor: "blue",
-          borderColor:'blue'
-        },
-        {
-          label: 'Aspiración Recomendada',
-          type: 'bar',
-          data: recomendation,
-          fill: true,
-          backgroundColor: "gray",
-          borderColor:'gray',
-      }];
 
-      <% if aspiracion_hab[dat] %>
-        aspiracion = [];
-        <% points_hab.keys.each do |hab|%>
-          aspiracion.push(<%= aspiracion_hab[dat][hab]%>);
-        <%end%>
-        data.splice(2,0,{
-        label: 'Aspiración Establecida',
-        type: 'bar',
-        data: aspiracion,
-        fill: true,
-        borderColor: '#FFFFF',
-        backgroundColor: '#00000',
-        })
-      <%end%>
-      ctx = document.getElementById('myChart <%=dat%>');
-      new Chart(ctx, {
-        data: {
-        labels: label,
-        datasets: data,
+<div>
+  <canvas id="myChart <%=dat%>" height="350px"></canvas>
+</div>
+<script>
+  label = [];
+  values = [];
+  maturity = [] ;
+  recomendation = [];
+  <% points_hab.keys.each do |hab|%>
+    label.push("<%= hab.gsub("_", " ") %>");
+    values.push(<%= points_hab[hab].round%>);
+    maturity.push(<%= maturity.round%>);
+    recomendation.push(<%= recomendation_hab[hab].round%>);
+  <%end%>
+  data = [{
+      label: 'Puntaje Aspirado Capital <%=dat.capitalize%>',
+      type: 'line',
+      data: maturity,
+      backgroundColor: "red",
+      borderColor:'red',
+      pointRadius: 1,
+    },
+    {
+      label: 'Puntaje por Habilitador',
+      type: 'bar',
+      data: values,
+      fill: true,
+      backgroundColor: "blue",
+      borderColor:'blue'
+    },
+    {
+      label: 'Aspiración Recomendada',
+      type: 'bar',
+      data: recomendation,
+      fill: true,
+      backgroundColor: "gray",
+      borderColor:'gray',
+  }];
+
+  <% if aspiracion_hab[dat] %>
+    aspiracion = [];
+    <% points_hab.keys.each do |hab|%>
+      aspiracion.push(<%= aspiracion_hab[dat][hab].round%>);
+    <%end%>
+    data.splice(2,0,{
+    label: 'Aspiración Establecida',
+    type: 'bar',
+    data: aspiracion,
+    fill: true,
+    borderColor: '#FFFFF',
+    backgroundColor: '#00000',
+    })
+  <%end%>
+  ctx = document.getElementById('myChart <%=dat%>');
+  new Chart(ctx, {
+    data: {
+    labels: label,
+    datasets: data,
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          onClick: null,
+        }
+      },
+      scales: {
+        x: {
+          stacked: true
         },
-        options: {
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              onClick: null,
+        y: { 
+          ticks: {
+            count: 101,
+            callback: (value, index, values ) => {
+              if ([0,30,55,75,90,100].includes(value)) {
+                return value
+              };
+              if (value == 15) {
+                return "Rezagado Digital"
+              };
+              if (value == 42) {
+                return "Explorador Digital"
+              };
+              
+              if (value == 65) {
+                return "Adoptador Digital"
+              };
+              
+              if (value == 82) {
+                return "Líder Digital"
+              };
+              
+              if (value == 95) {
+                return "Disruptor Digital"
+              };
             }
           },
-          scales: {
-            x: {
-              stacked: true
-            },
-            y: { 
-              ticks: {
-                count: 101,
-                callback: (value, index, values ) => {
-                  if ([0,30,55,75,90,100].includes(value)) {
-                    return value
-                  };
-                  if (value == 15) {
-                    return "Rezagado Digital"
-                  };
-                  if (value == 42) {
-                    return "Explorador Digital"
-                  };
-                  
-                  if (value == 65) {
-                    return "Adoptador Digital"
-                  };
-                  
-                  if (value == 82) {
-                    return "Líder Digital"
-                  };
-                  
-                  if (value == 95) {
-                    return "Disruptor Digital"
-                  };
+          grid: {
+            color: function(context) {
+              let response = [];
+              for (i = 0; i < context.scale.ticks.length; i++) {
+                if (i == context.index) {
+                  if (Number.isInteger(context.scale.ticks[i].label)) {
+                    return "rgba(0, 0, 0, 0.2)"
+                  } else {
+                    return false
+                  }
                 }
-              },
-              grid: {
-                color: function(context) {
-                  let response = [];
-                  for (i = 0; i < context.scale.ticks.length; i++) {
-                    if (i == context.index) {
-                      if (Number.isInteger(context.scale.ticks[i].label)) {
-                        return "rgba(0, 0, 0, 0.2)"
-                      } else {
-                        return false
-                      }
-                    }
-                  };
-                }
-              },
-              min: 0, 
-              max: 100,
-            },
-          },
-          elements: {
-            line: {
-              borderWidth: 3
+              };
             }
-          }
+          },
+          min: 0, 
+          max: 100,
         },
-      });            
-    </script>
-<% end %>
+      },
+      elements: {
+        line: {
+          borderWidth: 3
+        }
+      }
+    },
+  });            
+</script>

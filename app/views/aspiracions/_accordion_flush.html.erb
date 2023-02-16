@@ -11,9 +11,7 @@
         <div class="accordion-body">
           <div class = "row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 "> 
-              <%= turbo_frame_tag "maturity_graph" do %>
-                <%= render "maturity_graph", recomendation_mat: recomendation_mat, itdcon: itdcon %>
-              <%end%>
+              <%= render "maturity_graph", recomendation_mat: recomendation_mat, itdcon: itdcon %>
             </div>
             <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <div class="d-flex align-items-center w-100">
@@ -21,26 +19,24 @@
                   <%= render "form_maturity", empresa: empresa, aspiracion: aspiracion, recomendation_mat: recomendation_mat, itdcon: itdcon %>
                 </div>
                 <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 " >
-                  <%= turbo_frame_tag "maturity_graph" do %>
-                    <div class="d-flex justify-content-around">
-                      <div>
-                        <p class="text-center"><b>Aspiración<br>de Madurez</b></p>
-                        <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
-                          <h4 class="text-center"><b><%= recomendation_mat["maturity_score"].round %></b></h4>
-                        <%else%>
-                          <h6 class="text-center"><b> -- </b></h6>
-                        <%end%>
-                      </div>
-                      <div>
-                        <p class="text-center"><b>Aspiración de<br>Alineamiento</b></p>
-                        <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
-                          <h4 class="text-center"><b><%= recomendation_mat["alignment_score"].round %></b></h4>
-                        <%else%>
-                          <h6 class="text-center"><b> -- </b></h6>
-                        <%end%>
-                      </div>
+                  <div class="d-flex justify-content-around">
+                    <div>
+                      <p class="text-center"><b>Aspiración<br>de Madurez</b></p>
+                      <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
+                        <h4 class="text-center"><b><%= aspiracion_mat["maturity_score"].round %></b></h4>
+                      <%else%>
+                        <h6 class="text-center"><b> -- </b></h6>
+                      <%end%>
                     </div>
-                  <%end%>
+                    <div>
+                      <p class="text-center"><b>Aspiración de<br>Alineamiento</b></p>
+                      <%if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"] > 0) %>
+                        <h4 class="text-center"><b><%= aspiracion_mat["alignment_score"].round %></b></h4>
+                      <%else%>
+                        <h6 class="text-center"><b> -- </b></h6>
+                      <%end%>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="d-flex justify-content-end w-100">
@@ -73,16 +69,12 @@
         <div class="accordion-body">
           <div class = "row">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-              <%= turbo_frame_tag "dat_graph" do %>
-                <%= render "dat_graph", recomendation_dat: recomendation_dat, points_dat: points_dat, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat %>
-              <%end%>
+              <%= render "dat_graph", recomendation_dat: recomendation_dat, points_dat: points_dat, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat %>
             </div>
             <div class="d-flex flex-column flex-wrap justify-content-center col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <div class="d-flex flex-wrap align-items-center w-100">
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" >
-                  <%= turbo_frame_tag "dat_form" do %>
-                    <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, points_dat: points_dat  %>
-                  <%end%>
+                  <%= render "form_dat", empresa: empresa, aspiracion: aspiracion, recomendation_dat: recomendation_dat, recomendation_mat: recomendation_mat, points_dat: points_dat  %>
                   <p style="font-size: 12px; margin-bottom: -2px"> Para el mejor alineamiento entre DATs debes subir los DATs a:</p>
                   <% points_dat.keys().each do |dat|%>
                     <div>
@@ -92,10 +84,8 @@
                     </div>
                   <% end %>
                 </div>
-                <div class="ms-1 col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
-                  <%= turbo_frame_tag "result_dat" do %>
-                    <%= render "result_dat", aspiracion_mat: aspiracion_mat  %>
-                  <%end%>
+                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
+                  <%= render "result_dat", aspiracion_mat: aspiracion_mat  %>
                   <div class="d-flex justify-content-end w-100">
                     <input type="submit" value="Enviar" form="submit_dat_form" class="btn btn-primary border border-dark me-4 mt-2">
                   </div>
@@ -106,8 +96,6 @@
         </div>
       </div>
     </div>
-    <%= turbo_frame_tag "hab_section" do %>
-      <%= render "hab_section", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, recomendation_hab: recomendation_hab, points_hab: points_hab, points_dat: points_dat, aspiracion_hab: aspiracion_hab, recomendation_dat: recomendation_dat%>
-    <%end%>
+    <%= render "hab_section", empresa: empresa, aspiracion: aspiracion, aspiracion_dat: aspiracion_dat, aspiracion_mat: aspiracion_mat, recomendation_hab: recomendation_hab, points_hab: points_hab, points_dat: points_dat, aspiracion_hab: aspiracion_hab, recomendation_mat: recomendation_mat%>
   </div>
 <%end%>

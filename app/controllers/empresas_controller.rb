@@ -1,7 +1,9 @@
 class EmpresasController < ApplicationController
   before_action :set_empresa, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!, exept: [:index, :show]
-  #before_action :correct_user, only: [:edit, :update, :show, :destroy]
+  before_action :authenticate_user!
+  before_action :correct_user, only: [ :edit, :update, :destroy ]
+  before_action :correct_user_show, only: [ :show]
+  before_action :correct_user_new, only: [ :new]
   def index
     @empresas = Empresa.all
   end
@@ -16,14 +18,14 @@ class EmpresasController < ApplicationController
 
   def create
     @empresa = Empresa.new(empresa_params)
-
+    
     respond_to do |format|
       if @empresa.save
 
         current_user.empresa_id = @empresa.id
         current_user.is_admin = 1
         current_user.save
-        format.html { redirect_to empresa_url(@empresa), notice: "Empresa was successfully created." }
+        format.html { redirect_to empresa_url(@empresa), notice: "Empresa creada con éxito." }
         format.json { render :show, status: :created, location: @empresa }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +39,7 @@ class EmpresasController < ApplicationController
     if current_user.empresa_id == @empresa.id and current_user.is_admin
         @empresa.destroy
         respond_to do |format|
-          redirect_to root_path, notice: "Empresa was successfully destroyed."
+          redirect_to root_path, notice: "Empresa eliminada con éxito."
           format.json { head :no_content }
         end 
     else
@@ -48,23 +50,28 @@ class EmpresasController < ApplicationController
   end
   
   def show
-    
   end
-
-  #def correct_user
-   # empresaid = @empresa.id
-    #@verificador = current_user.empresa_id == empresaid
-    #redirect_to empresas_path, notice: "No tienes permiso realizar esa acción." if !@verificador
-
-  #end
 
   private
 
+  def correct_user_show
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != current_user.empresa
+  end
+
+  def correct_user_new
+    redirect_to root_path, notice: "Ya eres miembro de una empresa." if current_user.empresa
+  end
+
+  def correct_user
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if !(@empresa == current_user.empresa and current_user.is_admin)
+  end
+
   def set_empresa
-    @empresa = Empresa.find(params[:id])
+    @empresa = Empresa.find_by(id: params[:id])
+    redirect_to root_path, notice: "Acción inválida." if !@empresa
   end
 
   def empresa_params
-    params.require(:empresa).permit(:name, :rut, :sector, :income)
+    params.require(:empresa).permit(:name, :rut, :sector, :size)
   end
 end

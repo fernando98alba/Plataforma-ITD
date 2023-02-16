@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_160948) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,26 +30,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_160948) do
     t.bigint "empresa_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "estratégico"
-    t.integer "estructural"
-    t.integer "humano"
-    t.integer "relacional"
-    t.integer "natural"
-    t.integer "estrategia"
-    t.integer "modelos_de_negocios"
-    t.integer "governance"
-    t.integer "procesos"
-    t.integer "tecnología"
-    t.integer "datos_y_analítica"
-    t.integer "modelo_operativo"
-    t.integer "propiedad_intelectual"
-    t.integer "personas"
-    t.integer "ciclo_de_vida_del_colaborador"
-    t.integer "estructura_organizacional"
-    t.integer "stakeholders"
-    t.integer "marca"
-    t.integer "clientes"
-    t.integer "sustentabilidad"
+    t.float "estratégico"
+    t.float "estructural"
+    t.float "humano"
+    t.float "relacional"
+    t.float "natural"
+    t.float "estrategia"
+    t.float "modelos_de_negocios"
+    t.float "governance"
+    t.float "procesos"
+    t.float "tecnología"
+    t.float "datos_y_analítica"
+    t.float "modelo_operativo"
+    t.float "propiedad_intelectual"
+    t.float "personas"
+    t.float "ciclo_de_vida_del_colaborador"
+    t.float "estructura_organizacional"
+    t.float "stakeholders"
+    t.float "marca"
+    t.float "clientes"
+    t.float "sustentabilidad"
     t.index ["empresa_id"], name: "index_aspiracions_on_empresa_id"
   end
 
@@ -94,7 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_160948) do
     t.string "name"
     t.string "rut"
     t.string "sector"
-    t.integer "income"
+    t.string "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

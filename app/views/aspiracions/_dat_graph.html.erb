@@ -1,125 +1,123 @@
-<%= turbo_frame_tag "dat_graph" do %>  
-  <div>
-    <canvas id="myChart" height="350px"></canvas>
-  </div>
-  <script>
-    label = [];
-    values = [];
-    maturity = [] ;
-    recomendation = [];
-    <% points_dat.keys.each do |dat|%>
-      label.push("Capital <%= dat %>");
-      values.push(<%= points_dat[dat].round%>);
-      maturity.push(<%= aspiracion_mat["maturity_score"].round%>);
-      recomendation.push(<%= recomendation_dat[dat].round%>);
-    <%end%>
-    ctx = document.getElementById('myChart');
-    data = [{
-        label: 'Puntaje Aspirado',
-        type: 'line',
-        data: maturity,
-        backgroundColor: "red",
-        borderColor:'red',
-        pointRadius: 1,
-      },
-      {
-        label: 'Puntaje por Capital',
-        type: 'bar',
-        data: values,
-        fill: true,
-        backgroundColor: "blue",
-        borderColor:'blue'
-      },
-      {
-        label: 'Aspiración Recomendada',
-        type: 'bar',
-        data: recomendation,
-        fill: true,
-        backgroundColor: "gray",
-        borderColor:'gray'
-    }];
-    <% if aspiracion_dat.keys.length > 0 %>
-      aspiracion = [];
-      <% points_dat.keys.each do |dat|%>
-        aspiracion.push(<%= aspiracion_dat[dat].round%>);
-      <%end%>
-      data.splice(2,0,{
-      label: 'Aspiración Establecida',
+ <div>
+  <canvas id="myChart" height="350px"></canvas>
+</div>
+<script>
+  label = [];
+  values = [];
+  maturity = [] ;
+  recomendation = [];
+  <% points_dat.keys.each do |dat|%>
+    label.push("Capital <%= dat %>");
+    values.push(<%= points_dat[dat].round%>);
+    maturity.push(<%= aspiracion_mat["maturity_score"].round%>);
+    recomendation.push(<%= recomendation_dat[dat].round%>);
+  <%end%>
+  ctx = document.getElementById('myChart');
+  data = [{
+      label: 'Puntaje Aspirado',
+      type: 'line',
+      data: maturity,
+      backgroundColor: "red",
+      borderColor:'red',
+      pointRadius: 1,
+    },
+    {
+      label: 'Puntaje por Capital',
       type: 'bar',
-      data: aspiracion,
+      data: values,
       fill: true,
-      borderColor: '#FFFFF',
-      backgroundColor: '#00000',
-      })
+      backgroundColor: "blue",
+      borderColor:'blue'
+    },
+    {
+      label: 'Aspiración Recomendada',
+      type: 'bar',
+      data: recomendation,
+      fill: true,
+      backgroundColor: "gray",
+      borderColor:'gray'
+  }];
+  <% if aspiracion_dat.keys.length > 0 %>
+    aspiracion = [];
+    <% points_dat.keys.each do |dat|%>
+      aspiracion.push(<%= aspiracion_dat[dat].round%>);
     <%end%>
-    new Chart(ctx, {
-      data: {
-      labels: label,
-      datasets: data,
-      },
-      options: {
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            onClick: null,
-          }
-        },
-        scales: {
-          x: {
-            stacked: true
-          },
-          y: { 
-            ticks: {
-              count: 101,
-              callback: (value, index, values ) => {
-                if ([0,30,55,75,90,100].includes(value)) {
-                  return value
-                };
-                if (value == 15) {
-                  return "Rezagado Digital"
-                };
-                if (value == 42) {
-                  return "Explorador Digital"
-                };
-                
-                if (value == 65) {
-                  return "Adoptador Digital"
-                };
-                
-                if (value == 82) {
-                  return "Líder Digital"
-                };
-                
-                if (value == 95) {
-                  return "Disruptor Digital"
-                };
-              }
-            },
-            grid: {
-              color: function(context) {
-                let response = [];
-                for (i = 0; i < context.scale.ticks.length; i++) {
-                  if (i == context.index) {
-                    if (Number.isInteger(context.scale.ticks[i].label)) {
-                      return "rgba(0, 0, 0, 0.2)"
-                    } else {
-                      return false
-                    }
-                  }
-                };
-              }
-            },
-            min: 0, 
-            max: 100,
-          },
-        },
-        elements: {
-          line: {
-            borderWidth: 3
-          }
+    data.splice(2,0,{
+    label: 'Aspiración Establecida',
+    type: 'bar',
+    data: aspiracion,
+    fill: true,
+    borderColor: '#FFFFF',
+    backgroundColor: '#00000',
+    })
+  <%end%>
+  new Chart(ctx, {
+    data: {
+    labels: label,
+    datasets: data,
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          onClick: null,
         }
       },
-    });   
-  </script>
-<% end %>
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: { 
+          ticks: {
+            count: 101,
+            callback: (value, index, values ) => {
+              if ([0,30,55,75,90,100].includes(value)) {
+                return value
+              };
+              if (value == 15) {
+                return "Rezagado Digital"
+              };
+              if (value == 42) {
+                return "Explorador Digital"
+              };
+              
+              if (value == 65) {
+                return "Adoptador Digital"
+              };
+              
+              if (value == 82) {
+                return "Líder Digital"
+              };
+              
+              if (value == 95) {
+                return "Disruptor Digital"
+              };
+            }
+          },
+          grid: {
+            color: function(context) {
+              let response = [];
+              for (i = 0; i < context.scale.ticks.length; i++) {
+                if (i == context.index) {
+                  if (Number.isInteger(context.scale.ticks[i].label)) {
+                    return "rgba(0, 0, 0, 0.2)"
+                  } else {
+                    return false
+                  }
+                }
+              };
+            }
+          },
+          min: 0, 
+          max: 100,
+        },
+      },
+      elements: {
+        line: {
+          borderWidth: 3
+        }
+      }
+    },
+  });   
+</script>
 

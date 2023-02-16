@@ -3,6 +3,9 @@ class ItdconsController < ApplicationController
   before_action :get_points, only: [ :show]
   before_action :get_empresa
   before_action :get_participants, only: [ :index, :create]
+  before_action :authenticate_user!
+  before_action :correct_user
+  before_action :correct_empresa, only: [:show]
 
   def index
     @itdcons = @empresa.itdcons.order(id: :asc)
@@ -10,6 +13,7 @@ class ItdconsController < ApplicationController
     @last_itdcon = @itdcons.where(completed: true).last
     @last_not_completed_itdcon = @itdcons.find_by(completed: false)
   end
+
   def create
     @itdcon = @empresa.itdcons.build()
     puts itdcon_params
@@ -55,6 +59,15 @@ class ItdconsController < ApplicationController
   end
 
   private
+
+  def correct_user
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != current_user.empresa
+  end
+
+  def correct_empresa
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != @itdcon.empresa
+  end
+
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:id])
   end
@@ -112,6 +125,7 @@ class ItdconsController < ApplicationController
   
   def get_empresa
     @empresa = Empresa.find_by(id:params[:empresa_id])
+    redirect_to root_path, notice: "Acción invalida." if !@empresa
   end
 
   def get_participants

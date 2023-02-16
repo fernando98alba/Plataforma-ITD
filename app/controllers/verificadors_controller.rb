@@ -1,6 +1,7 @@
 class VerificadorsController < ApplicationController
   before_action :get_verificador,  only: [:edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   def edit
   end
   def update 

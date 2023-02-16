@@ -12,6 +12,9 @@
   <% end %>
 
   <%= form.hidden_field :dat, value: dat %>
+  <%recomendation_mat.keys.each do |mat|%>
+    <%= form.hidden_field mat, value: recomendation_mat[mat] %>
+  <%end%>
   <%points_hab.keys.each do |new_dat|%> 
     <%if new_dat == dat %>
       <%points_hab[new_dat].keys.each do |hab|%> 

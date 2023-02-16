@@ -1,8 +1,10 @@
 <div class="main mt-4 position-relative">
   <%= render partial: "form", locals: {empresa: @empresa, user: @empresa.users.build}%>
-  <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEquipo">
-    Invitar Miembro
-  </button>
+  <% if current_user.is_admin%>
+    <button class= "position-absolute top-0 end-0 mt-2 me-2 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEquipo">
+      Invitar Miembro
+    </button>
+  <%end%>
   <h3 >Equipo</h3>
   <div  class="row">
     <div id="size_fixed" class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -33,14 +35,24 @@
                       <%end%>
                     <%end%>
                   </div>
+
+                    <% if itdind.user == current_user%>
+                      <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
+                    <%else%>
+                      <%if current_user.is_admin%>
+                        <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
+                      <%end%>
+                    <%end%>
+
                   <div class="dropend">
                     <div type="button" id="dropdownMenuButtonEquipo1" data-bs-toggle="dropdown" aria-expanded="false">
                       <%= image_tag "logos/options.png", height: 40, class: "ms-3" %>
                     </div>
-                    
-                    <ul class="dropdown-menu ms-3" aria-labelledby="dropdownMenuButtonEquipo1">
-                      <%= link_to "Ver Perfil", user_path(user.id), class:"profileoptions" %>
-                    </ul>
+                    <% if itdind.user == current_user or current_user.is_admin%>                    
+                      <ul class="dropdown-menu ms-3" aria-labelledby="dropdownMenuButtonEquipo1">
+                        <%= link_to "Ver Perfil", user_path(user.id), class:"profileoptions" %>
+                      </ul>
+                    <%end%>
                   </div>
                 </div>
               </td>

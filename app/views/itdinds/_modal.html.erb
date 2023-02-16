@@ -9,14 +9,16 @@
         <div class="modal-body">
           <div class = "container">
             <div class="main mt-4">
-              <%= form.label driver.identifier, style: "display: block" %>
-              <%= form.text_field driver.identifier %>
+              <select name="itdind[verificador_attributes[<%=driver.identifier%>]]" id="itdind_verificador_attributes_<%=driver.identifier%>" class="form-select">
+                <%Verificador::OPTIONS.each do |option|%>
+                  <option value="<%=option%>"><%=option%></option>
+                <%end%>
+              </select>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <div type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
         </div>
       </div>
     </div>

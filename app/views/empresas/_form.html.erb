@@ -26,8 +26,12 @@
   </div>
 
   <div class="form-group mb-2 ">
-    <%= f.label "Ingresos", class: "me-2" %><br />
-    <%= f.text_field :income, autofocus: true, class: "form-control "%>
+    <%= f.label "Número de colaboradores", class: "me-2" %><br />
+    <select name="empresa[size]" id="empresa_size" class="form-select">
+      <%Empresa::OPTIONS.each do |option|%>
+        <option value="<%=option%>"><%=option%></option>
+      <%end%>
+    </select>
   </div>
 
   <div class="actions">

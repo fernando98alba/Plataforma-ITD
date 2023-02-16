@@ -1,239 +1,236 @@
-<%= turbo_frame_tag "maturity_graph" do %>
-  <div>
-    <canvas id="myChart2" height="200px"></canvas>
-  </div>
-  
-  <div class="position-absolute" style="display:none;">
-    <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
-  </div>
-  
-  <div class="position-absolute" style="display:none;">
-    <img id="location_red" src=<%=image_path("logos/location_red.png")%> width="15" height="20"/>
-  </div>
-  <script>
-    img = document.getElementById("location");
-    img_red = document.getElementById("location_red");
-    ctx2 = document.getElementById('myChart2');
+<div>
+  <canvas id="myChart2" height="200px"></canvas>
+</div>
 
-    data = {
-          labels: [0,10,20,40],
-          datasets: [
+<div class="position-absolute" style="display:none;">
+  <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
+</div>
+
+<div class="position-absolute" style="display:none;">
+  <img id="location_red" src=<%=image_path("logos/location_red.png")%> width="15" height="20"/>
+</div>
+<script>
+  img = document.getElementById("location");
+  img_red = document.getElementById("location_red");
+  ctx2 = document.getElementById('myChart2');
+
+  data = {
+        labels: [0,10,20,40],
+        datasets: [
+        { 
+          label: 'Puntaje Último ITD',
+          type: "scatter",
+          data: [{
+            y: <%= itdcon.alignment_score.round %>,
+            x: <%= itdcon.maturity_score.round %>
+          }],
+          backgroundColor: "black",
+          borderColor:'black',
+          pointStyle: img,
+        },
+        {
+          label: 'Rezagado Digital',
+          type: "line",
+          data: [30, 30, 30, 30],
+          backgroundColor: 'rgba(127, 164, 213, 1)',
+          borderColor:'rgba(127, 164, 213, 1)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: "origin"
+        },
+        {
+          label: 'Explorador Digital',
+          type: "line",
+          data: [55, 55, 55, 55],
+          backgroundColor: 'rgba(168, 183, 255, 1)',
+          borderColor:'rgba(168, 183, 255, 1)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: () => {
+            <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+              return 2
+            <%else%>
+              return 1
+            <%end%>
+          }
+        },
+        {
+          label: 'Adoptador Digital',
+          type: "line",
+          data: [75, 75, 75, 75],
+          backgroundColor: 'rgba(155, 218, 255, 1)',
+          borderColor:'rgba(155, 218, 255, 1)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: () => {
+            <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+              return 2
+            <%else%>
+              return 1
+            <%end%>
+          }
+        },
+        {
+          label: 'Líder Digital',
+          type: "line",
+          data: [90, 90, 90, 90],
+          backgroundColor: 'rgba(127, 224, 228, 1)',
+          borderColor:'rgba(127, 224, 228, 1)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: () => {
+            <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+              return 2
+            <%else%>
+              return 1
+            <%end%>
+          }
+        },
+        {
+          label: 'Disruptor Digital',
+          type: "line",
+          data: [100, 100, 100, 100],
+          backgroundColor: 'rgba(173, 239, 242, 1)',
+          borderColor:'rgba(173, 239, 242, 1)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: () => {
+            <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
+              return 2
+            <%else%>
+              return 1
+            <%end%>
+          }
+        },
+        ]
+      };
+      <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0) %>
+        data.datasets.splice(1,0,
           { 
-            label: 'Puntaje Último ITD',
+            label: 'Aspiración',
             type: "scatter",
             data: [{
-              y: <%= itdcon.alignment_score.round %>,
-              x: <%= itdcon.maturity_score.round %>
+              y: <%= recomendation_mat["alignment_score"].round %>,
+              x: <%= recomendation_mat["maturity_score"].round %>
             }],
-            backgroundColor: "black",
-            borderColor:'black',
-            pointStyle: img,
-          },
-          {
-            label: 'Rezagado Digital',
-            type: "line",
-            data: [30, 30, 30, 30],
-            backgroundColor: 'rgba(127, 164, 213, 1)',
-            borderColor:'rgba(127, 164, 213, 1)',
-            borderWidth: 1,
-            pointRadius: 0,
-            fill: "origin"
-          },
-          {
-            label: 'Explorador Digital',
-            type: "line",
-            data: [55, 55, 55, 55],
-            backgroundColor: 'rgba(168, 183, 255, 1)',
-            borderColor:'rgba(168, 183, 255, 1)',
-            borderWidth: 1,
-            pointRadius: 0,
-            fill: () => {
-              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
-                return 2
-              <%else%>
-                return 1
-              <%end%>
-            }
-          },
-          {
-            label: 'Adoptador Digital',
-            type: "line",
-            data: [75, 75, 75, 75],
-            backgroundColor: 'rgba(155, 218, 255, 1)',
-            borderColor:'rgba(155, 218, 255, 1)',
-            borderWidth: 1,
-            pointRadius: 0,
-            fill: () => {
-              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
-                return 2
-              <%else%>
-                return 1
-              <%end%>
-            }
-          },
-          {
-            label: 'Líder Digital',
-            type: "line",
-            data: [90, 90, 90, 90],
-            backgroundColor: 'rgba(127, 224, 228, 1)',
-            borderColor:'rgba(127, 224, 228, 1)',
-            borderWidth: 1,
-            pointRadius: 0,
-            fill: () => {
-              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
-                return 2
-              <%else%>
-                return 1
-              <%end%>
-            }
-          },
-          {
-            label: 'Disruptor Digital',
-            type: "line",
-            data: [100, 100, 100, 100],
-            backgroundColor: 'rgba(173, 239, 242, 1)',
-            borderColor:'rgba(173, 239, 242, 1)',
-            borderWidth: 1,
-            pointRadius: 0,
-            fill: () => {
-              <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0)%>
-                return 2
-              <%else%>
-                return 1
-              <%end%>
-            }
-          },
-          ]
-        };
-        <% if recomendation_mat["maturity_score"].round > itdcon.maturity_score.round or (recomendation_mat["alignment_score"].round < itdcon.alignment_score.round and recomendation_mat["alignment_score"].round > 0) %>
-          data.datasets.splice(1,0,
-            { 
-              label: 'Aspiración',
-              type: "scatter",
-              data: [{
-                y: <%= recomendation_mat["alignment_score"] %>,
-                x: <%= recomendation_mat["maturity_score"] %>
-              }],
-              backgroundColor: "rgba(255,0,0)",
-              borderColor:'rgba(255,0,0)',
-              pointStyle: img_red,
-            }
-          );
-        <%end%>
-        // render init block
-        myChart = new Chart(
-          document.getElementById('myChart2').getContext('2d'),
-          {
-            data,
-            options: {
-              plugins: {
-                maintainAspectRatio: false,
-                legend: {
-                  onClick: null,
-                  labels: {
-                      usePointStyle: true,
-                      filter: (legendItem, data) => {
-                          return legendItem.text == null || !legendItem.text.includes('Digital');
-                      }
-                  }
-                }
-              },
-              indexAxis: 'y',
-              scales: {
-                x: {
-                  ticks: {
-                    count: 101,
-                    callback: (value, index, values ) => {
-                      if ([0,30,55,75,90,100].includes(value)) {
-                        return value
-                      };
-                      if (value == 15) {
-                        return "Rezagado Digital"
-                      };
-                      if (value == 42) {
-                        return "Explorador Digital"
-                      };
-                      
-                      if (value == 65) {
-                        return "Adoptador Digital"
-                      };
-                      
-                      if (value == 82) {
-                        return "Líder Digital"
-                      };
-                      
-                      if (value == 95) {
-                        return "Disruptor Digital"
-                      };
-                    }
-                  },
-                  grid: {
-                    color: function(context) {
-                      let response = [];
-                      for (i = 0; i < context.scale.ticks.length; i++) {
-                        if (i == context.index) {
-                          if (Number.isInteger(context.scale.ticks[i].label)) {
-                            return "rgba(0, 0, 0, 0.2)"
-                          } else {
-                            return false
-                          }
-                        }
-                      };
-                    },
-                    z: 10
-                  },
-                  min: 0, 
-                  max: 100,
-                  stacked: false,
-                },
-                y: {
-                  ticks: {
-                    count: 9,
-                    callback: (value, index, values ) => {
-                      if ([0,10,20,40].includes(value)) {
-                        return value
-                      };
-                      if (value == 5) {
-                        return "Balance"
-                      };
-                      if (value == 15) {
-                        return "Desbalance"
-                      };
-                      if (value == 30) {
-                        return "Desalineamiento"
-                      };
-                    }
-                  },
-                  grid: {
-                    color: function(context) {
-                      let response = [];
-                      for (i = 0; i < context.scale.ticks.length; i++) {
-                        if (i == context.index) {
-                          if (Number.isInteger(context.scale.ticks[i].label)) {
-                            return "rgba(0, 0, 0, 0.2)"
-                          } else {
-                            return false
-                          }
-                        }
-                      };
-                    },
-                    z: 10
-                  },
-                  reverse: true
-                }
-              },
-              onClick: (e) => {
-
-                // Substitute the appropriate scale IDs
-                const dataX = myChart.scales.x.getValueForPixel(e.x);
-                const dataY = myChart.scales.y.getValueForPixel(e.y);
-                console.log(dataX);
-                console.log(dataY);
-              
-              }
-            },
+            backgroundColor: "rgba(255,0,0)",
+            borderColor:'rgba(255,0,0)',
+            pointStyle: img_red,
           }
         );
-    </script>
-      
-<% end %>
+      <%end%>
+      // render init block
+      myChart = new Chart(
+        document.getElementById('myChart2').getContext('2d'),
+        {
+          data,
+          options: {
+            plugins: {
+              maintainAspectRatio: false,
+              legend: {
+                onClick: null,
+                labels: {
+                    usePointStyle: true,
+                    filter: (legendItem, data) => {
+                        return legendItem.text == null || !legendItem.text.includes('Digital');
+                    }
+                }
+              }
+            },
+            indexAxis: 'y',
+            scales: {
+              x: {
+                ticks: {
+                  count: 101,
+                  callback: (value, index, values ) => {
+                    if ([0,30,55,75,90,100].includes(value)) {
+                      return value
+                    };
+                    if (value == 15) {
+                      return "Rezagado Digital"
+                    };
+                    if (value == 42) {
+                      return "Explorador Digital"
+                    };
+                    
+                    if (value == 65) {
+                      return "Adoptador Digital"
+                    };
+                    
+                    if (value == 82) {
+                      return "Líder Digital"
+                    };
+                    
+                    if (value == 95) {
+                      return "Disruptor Digital"
+                    };
+                  }
+                },
+                grid: {
+                  color: function(context) {
+                    let response = [];
+                    for (i = 0; i < context.scale.ticks.length; i++) {
+                      if (i == context.index) {
+                        if (Number.isInteger(context.scale.ticks[i].label)) {
+                          return "rgba(0, 0, 0, 0.2)"
+                        } else {
+                          return false
+                        }
+                      }
+                    };
+                  },
+                  z: 10
+                },
+                min: 0, 
+                max: 100,
+                stacked: false,
+              },
+              y: {
+                ticks: {
+                  count: 9,
+                  callback: (value, index, values ) => {
+                    if ([0,10,20,40].includes(value)) {
+                      return value
+                    };
+                    if (value == 5) {
+                      return "Balance"
+                    };
+                    if (value == 15) {
+                      return "Desbalance"
+                    };
+                    if (value == 30) {
+                      return "Desalineamiento"
+                    };
+                  }
+                },
+                grid: {
+                  color: function(context) {
+                    let response = [];
+                    for (i = 0; i < context.scale.ticks.length; i++) {
+                      if (i == context.index) {
+                        if (Number.isInteger(context.scale.ticks[i].label)) {
+                          return "rgba(0, 0, 0, 0.2)"
+                        } else {
+                          return false
+                        }
+                      }
+                    };
+                  },
+                  z: 10
+                },
+                reverse: true
+              }
+            },
+            onClick: (e) => {
+
+              // Substitute the appropriate scale IDs
+              const dataX = myChart.scales.x.getValueForPixel(e.x);
+              const dataY = myChart.scales.y.getValueForPixel(e.y);
+              console.log(dataX);
+              console.log(dataY);
+            
+            }
+          },
+        }
+      );
+</script>

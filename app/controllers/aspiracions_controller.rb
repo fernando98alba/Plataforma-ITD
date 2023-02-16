@@ -1,13 +1,18 @@
 class AspiracionsController < ApplicationController
   before_action :get_empresa
-  before_action :get_aspiracion, only: [ :index, :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!
+  before_action :get_aspiracion, only: [ :show, :destroy ]
   before_action :get_last_itdcon, only: [ :index, :show, :create, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation  ]
   before_action :get_recomendation, only: [:index, :create]
   respond_to :js, :json, :html
+  before_action :correct_user
+  before_action :correct_admin, only: [:index]
+  before_action :correct_empresa, only: [:show]
 
   def new
     @aspiracion = @empresa.aspiracion.build()
   end
+
   def index
   end
 
@@ -28,7 +33,7 @@ class AspiracionsController < ApplicationController
         if @last_aspiracion
           @last_aspiracion.delete
         end
-        format.html { redirect_to empresa_aspiracion_path(@empresa, @aspiracion), notice: "Aspiracion was successfully created." }
+        format.html { redirect_to empresa_aspiracion_path(@empresa, @aspiracion), notice: "Aspiración creada con éxito." }
       else
         format.html { redirect_to empresa_aspiracions_path(@empresa.id), status: :unprocessable_entity }
         format.json { render json: @aspiracion.errors, status: :unprocessable_entity }
@@ -95,7 +100,7 @@ class AspiracionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
+      format.html { redirect_to root_path, notice: "Aspiración creada con éxito." }
       format.turbo_stream
     end
   end
@@ -107,7 +112,11 @@ class AspiracionsController < ApplicationController
     @aspiracion_hab = {}
     @recomendation_hab = {}
     habilitadores = []
-    
+    @recomendation_mat = {}
+    @recomendation_mat["alignment_score"] = hab_params["alignment_score"].to_f
+    @recomendation_mat["maturity_score"] = hab_params["maturity_score"].to_f
+    @recomendation_dat = {}
+    calculate_recomendation
     @points_dat.keys.each do |dat|
       @aspiracion_dat[dat] = hab_params[dat].to_f 
     end
@@ -126,7 +135,7 @@ class AspiracionsController < ApplicationController
           if hab_params[hab] != "" and hab_params[hab] != nil
             @aspiracion_hab[dat][hab] = hab_params[hab].to_f
           else
-            @aspiracion_hab[dat][hab] = @points_hab[dat][hab]
+            @aspiracion_hab[dat][hab] = @points_hab[dat][hab].to_f
           end
 
           habilitadores.push @aspiracion_hab[dat][hab]
@@ -135,6 +144,10 @@ class AspiracionsController < ApplicationController
         if @aspiracion_hab[dat] == @points_hab[dat]
           @aspiracion_hab[dat] = @recomendation_hab[dat] 
           @aspiracion_dat[dat] = hab_params[dat].to_f 
+          puts "@aspiracion_dat[dat]"
+          puts @aspiracion_dat[dat]
+          puts dat
+          puts @points_hab
         end
       else
         @points_hab[dat].keys.each do |hab|
@@ -157,12 +170,10 @@ class AspiracionsController < ApplicationController
     Dat.all.each do |dat|
       @aspiracion_mat["maturity_score"] += @aspiracion_dat[dat.name.downcase.downcase]*dat.ponderador
     end
-
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
     num_sum = habilitadores.sum(0.0) {|element| (element - alignment_mean) ** 2}
     variance = num_sum / (habilitadores.size)  
     @aspiracion_mat["alignment_score"] = Math.sqrt(variance)
-
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
       format.turbo_stream
@@ -170,6 +181,19 @@ class AspiracionsController < ApplicationController
   end
 
   private
+
+  def correct_user
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != current_user.empresa
+  end
+
+  def correct_empresa
+    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != @aspiracion.empresa
+  end
+
+  def correct_admin
+    redirect_to root_path, notice: "No tienes permiso realizar definir una aspiración." if !current_user.is_admin
+  end
+
   def calculate_recomendation
     recomendation_sorted = @points_dat.sort_by{|k, v| v}
     list = {}
@@ -328,7 +352,12 @@ class AspiracionsController < ApplicationController
           list[element[0]] = element[1]
         end
         keys = list.keys
-        ptos = (@aspiracion[hab] - @points_hab[dat][hab])*@points_ele[dat][hab].keys.length
+        ptos = (@aspiracion[hab].round(4) - @points_hab[dat][hab].round(4))*@points_ele[dat][hab].keys.length
+        puts "AAAAAA"
+        puts ptos
+        puts @aspiracion[hab]
+        puts @points_hab[dat][hab]
+        puts hab
         while ptos >0
           diff = 0 #la diferencia entre un habilitador y el siguiente
           list_aux = [] #habilitadores a subir puntaje
@@ -381,6 +410,7 @@ class AspiracionsController < ApplicationController
         @recomendation_element[hab] = list
       end
     end
+    puts @recomendation_element
     @points_dri = {}
     Dat.all.each do |dat|
       @recomendation_driver[dat.name.downcase.downcase] = {}
@@ -412,41 +442,26 @@ class AspiracionsController < ApplicationController
               end
             end
             if diff == 0 #caso en que todos los habilitadores están con el mismo puntaje
-              resta = (ptos/keys.length).floor #cantidad a subir por habilitador (es el piso para que sea entero y no sume más de la cuenta)
-              keys.each do |key|
+              resta = (ptos/keys.length) # ESTO ES LO QUE HAY Q VER SI QUIERO Q SEAN ENTEROS cantidad a subir por habilitador (es el piso para que sea entero y no sume más de la cuenta) 
+              keys.each do |key| 
                 list[key] += resta
                 ptos -= resta
               end
-              if ptos > 0
-                keys.each do |key|
-                  list[key] += 1
-                  ptos -= 1
-                  if ptos == 0
-                    break
-                  end
-                end
-              end
+              
             else
+
               if diff*list_aux.length <= ptos
                 list_aux.each do |key|
                   list[key] += diff
                 end
                 ptos -= diff*list_aux.length
               else
-                resta = (ptos/keys.length).floor
+                resta = (ptos/keys.length)
                 list_aux.each do |key|
                   list[key] += resta
                   ptos -= resta
                 end
-                if ptos > 0
-                  list_aux.each do |key|
-                    list[key] += 1
-                    ptos -= 1
-                    if ptos == 0
-                      break
-                    end
-                  end
-                end
+                
               end
             end
           end
@@ -455,6 +470,7 @@ class AspiracionsController < ApplicationController
         end
       end
     end
+    puts @recomendation_driver
   end
 
   def get_recomendation
@@ -468,19 +484,23 @@ class AspiracionsController < ApplicationController
     @aspiracion_hab = {}
     @recomendation_mat["maturity_score"] = 0
     @recomendation_mat["alignment_score"] = 0
+    @aspiracion_mat["maturity_score"] = 0
+    @aspiracion_mat["alignment_score"] = 0
   end
 
   def get_aspiracion
     @aspiracion = @empresa.aspiracion.last
+    redirect_to empresa_aspiracions_path(@empresa), notice: "Acción invalida." if !@aspiracion
   end
 
   def get_empresa
-
     @empresa = Empresa.find_by(id: params[:empresa_id])
+    redirect_to root_path, notice: "Acción invalida." if !@empresa
   end
 
   def get_last_itdcon
     @itdcon = @empresa.itdcons.where(completed: true).last
+    redirect_to empresa_itdcons_path(@empresa), notice: "Acción invalida." if !@itdcon
   end
 
   def maturity_params
@@ -491,12 +511,12 @@ class AspiracionsController < ApplicationController
 
   def dat_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:estratégico, :estructural, :humano, :relacional, :natural, :maturity_score, :alignment_score)
+    params.require(:aspiracion).permit(:maturity_score, :alignment_score, :estratégico, :estructural, :humano, :relacional, :natural, :maturity_score, :alignment_score)
   end
 
   def hab_params
     #:maturity_score, :alignment_score, , :estrategia, :modelonegocios, :governance, :procesos, :tecnologia, :datosyalanitica, :modelooperativo, :propiedadintelectual, :personas, :ciclodevida, :estructura, :stakejolderts, :marca, :clientes, :sustentabilidad
-    params.require(:aspiracion).permit(:dat, :estrategia, :modelos_de_negocios, :governance, :procesos, :tecnología, :datos_y_analítica, :modelo_operativo, :propiedad_intelectual, :personas, :ciclo_de_vida_del_colaborador, :estructura_organizacional, :stakeholders, :marca, :clientes, :sustentabilidad, :estratégico, :estructural, :humano, :relacional, :natural,)
+    params.require(:aspiracion).permit(:maturity_score, :alignment_score, :dat, :estrategia, :modelos_de_negocios, :governance, :procesos, :tecnología, :datos_y_analítica, :modelo_operativo, :propiedad_intelectual, :personas, :ciclo_de_vida_del_colaborador, :estructura_organizacional, :stakeholders, :marca, :clientes, :sustentabilidad, :estratégico, :estructural, :humano, :relacional, :natural,)
   end
 
   def aspiracion_params

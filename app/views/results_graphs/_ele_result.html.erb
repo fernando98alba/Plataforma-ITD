@@ -98,7 +98,7 @@
                     values.push("<%= itd[driver.identifier]%>");
                     <% if itd[driver.identifier] < (itd.madurez.min + ((itd.madurez.max - itd.madurez.min)*0.4))/100*4%>
                       colors.push("rgba(255, 0, 0, 1)");
-                    <% elsif itd[driver.identifier] < (itd.madurez.min + ((itd.madurez.max - itd.madurez.min)*0.4))/100*4%>
+                    <% elsif itd[driver.identifier] < (itd.madurez.min + ((itd.madurez.max - itd.madurez.min)*0.75))/100*4%>
                       colors.push("rgba(165, 165, 165, 1)");
                     <% else %>
                       colors.push("rgba(113, 218, 0, 1)");
