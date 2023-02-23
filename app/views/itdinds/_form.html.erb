@@ -119,7 +119,6 @@
                 <div class="container" style="margin-bottom: 20px;">
                   <%habilitador.elementos.each do |elemento|%>
                     <%elemento.drivers.each do |driver|%>
-                      <%= render partial: "modal", locals: {empresa: empresa, itdcon: itdcon, itdind: itdind, driver: driver, form: form}%>
                       <div class="d-flex flex-wrap justify-content-center w-100">
                         <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-xs-11 shadow p-3 mb-5 rounded">
                           <div class="d-flex flex-wrap align-items-center " > 
@@ -128,7 +127,8 @@
                             <%else%>
                               <b><%="#{driver.identifier[1..-1]}) #{elemento.name}"%> </b>
                             <%end%>
-                            <%if driver.verifier%>
+                            <%if driver.verificadors.count>0%>
+                              <%= render partial: "modal", locals: {empresa: empresa, itdcon: itdcon, itdind: itdind, driver: driver, form: form}%>
                               <div type="button" class="ms-1" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%>">
                                 <%= image_tag "logos/dialog.png", height: 30 %>
                               </div>

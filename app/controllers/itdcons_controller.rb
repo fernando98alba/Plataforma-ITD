@@ -16,29 +16,23 @@ class ItdconsController < ApplicationController
 
   def create
     @itdcon = @empresa.itdcons.build()
-    puts itdcon_params
     @itdind = nil
     #ADD any_participant_selected
     #respond_to do |format|
-    if itdcon_params.values.include? "1"
+    @itdcon_params = itdcon_params
+    if @itdcon_params.values.include? "1"
       if @itdcon.save
-        itdcon_params.keys.each do |param|
-          if itdcon_params[param].to_i == 1
+        @itdcon_params.keys.each do |param|
+          if @itdcon_params[param].to_i == 1
             user = User.find_by(id: param.to_i) #Cambiar a paerticipants
             if user != current_user 
               itdind = user.itdinds.build()
               itdind.itdcon = @itdcon
               itdind.save()
-              verifier = Verificador.new
-              verifier.itdind = itdind
-              verifier.save
             else
               @itdind = current_user.itdinds.build()
               @itdind.itdcon = @itdcon
               @itdind.save
-              verifier = Verificador.new
-              verifier.itdind = @itdind
-              verifier.save
             end
           end
         end

@@ -7,6 +7,7 @@ class ItdsinsController < ApplicationController
   end
 
   def create
+    @itdsin_params = itdsin_params
     @itdsin = Itdsin.new(itdsin_params)
     check_if_completed()
     calculate_itdsin
@@ -34,10 +35,10 @@ class ItdsinsController < ApplicationController
     #end
     (1..91).each do |index|
       question = "p" + index.to_s
-      if !itdsin_params[question] 
+      if !@itdsin_params[question] 
         @itdsin[question] = rand(0..4) #ELIMINAAAR
       else
-        @itdsin[question] = itdsin_params[question].to_i
+        @itdsin[question] = @itdsin_params[question].to_i
       end
     end
   end

@@ -38,8 +38,8 @@
             <% @itdcons.each do |itdcon|%>
               <%if itdcon[:completed]%>
                 data_evolution.push({
-                  y: <%= itdcon.alignment_score.round %>,
-                  x: <%= itdcon.maturity_score.round %>
+                  y: <%= @itdcons.last.alignment_score.round %>,
+                  x: <%= @itdcons.last.maturity_score.round %>
                 });
               <%end%>
             <%end%>
@@ -330,7 +330,7 @@
         <h3><%= "Brechas en los habilitadores"%></h3>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 shadow p-3 mb-5 bg-white rounded">
           <div>
-            <canvas id="myChart3"></canvas>
+            <canvas id="myChart3" height="500px"></canvas>
           </div>
           <script>
             label = [];
@@ -419,6 +419,7 @@
               datasets: data_hab,
               },
               options: {
+                maintainAspectRatio: false,
                 plugins: {
                   legend: {
                     

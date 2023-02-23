@@ -4,7 +4,6 @@ class ItdindsController < ApplicationController
   before_action :get_itdcon
   before_action :get_empresa
   before_action :get_points, only: [ :show]
-  before_action :get_verificador
   before_action :authenticate_user!
   before_action :correct_user_edit, only: [:edit, :update] #CHECK QUE ITDIND.ITDCON = @ITDCON
   before_action :correct_user_show, only: [:show]
@@ -20,11 +19,12 @@ class ItdindsController < ApplicationController
   end
 
   def update
+    @parameters = itdind_params
     check_if_completed()
     if @itdind[:completed] == true
       calculate_itdind
     end
-    @verificador.update(itdind_params[:verificador_attributes])
+    update_verificators
     respond_to do |format|
       if @itdind.save
         if @itdind[:completed] == true
@@ -63,10 +63,10 @@ class ItdindsController < ApplicationController
     #end
     (1..91).each do |index|
       question = "p" + index.to_s
-      if !itdind_params[question] 
+      if !@parameters[question] 
         @itdind[question] = rand(0..4) #ELIMINAAAR
       else
-        @itdind[question] = itdind_params[question].to_i
+        @itdind[question] = @parameters[question].to_i
       end
     end
     @itdind[:completed] = true
@@ -192,16 +192,34 @@ class ItdindsController < ApplicationController
     redirect_to root_path, notice: "Acción invalida." if !@itdind
   end
 
-  def get_verificador
-    @verificador = @itdind.verificador
-    puts @verificador
+  def update_verificators
+    Verificador.all.each do |verificador|
+      state = @parameters[:com_verificadors_atributtes]["ver"+verificador.id.to_s]
+      comment = @parameters[:com_verificadors_atributtes]["comment_"+verificador.id.to_s]
+      if state != "0" and comment != ""
+        @verificador = ComVerificador.find_by(itdind_id: @itdind.id, verificador_id: verificador.id)
+        if @verificador
+          @verificador.update({state: state, comment: comment})
+        else
+          @verificador = ComVerificador.new({state: state, comment: comment})
+          @verificador.itdind = @itdind
+          @verificador.verificador_id = verificador.id
+          @verificador.save
+        end
+      end
+    end
   end
 
   def itdind_params
     permited = []
+    permited_ver = []
     Driver.all.each do |driver|
       permited.push(driver.identifier)
+      driver.verificadors.all.each do |verificador|
+        permited_ver.push("ver"+verificador.id.to_s)
+        permited_ver.push("comment_"+verificador.id.to_s)
+      end
     end
-    params.require(:itdind).permit([:itdcon_id].concat(permited), verificador_attributes: [:id].concat(permited))
+    params.require(:itdind).permit([:itdcon_id].concat(permited), com_verificadors_atributtes: [:id].concat(permited_ver))
   end
 end

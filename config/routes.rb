@@ -16,9 +16,7 @@ Rails.application.routes.draw do
   get "users/:id", to: "users#show", as: "user"
   resources :empresas do 
     resources :itdcons, only: [:index, :show, :create] do
-      resources :itdinds, only: [:show, :edit, :update] do 
-        resources :verificadors, only: [:show]
-      end
+      resources :itdinds, only: [:show, :edit, :update]
     end
     resources :aspiracions
   end

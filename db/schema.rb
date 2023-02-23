@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_22_135049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
     t.index ["iniciativa_id"], name: "index_brechas_on_iniciativa_id"
   end
 
+  create_table "com_verificadors", force: :cascade do |t|
+    t.integer "state"
+    t.string "comment"
+    t.bigint "itdind_id"
+    t.bigint "verificador_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itdind_id"], name: "index_com_verificadors_on_itdind_id"
+    t.index ["verificador_id"], name: "index_com_verificadors_on_verificador_id"
+  end
+
   create_table "dats", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -78,7 +89,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
     t.string "min_description"
     t.string "max_description"
     t.string "identifier"
-    t.string "verifier"
     t.index ["elemento_id"], name: "index_drivers_on_elemento_id"
   end
 
@@ -479,106 +489,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
   end
 
   create_table "verificadors", force: :cascade do |t|
-    t.text "p1"
-    t.text "p2"
-    t.text "p3"
-    t.text "p4"
-    t.text "p5"
-    t.text "p6"
-    t.text "p7"
-    t.text "p8"
-    t.text "p9"
-    t.text "p10"
-    t.text "p11"
-    t.text "p12"
-    t.text "p13"
-    t.text "p14"
-    t.text "p15"
-    t.text "p16"
-    t.text "p17"
-    t.text "p18"
-    t.text "p19"
-    t.text "p20"
-    t.text "p21"
-    t.text "p22"
-    t.text "p23"
-    t.text "p24"
-    t.text "p25"
-    t.text "p26"
-    t.text "p27"
-    t.text "p28"
-    t.text "p29"
-    t.text "p30"
-    t.text "p31"
-    t.text "p32"
-    t.text "p33"
-    t.text "p34"
-    t.text "p35"
-    t.text "p36"
-    t.text "p37"
-    t.text "p38"
-    t.text "p39"
-    t.text "p40"
-    t.text "p41"
-    t.text "p42"
-    t.text "p43"
-    t.text "p44"
-    t.text "p45"
-    t.text "p46"
-    t.text "p47"
-    t.text "p48"
-    t.text "p49"
-    t.text "p50"
-    t.text "p51"
-    t.text "p52"
-    t.text "p53"
-    t.text "p54"
-    t.text "p55"
-    t.text "p56"
-    t.text "p57"
-    t.text "p58"
-    t.text "p59"
-    t.text "p60"
-    t.text "p61"
-    t.text "p62"
-    t.text "p63"
-    t.text "p64"
-    t.text "p65"
-    t.text "p66"
-    t.text "p67"
-    t.text "p68"
-    t.text "p69"
-    t.text "p70"
-    t.text "p71"
-    t.text "p72"
-    t.text "p73"
-    t.text "p74"
-    t.text "p75"
-    t.text "p76"
-    t.text "p77"
-    t.text "p78"
-    t.text "p79"
-    t.text "p80"
-    t.text "p81"
-    t.text "p82"
-    t.text "p83"
-    t.text "p84"
-    t.text "p85"
-    t.text "p86"
-    t.text "p87"
-    t.text "p88"
-    t.text "p89"
-    t.text "p90"
-    t.text "p91"
-    t.bigint "itdind_id"
+    t.string "name"
+    t.bigint "driver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["itdind_id"], name: "index_verificadors_on_itdind_id"
+    t.index ["driver_id"], name: "index_verificadors_on_driver_id"
   end
 
   add_foreign_key "aspiracions", "empresas"
   add_foreign_key "brechas", "empresas"
   add_foreign_key "brechas", "iniciativas"
+  add_foreign_key "com_verificadors", "itdinds"
+  add_foreign_key "com_verificadors", "verificadors"
   add_foreign_key "drivers", "elementos"
   add_foreign_key "elementos", "habilitadors"
   add_foreign_key "habilitadors", "dats"
@@ -594,5 +516,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_132137) do
   add_foreign_key "itdsins", "alineamientos"
   add_foreign_key "itdsins", "madurezs"
   add_foreign_key "users", "empresas"
-  add_foreign_key "verificadors", "itdinds"
+  add_foreign_key "verificadors", "drivers"
 end

@@ -3,6 +3,5 @@ class AddParametersToDriver < ActiveRecord::Migration[7.0]
     add_column :drivers, :min_description, :string
     add_column :drivers, :max_description, :string
     add_column :drivers, :identifier, :string
-    add_column :drivers, :verifier, :string
   end
 end

@@ -28,8 +28,8 @@
   <div class="form-group mb-2 ">
     <%= f.label "Número de colaboradores", class: "me-2" %><br />
     <select name="empresa[size]" id="empresa_size" class="form-select">
-      <%Empresa::OPTIONS.each do |option|%>
-        <option value="<%=option%>"><%=option%></option>
+      <%Empresa::OPTIONS.keys.each do |option|%>
+        <option value=<%=option%>><%=Empresa::OPTIONS[option]%></option>
       <%end%>
     </select>
   </div>
