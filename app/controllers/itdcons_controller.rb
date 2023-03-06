@@ -1,11 +1,14 @@
 class ItdconsController < ApplicationController
   before_action :get_itdcon, only: [ :show, :edit, :update, :destroy ]
-  before_action :get_points, only: [ :show]
   before_action :get_empresa
   before_action :get_participants, only: [ :index, :create]
   before_action :authenticate_user!
   before_action :correct_user
+  before_action :correct_user_create, only: [ :create]
+  before_action :itdcon_pending, only: [ :create]
   before_action :correct_empresa, only: [:show]
+  before_action :correct_completed, only: [ :show]
+  before_action :get_points, only: [ :show]
 
   def index
     @itdcons = @empresa.itdcons.order(id: :asc)
@@ -20,6 +23,7 @@ class ItdconsController < ApplicationController
     #ADD any_participant_selected
     #respond_to do |format|
     @itdcon_params = itdcon_params
+
     if @itdcon_params.values.include? "1"
       if @itdcon.save
         @itdcon_params.keys.each do |param|
@@ -56,6 +60,18 @@ class ItdconsController < ApplicationController
 
   def correct_user
     redirect_to root_path, notice: "No tienes permiso realizar esa acción." if @empresa != current_user.empresa
+  end
+
+  def correct_user_create
+    redirect_to empresa_itdcons_path(@empresa.id), notice: "Solo el administrador puede iniciar una medición." if current_user.is_admin == "0"
+  end
+
+  def itdcon_pending
+    redirect_to empresa_itdcons_path(@empresa.id), notice: "Aún hay una medición pendiednte." if @empresa.itdcons.find_by(completed: false) != nil
+  end
+
+  def correct_completed
+    redirect_to empresa_itdcons_path(@empresa.id), notice: "Todos deben responder la encuesta antes de ver los resultados." if (!@itdcon.completed)
   end
 
   def correct_empresa

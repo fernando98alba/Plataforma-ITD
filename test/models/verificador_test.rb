@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ItdSrV1Test < ActiveSupport::TestCase
+class VerificadorTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

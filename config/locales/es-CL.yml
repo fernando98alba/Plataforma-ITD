@@ -2,7 +2,17 @@
 es-CL:
   activerecord:
     attributes:
+      empresa:
+        name: Nombre de Empresa
+        lastname: Apellido de Empresa
+        rut: Rut de Empresa
+        size: Cantidad de colaboradores de Empresa
+        sector: Sector de Empresa
       user:
+        name: Nombre
+        lastname: Apellido
+        rut: Rut
+        password: La Contraseña
         confirmation_sent_at: Confirmación enviada a
         confirmation_token: Código de confirmación
         confirmed_at: Confirmado en
@@ -27,6 +37,9 @@ es-CL:
         unlock_token: Código de desbloqueo
         updated_at: Actualizado en
     models:
+      empresa:
+        one: Empresa
+        other: Empresas
       user:
         one: Usuario
         other: Usuarios

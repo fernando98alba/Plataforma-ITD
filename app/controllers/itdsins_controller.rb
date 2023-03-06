@@ -9,7 +9,6 @@ class ItdsinsController < ApplicationController
   def create
     @itdsin_params = itdsin_params
     @itdsin = Itdsin.new(itdsin_params)
-    check_if_completed()
     calculate_itdsin
     respond_to do |format|
       if @itdsin.save
@@ -29,19 +28,6 @@ class ItdsinsController < ApplicationController
   def not_signed_in
     redirect_to root_path, notice: "No tienes permiso para realizar esa acción." if current_user
   end
-  def check_if_completed
-    #if !itdsin_params.values.include? ""
-     # @itdsin[:completed] = true
-    #end
-    (1..91).each do |index|
-      question = "p" + index.to_s
-      if !@itdsin_params[question] 
-        @itdsin[question] = rand(0..4) #ELIMINAAAR
-      else
-        @itdsin[question] = @itdsin_params[question].to_i
-      end
-    end
-  end
 
   def calculate_itdsin
     madurez = 0
@@ -54,7 +40,6 @@ class ItdsinsController < ApplicationController
           point_elemento = 0
           elemento.drivers.each do |driver|
             point_elemento += @itdsin[driver.identifier]
-            puts
           end
           point_elemento = point_elemento/elemento.drivers.count.to_f
           point_elemento = point_elemento*100.0/4

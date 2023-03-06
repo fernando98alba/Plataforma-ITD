@@ -1,17 +1,14 @@
 class AspiracionsController < ApplicationController
   before_action :get_empresa
   before_action :authenticate_user!
-  before_action :get_aspiracion, only: [ :show, :destroy ]
-  before_action :get_last_itdcon, only: [ :index, :show, :create, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation  ]
-  before_action :get_recomendation, only: [:index, :create]
+  before_action :exists_aspiracion, only: [ :show] 
+  before_action :get_aspiracion
+  before_action :get_last_itdcon, only: [ :index, :show, :create, :update, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation  ]
+  before_action :get_recomendation, only: [:index, :create, :update]
   respond_to :js, :json, :html
   before_action :correct_user
-  before_action :correct_admin, only: [:index]
+  before_action :correct_admin, only: [:index, :create, :update, :update_maturity_recomendation, :update_dat_recomendation, :update_hab_recomendation]
   before_action :correct_empresa, only: [:show]
-
-  def new
-    @aspiracion = @empresa.aspiracion.build()
-  end
 
   def index
   end
@@ -25,14 +22,22 @@ class AspiracionsController < ApplicationController
   end
 
   def create
-    @last_aspiracion = @empresa.aspiracion.last
-    @aspiracion = Aspiracion.new(aspiracion_params)
-    
+    @aspiracion = @empresa.build_aspiracion(aspiracion_params)
     respond_to do |format|
       if @aspiracion.save
-        if @last_aspiracion
-          @last_aspiracion.delete
-        end
+        format.html { redirect_to empresa_aspiracion_path(@empresa, @aspiracion), notice: "Aspiración creada con éxito." }
+      else
+        format.html { redirect_to empresa_aspiracions_path(@empresa.id), status: :unprocessable_entity }
+        format.json { render json: @aspiracion.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    puts "update"
+    @aspiracion = @empresa.aspiracion
+    respond_to do |format|
+      if @aspiracion.update(aspiracion_params)
         format.html { redirect_to empresa_aspiracion_path(@empresa, @aspiracion), notice: "Aspiración creada con éxito." }
       else
         format.html { redirect_to empresa_aspiracions_path(@empresa.id), status: :unprocessable_entity }
@@ -58,14 +63,18 @@ class AspiracionsController < ApplicationController
     end
     get_points
     calculate_recomendation
+    puts @recomendation_dat
     @aspiracion_mat["maturity_score"] = @recomendation_mat["maturity_score"]
     calculate_alignment
     if @aspiracion_mat["alignment_score"]> @recomendation_mat["alignment_score"]
-      puts "ERROOOOR"
       ensure_alignment
+    else
+      @recomendation_mat["alignment_score"] = @aspiracion_mat["alignment_score"]
     end
+    puts @recomendation_dat
     respond_to do |format|
       format.turbo_stream
+      format.json {render json: @recomendation_mat}
     end
   end
 
@@ -103,7 +112,7 @@ class AspiracionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Aspiración creada con éxito." }
+      format.json {render json: @aspiracion_dat}
       format.turbo_stream
     end
   end
@@ -171,7 +180,7 @@ class AspiracionsController < ApplicationController
     variance = num_sum / (habilitadores.size)  
     @aspiracion_mat["alignment_score"] = Math.sqrt(variance)
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Aspiracion was successfully created." }
+      format.json {render json: @aspiracion_hab}
       format.turbo_stream
     end
   end
@@ -187,7 +196,7 @@ class AspiracionsController < ApplicationController
   end
 
   def correct_admin
-    redirect_to root_path, notice: "No tienes permiso realizar definir una aspiración." if !current_user.is_admin
+    redirect_to root_path, notice: "No tienes permiso realizar definir una aspiración." if current_user.is_admin == "0"
   end
 
   def calculate_recomendation
@@ -340,6 +349,7 @@ class AspiracionsController < ApplicationController
   end
 
   def calculate_alignment
+    @dic_hab = {}
     habilitadores = []
     @recomendation_dat.keys.each do |dat|
       recomendation_sorted = @points_hab[dat].sort_by{|k, v| v}
@@ -400,6 +410,7 @@ class AspiracionsController < ApplicationController
       end
       list.keys.each do |key|
         habilitadores.push list[key]
+        @dic_hab[key] = list[key]
       end
     end
     alignment_mean = habilitadores.sum(0.0)/habilitadores.size
@@ -564,13 +575,7 @@ class AspiracionsController < ApplicationController
   end
 
   def ensure_alignment
-    dic_hab = {}
-    @points_hab.keys.each do |dat|
-      @points_hab[dat].keys.each do |hab|
-        dic_hab[hab] = @points_hab[dat][hab]
-      end
-    end
-    recomendation_sorted = dic_hab.sort_by{|k, v| v}
+    recomendation_sorted = @dic_hab.sort_by{|k, v| v}
     list = {}
     recomendation_sorted.each do |element|
       list[element[0]] = element[1]
@@ -605,10 +610,7 @@ class AspiracionsController < ApplicationController
         break
       end
     end
-    puts "END"
-    puts alignment
     @aspiracion_mat["alignment_score"] = alignment.round(1)
-    puts list
     calculate_recomendation_from_alignment(list)
   end
   def recursive_find_alignment(min, max, alignment, list, list_aux)
@@ -636,7 +638,6 @@ class AspiracionsController < ApplicationController
     end
   end
 
-  
   def calculate_recomendation_from_alignment(list)
     @aspiracion_mat["maturity_score"] = 0
     Dat.all.each do |dat|
@@ -650,15 +651,20 @@ class AspiracionsController < ApplicationController
     @recomendation_mat["maturity_score"] = @aspiracion_mat["maturity_score"]
   end
 
-
   def get_aspiracion
-    @aspiracion = @empresa.aspiracion.last
+    @aspiracion = @empresa.aspiracion
+    if !@aspiracion
+      @aspiracion = @empresa.build_aspiracion
+    end
+  end
+  
+  def exists_aspiracion 
+    @aspiracion = @empresa.aspiracion
     redirect_to empresa_aspiracions_path(@empresa), notice: "Acción invalida." if !@aspiracion
   end
 
   def get_empresa
     @empresa = Empresa.find_by(id: params[:empresa_id])
-    redirect_to root_path, notice: "Acción invalida." if !@empresa
   end
 
   def get_last_itdcon

@@ -23,7 +23,7 @@
         <div class="form-group mb-2">
           <%= f.label :password, class: "mb-2" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
+          <em>(Debe tener <%= @minimum_password_length %> caracteres mínimo, una mayúscula, una minúscula, un número y un caracter especial)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control " %>
         </div>
@@ -32,9 +32,10 @@
           <%= f.label :password_confirmation, class: "mb-2" %><br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control " %>
         </div>
+        <%= render partial: "empresas/form", locals: {f: f}%>
 
         <div class="actions">
-          <%= f.submit "Registrarse", data: {turbo: false, disable_with: "Procesando..."}, class: "btn btn-primary" %>
+          <%= f.submit "Registrarse", data: {disable_with: "Procesando..."}, class: "btn btn-primary" %>
         </div>
       <% end %>
 

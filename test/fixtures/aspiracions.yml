@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+one:
+  maturity_score: 60.2092206790124
+  alignment_score: 5.00253468465977
+  empresa: one
+  estratégico: 59.1597222222222
+  estructural: 59.1597222222222
+  humano: 60.3395061728395
+  relacional: 59.1597222222222
+  natural: 64.5833333333334
+  estrategia: 52.9513888888889
+  modelos_de_negocios: 70.8333333333334
+  governance: 52.9513888888889
+  procesos: 59.3333333333333
+  tecnología: 59.3333333333333
+  datos_y_analítica: 59.3333333333333
+  modelo_operativo: 59.3333333333333
+  propiedad_intelectual: 59.3333333333333
+  personas: 55.2083333333333
+  ciclo_de_vida_del_colaborador: 56.0185185185185
+  estructura_organizacional: 69.7916666666667
+  stakeholders: 59.3333333333334
+  marca: 59.3333333333334
+  clientes: 59.3333333333334
+  sustentabilidad: 64.5833333333334

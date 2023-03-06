@@ -1,0 +1,2 @@
+module ItdindsHelper
+end

@@ -1,48 +1,29 @@
 require "test_helper"
-
 class EmpresasControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @empresa = empresas(:one)
-  end
-
-  test "should get index" do
-    get empresas_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_empresa_url
-    assert_response :success
-  end
-
-  test "should create empresa" do
-    assert_difference("Empresa.count") do
-      post empresas_url, params: { empresa: { nombre_empresa: @empresa.nombre_empresa, rut: @empresa.rut } }
-    end
-
-    assert_redirected_to empresa_url(Empresa.last)
-  end
+  include Devise::Test::IntegrationHelpers 
+  #La creacion se testea en user_testing
 
   test "should show empresa" do
-    get empresa_url(@empresa)
+    user = users(:one)
+    sign_in user
+    empresa = user.empresa
+    get empresa_url(empresa)
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_empresa_url(@empresa)
-    assert_response :success
+  test "should not show empresa if user not of empresa" do
+    user = users(:one)
+    sign_in(user)
+    empresa = user.empresa
+    get empresa_url(empresas(:two))
+    assert_redirected_to root_path
   end
 
-  test "should update empresa" do
-    patch empresa_url(@empresa), params: { empresa: { nombre_empresa: @empresa.nombre_empresa, rut: @empresa.rut } }
-    assert_redirected_to empresa_url(@empresa)
+  test "should not show empresa if user not logged in" do
+    get empresa_url(empresas(:two))
+    assert_redirected_to new_user_session_path
+    get empresa_url(empresas(:one))
+    assert_redirected_to new_user_session_path
   end
 
-  test "should destroy empresa" do
-    assert_difference("Empresa.count", -1) do
-      delete empresa_url(@empresa)
-    end
-
-    assert_redirected_to empresas_url
-  end
 end

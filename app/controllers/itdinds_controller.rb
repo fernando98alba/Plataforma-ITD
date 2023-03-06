@@ -3,11 +3,12 @@ class ItdindsController < ApplicationController
   before_action :get_itdind
   before_action :get_itdcon
   before_action :get_empresa
-  before_action :get_points, only: [ :show]
   before_action :authenticate_user!
   before_action :correct_user_edit, only: [:edit, :update] #CHECK QUE ITDIND.ITDCON = @ITDCON
   before_action :correct_user_show, only: [:show]
+  before_action :correct_completed, only: [:show]
   before_action :correct_empresa_itdcon
+  before_action :get_points, only: [ :show]
 
   def show
   end
@@ -28,7 +29,7 @@ class ItdindsController < ApplicationController
     respond_to do |format|
       if @itdind.save
         if @itdind[:completed] == true
-          calculate_itdcon()
+          calculate_itdcon
           if @itdcon[:completed] == true
             format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           else
@@ -46,30 +47,31 @@ class ItdindsController < ApplicationController
   private
 
   def correct_user_edit
-    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if current_user != @itdind.user
+    redirect_to empresa_itdcons_url(@empresa), notice: "No tienes permiso realizar esa acción." if !(current_user == @itdind.user and !@itdind.completed)
   end
 
   def correct_user_show
-    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if (current_user != @itdind.user and !current_user.is_admin)
+    redirect_to empresa_itdcons_url(@empresa), notice: "No tienes permiso realizar esa acción." if (current_user != @itdind.user and !(current_user.is_admin == "1" and current_user.empresa == @empresa))
   end
   
+  def correct_completed
+    redirect_to empresa_itdcons_url(@empresa), notice: "Todos deben responder la encuesta antes de ver los resultados." if (!@itdcon.completed)
+  end
+
   def correct_empresa_itdcon
     redirect_to root_path, notice: "No tienes permiso realizar esa acción." if !(@itdind.itdcon == @itdcon and @itdcon.empresa == @empresa)
   end
 
   def check_if_completed
-    #if !itdind_params.values.include? ""
-     # @itdind[:completed] = true
-    #end
+    @itdind[:completed] = true
     (1..91).each do |index|
       question = "p" + index.to_s
       if !@parameters[question] 
-        @itdind[question] = rand(0..4) #ELIMINAAAR
+        @itdind[:completed] = false
       else
         @itdind[question] = @parameters[question].to_i
       end
     end
-    @itdind[:completed] = true
   end
 
   def calculate_itdind
@@ -83,7 +85,6 @@ class ItdindsController < ApplicationController
           point_elemento = 0
           elemento.drivers.each do |driver|
             point_elemento += @itdind[driver.identifier]
-            puts
           end
           point_elemento = point_elemento/elemento.drivers.count.to_f
           point_elemento = point_elemento*100.0/4
@@ -122,31 +123,33 @@ class ItdindsController < ApplicationController
       @itdcon[:completed] = true
     end
      #Atomicidad, y si dos cambian a true al mismo tiempo?
-    Driver.all.each do |driver|
-      @itdcon[driver.identifier] = 0
+    if @itdcon[:completed] == true
+      Driver.all.each do |driver|
+        @itdcon[driver.identifier] = 0
+        itdinds.each do |itdind|
+          @itdcon[driver.identifier] += itdind[driver.identifier]
+        end
+        @itdcon[driver.identifier] = @itdcon[driver.identifier]/itdinds.length.to_f
+      end
+      @itdcon["maturity_score"] = 0
+      @itdcon["alignment_score"] = 0
       itdinds.each do |itdind|
-        @itdcon[driver.identifier] += itdind[driver.identifier]
+        @itdcon["maturity_score"] += itdind["maturity_score"]
+        @itdcon["alignment_score"] += itdind["alignment_score"]
       end
-      @itdcon[driver.identifier] = @itdcon[driver.identifier]/itdinds.length.to_f
-    end
-    @itdcon["maturity_score"] = 0
-    @itdcon["alignment_score"] = 0
-    itdinds.each do |itdind|
-      @itdcon["maturity_score"] += itdind["maturity_score"]
-      @itdcon["alignment_score"] += itdind["alignment_score"]
-    end
-    @itdcon["maturity_score"] = @itdcon["maturity_score"]/itdinds.length.to_f
-    @itdcon["alignment_score"] = @itdcon["alignment_score"]/itdinds.length.to_f
-    Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
-      if @itdcon["maturity_score"] <= level.max and @itdcon["maturity_score"] >= level.min
-        @itdcon.madurez = level
-        break
+      @itdcon["maturity_score"] = @itdcon["maturity_score"]/itdinds.length.to_f
+      @itdcon["alignment_score"] = @itdcon["alignment_score"]/itdinds.length.to_f
+      Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
+        if @itdcon["maturity_score"] <= level.max and @itdcon["maturity_score"] >= level.min
+          @itdcon.madurez = level
+          break
+        end
       end
-    end
-    Alineamiento.all.each do |level|
-      if @itdcon["alignment_score"] <= level.max and @itdcon["alignment_score"] >= level.min
-        @itdcon.alineamiento = level
-        break
+      Alineamiento.all.each do |level|
+        if @itdcon["alignment_score"] <= level.max and @itdcon["alignment_score"] >= level.min
+          @itdcon.alineamiento = level
+          break
+        end
       end
     end
     @itdcon.save
@@ -194,17 +197,19 @@ class ItdindsController < ApplicationController
 
   def update_verificators
     Verificador.all.each do |verificador|
-      state = @parameters[:com_verificadors_atributtes]["ver"+verificador.id.to_s]
-      comment = @parameters[:com_verificadors_atributtes]["comment_"+verificador.id.to_s]
-      if state != "0" and comment != ""
-        @verificador = ComVerificador.find_by(itdind_id: @itdind.id, verificador_id: verificador.id)
-        if @verificador
-          @verificador.update({state: state, comment: comment})
-        else
-          @verificador = ComVerificador.new({state: state, comment: comment})
-          @verificador.itdind = @itdind
-          @verificador.verificador_id = verificador.id
-          @verificador.save
+      if @parameters[:com_verificadors_atributtes]
+        state = @parameters[:com_verificadors_atributtes]["ver"+verificador.id.to_s]
+        comment = @parameters[:com_verificadors_atributtes]["comment_"+verificador.id.to_s]
+        if !(state == "0" and comment == "")
+          @verificador = ComVerificador.find_by(itdind_id: @itdind.id, verificador_id: verificador.id)
+          if @verificador
+            @verificador.update({state: state, comment: comment})
+          else
+            @verificador = ComVerificador.new({state: state, comment: comment})
+            @verificador.itdind = @itdind
+            @verificador.verificador_id = verificador.id
+            @verificador.save
+          end
         end
       end
     end

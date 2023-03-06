@@ -2,22 +2,30 @@
   <h1 class="text-center" style="margin-bottom: 60px">Resultados Consolidados medición <%=l(@itdcon.created_at.to_date, format: :custom_itd)%></h1>
   <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
-
-      <div class="dropdown mb-2">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Respuestas Consolidadas
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <% @itdcon.itdinds.each do |itdind|%>
-            <% if itdind.user == current_user%>
-              <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
-            <%else%>
-              <%if current_user.is_admin%>
-                <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
-              <%end%>
-            <%end%>
-          <% end %>
-        </ul>
+      <div class=" row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-wrap justify-content-start">
+          <div class="dropdown mb-2">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Respuestas Consolidadas
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <% @itdcon.itdinds.each do |itdind|%>
+                <% if itdind.user == current_user%>
+                  <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
+                <%else%>
+                  <%if current_user.is_admin%>
+                    <%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %>
+                  <%end%>
+                <%end%>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-wrap justify-content-xl-end justify-content-lg-end justify-content-md-end justify-content-sm-start justify-content-xs-start">
+          <div>
+            <%= link_to "Resultado Verificadores", empresa_itdcon_com_verificadors_url(@empresa, @itdcon), data: {turbo: false}, class:"btn btn-secondary"%>
+          </div>
+        </div>
       </div>
       <%= render partial: "results_graphs/maturity_result", locals: {itd: @itdcon}%>
       

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'con_verificadors/index'
   root "homes#index"
   post 'empresas/:empresa_id/aspiracions/update_maturity_recomendation', to: 'aspiracions#update_maturity_recomendation', as: 'update_maturity_recomendation'
   post 'empresas/:empresa_id/aspiracions/update_dat_recomendation', to: 'aspiracions#update_dat_recomendation', as: 'update_dat_recomendation'
@@ -14,13 +15,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   get "empresas/:empresa_id/users", to: "users#index", as: "empresa_users"
   get "users/:id", to: "users#show", as: "user"
-  resources :empresas do 
+  resources :empresas, only: [:show] do 
     resources :itdcons, only: [:index, :show, :create] do
       resources :itdinds, only: [:show, :edit, :update]
+      resources :com_verificadors, only: [:index]
     end
-    resources :aspiracions
+    resources :aspiracions, only: [:index, :show, :create, :update]
   end
-  resources :itdsins 
+  resources :itdsins , only: [:new, :create, :show]
   get "homes/example"
 
   get '/*paths', to: 'unhandled#show'

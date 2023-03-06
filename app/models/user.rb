@@ -3,10 +3,20 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
-  belongs_to :empresa, optional: true
+  validates :name, presence: true
+  validates :lastname, presence: true
+  belongs_to :empresa
   has_many :itdinds
-
+  validate :password_complexity
+  accepts_nested_attributes_for :empresa
   private
+
+  def password_complexity
+    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return if password.blank? || password =~ /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/
+
+    errors.add :password, ' no cumple los requisitos de complejidad'
+  end
 
   def block_from_invitation?
     #If the user has not been confirmed yet, we let the usual controls work

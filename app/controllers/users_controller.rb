@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
-  before_action :get_empresa, only: [:index]
+  before_action :get_empresa, only: [:index, :invite_member]
   before_action :get_user, only: [:show]
   before_action :authenticate_user!
   before_action :correct_user, only: [:show]#cualquier miembro del equipo?
-  before_action :correct_user_empresa, only: [:index]
+  before_action :correct_user_empresa, only: [:index, :invite_member]
+  before_action :correct_user_invite, only: [:invite_member]
   
   def create
   end
@@ -22,26 +23,25 @@ class UsersController < ApplicationController
     redirect_to users_index_path
   end
 
-  def invite_member #ALERT IF INVITED_USER = CURRENT_USER #AGREGAR CASOS EN QUE ESTE INVITADO Y NO HAYA ACEPTADO
+  def invite_member #CHECK IF EMAIL IS CORRECT IN VIEW   
     user = User.find_by(email: invitation_param[:email])
     if user
       if user != current_user
-        if user.empresa_id == nil or (user.empresa_id == current_user.empresa_id and !user.accepted_or_not_invited?) #ALERTA SI EXISTE
-          user.empresa = current_user.empresa
-          user.save
-          user.invite!(current_user)
-          flash[:alert] = "Invitación enviada con exito"
+        if (user.empresa_id == current_user.empresa_id and !user.accepted_or_not_invited?) #ALERTA SI EXISTE
+          current_user.invite!(user)
+          flash[:alert] = "Invitación reenviada con exito"
         elsif user.empresa_id != current_user.empresa_id
           #ADD ALERT
           flash[:alert] = "Usuario ya pertenece a otra organización"
         else
           #ADD ALERT
-          flash[:alert] = "Usuario ya fue agregado a la organización"
+          flash[:alert] = "Usuario ya es parte de la organización"
         end
       else
         flash[:alert] = "No puedes agregarte a ti mismo"
       end
     else
+
       User.invite!({email: invitation_param[:email], empresa: current_user.empresa}, current_user)
       flash[:alert] = "Usuario invitado con exito"
     end
@@ -51,11 +51,13 @@ class UsersController < ApplicationController
   private
 
   def correct_user
-    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if !(@user == current_user or (@empresa == current_user.empresa and current_user.is_admin))
+    redirect_to root_path, notice: "No tienes permiso para realizar esa acción." if !(@user == current_user)
   end
-
+  def correct_user_invite
+    redirect_to empresa_users_path(current_user.empresa_id), notice: "No tienes permiso para realizar esa acción." if (current_user.is_admin == "0")
+  end
   def correct_user_empresa
-    redirect_to root_path, notice: "No tienes permiso realizar esa acción." if current_user.empresa != @empresa
+    redirect_to root_path, notice: "No tienes permiso para realizar esa acción." if current_user.empresa != @empresa
   end
 
   def get_empresa

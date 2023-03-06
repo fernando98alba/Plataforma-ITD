@@ -15,9 +15,6 @@ class Users::InvitationsController < DeviseController
 
   # GET /resource/accept?invitation_token=abcdef
   def edit
-    puts "aaaaaaaaa"
-    puts resource.created_by_invite?
-    puts !resource.invitation_accepted?
     if resource.name ==nil and !resource.invitation_accepted?
       set_minimum_password_length
       resource.invitation_token = params[:invitation_token]

@@ -1,0 +1,266 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+one:
+  name: Documento que formalice el propósito
+  driver: one
+
+two:
+  name: Documento con análisis competitivo vigente
+  driver: two
+
+three:
+  name: Estrategia documentada
+  driver: three
+
+four:
+  name: Listado de líderes que participan en las decisiones de Transformación que han participado en programas de formación en TD
+  driver: four
+
+five:
+  name: Listado de líderes que participan en las decisiones de Transformación que han participado en programas de formación en habilitadores de TD
+  driver: four
+
+six:
+  name: Minutas con participantes en el diseño de la Estrategia y con todos los niveles jerárquicos de la organización
+  driver: five
+
+seven:
+  name: Mapa Estratégico (Objetivos, KPI, Metas)
+  driver: six
+
+eight:
+  name: Estrategias funcionales documentadas
+  driver: seven
+
+nine:
+  name: Casos de negocio de los proyectos estratégicos
+  driver: nine
+
+ten:
+  name: Listado de Incentivos alineados con estrategia
+  driver: nine
+
+eleven:
+  name: "Plan de Comunicación de la Estrategia: Registro o evidencia de la instancia formal de presentación del plan de comunicaciones"
+  driver: ten
+
+twelve:
+  name: Reporte de avances en portafolio de Proyectos estratégicos
+  driver: eleven
+
+thirteen:
+  name: Proceso formal de revisión y seguimiento de la estrategia
+  driver: twelve
+
+fourteen:
+  name: Reporte de resultados de la estrategia
+  driver: twelve
+
+fifteen:
+  name: Portafolio de Modelos de Negocio o Servicios (según corresponda)
+  driver: thirteen
+
+sixteen:
+  name: Caso de negocio de nuevos modelos de negocios digitales
+  driver: fourteen
+
+seventeen:
+  name: Propuesta de valor documentada
+  driver: fifteen
+
+eighteen:
+  name: Proceso formal de I+D para productos y servicios
+  driver: sixteen
+
+nineteen:
+  name: Propuesta de mejoras producto de análisis de datos de clientes
+  driver: seventeen
+
+twenty:
+  name: Modelo de Governance documentado
+  driver: twenty
+
+twenty-one:
+  name: Registro de Comunicaciones Internas
+  driver: twenty-one
+
+twenty-two:
+  name: Definición formal de apetito de riesgo
+  driver: twenty-three
+
+twenty-three:
+  name: Matriz de Riesgos
+  driver: twenty-four
+
+twenty-four:
+  name: Proceso formal para Gestionar los riesgos
+  driver: twenty-four
+
+twenty-five:
+  name: Mapa de procesos documentado. Procesos documentados con notación estándar internacional (BPMN)
+  driver: twenty-five
+
+twenty-six:
+  name: Procesos formales de mejora continua
+  driver: twenty-six
+
+twenty-seven:
+  name: Dashboard/reportes con métricas priorizadas
+  driver: thirty
+
+twenty-eight:
+  name: Arquitectura tecnológica documentada
+  driver: thirty-two
+
+twenty-nine:
+  name: Política de Ciberseguridad
+  driver: thirty-five
+
+thirty:
+  name: Presupuesto de TI formalizado
+  driver: thirty-seven
+
+thirty-one:
+  name: Presupuesto de Innovación formalizado
+  driver: thirty-seven
+
+thirty-two:
+  name: Listado de tecnologías emergentes y usos
+  driver: thirty-eight
+
+thirty-three:
+  name: Mapa de procesos y aplicaciones para procesos de negocios
+  driver: thirty-nine
+
+thirty-four:
+  name: Proceso formal de búsqueda tecnológica
+  driver: forty-one
+
+thirty-five:
+  name: Proceso formal de innovación
+  driver: forty-one
+
+thirty-six:
+  name: Estrategia de datos documentada
+  driver: forty-two
+
+thirty-seven:
+  name: Ética de gestión y uso de datos documentada
+  driver: forty-four
+
+thirty-eight:
+  name: Política para gestionar propiedad intelectual en la organización
+  driver: forty-nine
+
+thirty-nine:
+  name: Proceso formal de gestión del conocimiento
+  driver: fifty-one
+
+forty:
+  name: Evaluación de liderazgo a los líderes del área
+  driver: fifty-three
+
+forty-one:
+  name: Definición formal de las competencias digitales
+  driver: fifty-nine
+
+forty-two:
+  name: Metodología documentada de gestión del cambio para proyectos de transformación
+  driver: sixty-two
+
+forty-three:
+  name: Procesos de recursos humanos documentados y alineados con la estrategia
+  driver: sixty-three
+
+forty-four:
+  name: Modelo de evaluación de desempeño
+  driver: sixty-four
+
+forty-five:
+  name: Modelo de incentivos
+  driver: sixty-five
+
+forty-six:
+  name: Programa formal de desarrollo de talento
+  driver: sixty-seven
+
+forty-seven:
+  name: Presupuesto de capacitación formalizado
+  driver: sixty-eight
+
+forty-eight:
+  name: Cultura documentada
+  driver: sixty-nine
+
+forty-nine:
+  name: Estructura organizacional documentada
+  driver: seventy
+
+fifty:
+  name: Roles definidos en la documentación de procesos
+  driver: seventy-three
+
+fifty-one:
+  name: Mapa de Stakeholders documentado
+  driver: seventy-six
+
+fifty-two:
+  name: Proceso formal de gestión de ecosistema
+  driver: seventy-seven
+
+fifty-three:
+  name: Plan de Gestión de Marca y Reputación
+  driver: seventy-nine
+
+fifty-four:
+  name: Documento que tenga formalizada la experiencia clientes
+  driver: eighty
+
+fifty-five:
+  name: Mapa del cliente (Customer Journey Map)
+  driver: eighty
+
+fifty-six:
+  name: Proceso formal para mejorar e innovar en la experiencia
+  driver: eighty-one
+
+fifty-seven:
+  name: Bases de datos de clientes actualizada
+  driver: eighty-two
+
+fifty-eight:
+  name: Embudo de clientes documentado
+  driver: eighty-three
+
+fifty-nine:
+  name: Plan de Marketing documentado
+  driver: eighty-four
+
+sixty:
+  name: Estrategia omnicanal documentada
+  driver: eighty-five
+
+sixty-one:
+  name: Métricas de canales definidas
+  driver: eighty-six
+
+sixty-two:
+  name: Plan de comunicaciones con cliente
+  driver: eighty-seven
+
+sixty-three:
+  name: Métricas de sustentabilidad definidas
+  driver: eighty-eight
+
+sixty-four:
+  name: Propósito sustentable definido y formalizado
+  driver: eighty-nine
+
+sixty-five:
+  name: Reportes que integren la visión de sustentabilidad
+  driver: ninety-one
