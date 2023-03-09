@@ -1,0 +1,72 @@
+<div class="shadow p-3 mb-5 bg-white round(1)ed">  
+  <h3>Drill-down por DAT</h3>
+  <p class="mb-3">En esta sección se muestran los resultados desagregados para cada Dimensión de Activo Transformacional </p>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <%results_hab.keys.each_with_index do |dat, index|%>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id=<%="flush-heading" + index.humanize.capitalize%>>
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=<%="#flush-collapse" + index.humanize.capitalize%> aria-expanded="false" aria-controls=<%="flush-collapse" + index.humanize.capitalize%>>
+            <h4><b>Capital <%=dat.capitalize%></b></h4>
+          </button>
+        </h2>
+        <div id=<%="flush-collapse" + index.humanize.capitalize%> class="accordion-collapse collapse" aria-labelledby=<%="flush-heading" + index.humanize.capitalize%> data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="row justify-content-between"> 
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+               <table class="table table-bordered table-sm align-middle" style="font-size: 75%; margin-bottom:-2px">
+                  <thead>
+                    <tr>
+                      <th class="text-center"><b>Habilitador</b></th>
+                      <th class="text-center"><b>Verificador</b></th>
+                      <th class="text-center m-0"><b>Respuestas contabilizadas</b></th>
+                      <th class="text-center m-0"><b>Porcentaje positivas</b></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%results_hab[dat].keys.each do |hab|%>
+                      <%results_ver[dat][hab].keys.each do |ver|%> 
+                        <tr>
+                          <td class="text-center"><%=hab.capitalize%></td>
+                          <td class="text-center"><%=ver.capitalize%></td>
+                          <td class="text-center"><%=results_ver[dat][hab][ver][:results].length%></td>
+                          <%if results_ver[dat][hab][ver][:value] >=0.75%>
+                            <td class="text-center bg-success"><b><%=results_ver[dat][hab][ver][:value].round(1)%></b></td>
+                          <%elsif results_ver[dat][hab][ver][:value] >=0.4%>
+                            <td class="text-center bg-secondary"><b><%=results_ver[dat][hab][ver][:value].round(1)%></b></td>
+                          <%else%>
+                            <td class="text-center bg-danger"><b><%=results_ver[dat][hab][ver][:value].round(1)%></b></td>
+                          <%end%>
+                        </tr>
+                      <%end%>
+                    <%end%>
+                  </tbody>
+                </table> 
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 border border-dark pt-2">
+                <h4 class="text-center text-uppercase"> INSIGHTS </h4>
+                <ul>
+                  <li style="text-align: justify;"> 
+                    Dentro del Capital <b><%=dat.capitalize%></b> un <b><%=(results_dat[dat][:green]/results_dat[dat][:total]*100).round(1)%>%</b> de los verificadores están consolidados como presentes y el <b><%=(results_dat[dat][:red]/results_dat[dat][:total]*100).round(1)%>%</b> como no presentes
+                  </li>
+                  <li style="text-align: justify;"> 
+                    <%if  results_dat[dat][:gray] >0%>
+                      Tienen un <b><%=(results_dat[dat][:gray]/results_dat[dat][:total]*100).round(1)%>%</b> de los verificadores con una gran dispersión, <b>recomendamos diseñar un plan de comunicación para el estado de estos verificadores.</b>
+                    <%end%>
+                  </li>
+                  <%results_hab[dat].keys.each do |hab|%>
+                    <li style="text-align: justify;">
+                      En el habilitador <b><%=hab.capitalize%></b> un <b><%=(results_hab[dat][hab][:green]/results_hab[dat][hab][:total]*100).round(1)%>%</b> de los verificadores están consolidados como presentes y el <b><%=(results_hab[dat][hab][:red]/results_hab[dat][hab][:total]*100).round(1)%>%</b> como no presentes. 
+                      <%if results_hab[dat][hab][:gray] >0%>
+                        Además, tienen un <b><%=(results_hab[dat][hab][:gray]/results_hab[dat][hab][:total]*100).round(1)%>%</b> de los verificadores con una gran dispersión, <b>recomendamos diseñar un plan de comunicación para el estado de estos verificadores.</b>
+                      <%end%>
+                    </li>
+                  <%end%>
+                </ul> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>

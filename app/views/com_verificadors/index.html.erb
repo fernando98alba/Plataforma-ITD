@@ -1,0 +1,14 @@
+<div class="main mt-4 shadow p-3 mb-5 rounded">
+  <h1 class="text-center" style="margin-bottom: 60px">Resultados Consolidados medición <%=l(@itdcon.created_at.to_date, format: :custom_itd)%></h1>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+      <div>
+        <%= link_to "Resultado Respuestas Consolidadas", empresa_itdcon_path(@empresa, @itdcon), data: {turbo: false}, class:"btn btn-secondary"%>
+      </div>
+      <%= render partial: "results_graphs/verificadors_general_results", locals: {results_dat: @results_dat, results_general: @results_general}%>
+      
+      <%= render partial: "results_graphs/verificadors_dat_results", locals: {results_hab: @results_hab, results_ver: @results_ver, results_dat: @results_dat}%>
+    </div>
+  </div>
+
+</div>

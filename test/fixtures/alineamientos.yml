@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  name: Balance
+  description: Las organizaciones balanceadas muestran un equilibrio sistémico en la Transformación Digital y debido a la sinergia y correlación entre los habilitadores tienen una mayor facilidad para avanzar de forma sistemática en la transformación de su negocio.
+  min: 0
+  max: 10
+
+two:
+  name: Desbalance
+  description: Estas organizaciones comienzan a mostrar un desbalance entre la asignación de recursos y la estrategia de Transformación Digital, mostrando un mayor desarrollo en alguno de sus habilitadores, lo que puede impactar en una transformación sostenible del negocio. Comienza a trabarse el avance en las iniciativas digitales.
+  min: 10
+  max: 19
+
+three:
+  name: Desalineamiento
+  description: Estas organizaciones tienen un desalineamiento notorio entre la asignación de recursos con la estrategia de Transformación Digital, esto implica un riesgo o limitante para seguir evolucionando en madurez digital. Una de las principales razones es debido a un trabajo en silos dentro de la organización.
+  min: 19
+  max: 40

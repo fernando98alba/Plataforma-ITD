@@ -1,0 +1,191 @@
+<div class="shadow p-3 mb-5 bg-white rounded">  
+  <h3>Drill-down por DAT</h3>
+  <p class="mb-3">En esta sección se muestran los resultados desagregados para cada Dimensión de Activo Transformacional </p>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <script>
+      let ctx_cap;
+    </script>
+    <%Dat.all.each_with_index do |dat, index|%>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id=<%="flush-heading" + index.humanize.capitalize%>>
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target=<%="#flush-collapse" + index.humanize.capitalize%> aria-expanded="false" aria-controls=<%="flush-collapse" + index.humanize.capitalize%>>
+            <h4><b>Capital <%=dat.name%></b></h4>
+          </button>
+        </h2>
+        <div id=<%="flush-collapse" + index.humanize.capitalize%> class="accordion-collapse collapse" aria-labelledby=<%="flush-heading" + index.humanize.capitalize%> data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+              <%= dat.description%>
+            </div>
+            <div class="row justify-content-between"> 
+              <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                <div>
+                  <canvas id=<%= "myChart" + (index+4).to_s%> height="200px"></canvas>
+                </div>
+                <script>
+                  label = [];
+                  values = []; 
+                  maturity = [];
+                  <% dat.habilitadors.each do |hab|%>
+                    label.push("<%= hab.name.capitalize.gsub("_", " ") %>");
+                    values.push("<%= points_hab[hab.name.downcase].round%>");
+                    maturity.push(<%= points_dat[dat.name.downcase].round%>);
+                  <%end%>
+                  ctx_cap= document.getElementById('myChart' + "<%=(index + 4)%>");
+                  new Chart(ctx_cap, {
+                    type: 'bar',
+                    data: {
+                    labels: label,
+                    datasets: [{
+                      label: 'Puntaje obtenido Capital <%=dat.name%>',
+                      type: 'line',
+                      data: maturity,
+                      backgroundColor: "rgba(255, 0, 0, 1)",
+                      borderColor:'rgba(255, 0, 0, 1)',
+                    },
+                    {
+                      label: 'Puntaje habilitadores Capital <%=dat.name%>',
+                      data: values,
+                      fill: true,
+                      backgroundColor: 'rgba(29, 70, 243)',
+                      borderColor: 'rgba(29, 70, 243)',
+                    }]
+                  },
+                    options: {
+                      plugins: {
+                        maintainAspectRatio: false,
+                        legend: {
+                          onClick: null,
+                        }
+                      },
+                      scales: {
+                        y: {
+                          ticks: {
+                            count: 101,
+                            callback: (value, index, values ) => {
+                              if ([0,30,55,75,90,100].includes(value)) {
+                                return value
+                              };
+                              if (value == 15) {
+                                return "Rezagado Digital"
+                              };
+                              if (value == 42) {
+                                return "Explorador Digital"
+                              };
+                              
+                              if (value == 65) {
+                                return "Adoptador Digital"
+                              };
+                              
+                              if (value == 82) {
+                                return "Líder Digital"
+                              };
+                              
+                              if (value == 95) {
+                                return "Disruptor Digital"
+                              };
+                            }
+                          },
+                          grid: {
+                            color: function(context) {
+                              for (i = 0; i < context.scale.ticks.length; i++) {
+                                if (i == context.index) {
+                                  if (Number.isInteger(context.scale.ticks[i].label)) {
+                                    return "rgba(0, 0, 0, 0.2)"
+                                  } else {
+                                    return false
+                                  }
+                                }
+                              };
+                            }
+                          },
+                          min: 0, 
+                          max: 100,
+                        },
+                      },
+                      elements: {
+                        line: {
+                          borderWidth: 3,
+                        }
+                      }
+                    },
+                  });
+                </script>
+              </div>
+              <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 border border-dark ps-3 pe-3">
+                <h4 class="text-center text-uppercase"> INSIGHTS </h4>
+                <%if dat.name.downcase != "natural"%>
+                  <ul>
+                    <li style="text-align: justify;"> 
+                      El puntaje promedio del DAT <b>Capital <%=dat.name.capitalize%></b> es: <b><%=points_dat[dat.name.downcase].round%></b>
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El DAT <b>Capital <%=dat.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
+                      <%end%>
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                    <li style="text-align: justify;">
+                      Los habilitadores claves impulsores del DAT Capital <%=dat.name.capitalize%> son: 
+                      <ul>
+                        <% points_hab.sort_by{|k, v| -v}.each do |hab, points|%>
+                          <% if dat.habilitadors.find_by(name: hab.capitalize)%>
+                            <% if points >= points_dat[dat.name.downcase] %>
+                              <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
+                            <%end%>
+                          <%end%>
+                        <%end%>
+                      </ul>
+                    </li>
+                    <li style="text-align: justify;">
+                      Los habilitadores claves ralentizadores del DAT Capital <%=dat.name.capitalize%> son: 
+                      <ul>
+                        <% points_hab.sort_by{|k, v| v}.each do |hab, points|%>
+                          <% if dat.habilitadors.find_by(name: hab.capitalize)%>
+                            <% if points < points_dat[dat.name.downcase] %>
+                              <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
+                            <%end%>
+                          <%end%>
+                        <%end%>
+                      </ul>
+                    </li>
+                  </ul> 
+                <%else%>
+                  <ul>
+                    <li style="text-align: justify;"> 
+                      El puntaje promedio del DAT <b>Capital <%=dat.name.capitalize%></b> es: <b><%=points_dat[dat.name.downcase].round%></b>
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El DAT <b>Capital <%=dat.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
+                      <%end%>
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                    <li style="text-align: justify;"> 
+                      El habilitador <b><%=dat.habilitadors.first.name.capitalize%> es 
+                      <%if points_dat[dat.name.downcase] > itd.maturity_score%>
+                        impulsor
+                      <%else%>
+                        ralentizador
+                      <%end%>
+                      </b> de la Transformación digital de la organización.
+                    </li>
+                  </ul>
+                <%end%>
+              </div>
+            </div>
+
+            <%= render partial: "results_graphs/ele_result", locals: {dat: dat, itd: itd}%>
+
+          </div>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>

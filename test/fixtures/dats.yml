@@ -1,0 +1,30 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  name: Estratégico
+  description: "El Capital Estratégico se refiere a todos los habilitadores de valor para generar y mantener un sentido de propósito y alineamiento en la compañía. Es fundamental para definir la visión de largo plazo y con esto la manera de estructurar y gestionar los recursos y la creación de valor en el corto y mediano plazo. Incluye los siguientes habilitadores: estrategia, el modelo de negocios y el governance."
+  ponderador: 0.2
+
+two:
+  name: Estructural
+  description: "El Capital Estructural es el conocimiento capturado e interiorizado por la organización para apoyar la escalabilidad de sus operaciones. Es fundamental además para facilitar, soportar, capturar, proteger y construir conocimiento. Incluye los siguientes habilitadores: procesos, tecnología, datos y analítica, propiedad intelectual, y modelo operativo."
+  ponderador: 0.25
+
+three:
+  name: Humano
+  description: 'El Capital Humano se refiere a las personas de la organización en cuanto a capacidades y competencias creativas y de liderazgo, y a las capacidades de la organización para gestionar el ciclo de vida del colaborador punta a punta. Las personas son el motor de la transformación. Incluye los siguientes habilitadores: personas, ciclo de vida del colaborador y Estructura organizacional.'
+  ponderador: 0.2
+
+four:
+  name: Relacional
+  description: 'El Capital Relacional es fundamental ya que una organización no vive aislada, por lo que se debe modelar e institucionalizar la conexión con clientes y otros stakeholders para mejorar la experiencia y relaciones que se construyen, para generar valor.'
+  ponderador: 0.2
+  
+five:
+  name: Natural
+  description: 'El Capital Natural desde el punto de vista estratégico aborda la gestión de la interacción con el medioambiente y comunidades para generar el triple valor y proveer así sustentabilidad al negocio. Esto es la articulación y monitoreo permanente de la forma en que la organización genera valor sustentable.'
+  ponderador: 0.15

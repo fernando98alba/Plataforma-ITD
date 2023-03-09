@@ -1,0 +1,157 @@
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <h3>Aquí podemos ver los distintos habilitadores</h3>
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px">
+    El balance también puede apreciarse comparando la madurez entre habilitadores
+  </div>
+  <div class="row justify-content-between"> 
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 "> 
+      <div>
+        <canvas id="myChart3" height="380px" ></canvas>
+      </div>
+      <script>
+        let ctx3= document.getElementById('myChart3');
+        label = [];
+        values = [];
+        <% @points_hab.keys.each do |hab|%>
+          label.push("<%= hab.capitalize %>");
+          values.push(<%= @points_hab[hab].round%>);
+        <%end%>
+        new Chart(ctx3, {
+          type: 'radar',
+          data: {
+          labels: label,    
+          datasets: [{
+            label: 'Puntaje por habilitador',
+            data: values,
+            fill: false,
+            backgroundColor: 'rgba(29, 70, 243)',
+            borderColor: 'rgba(29, 70, 243)',
+            pointBackgroundColor: 'rgba(29, 70, 243)',
+            pointBorderColor: 'rgba(29, 70, 243)',
+          },
+          {
+            label: 'Rezagado Digital',
+            data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+            backgroundColor: 'rgba(127, 164, 213, 1)',
+            borderColor:'rgba(127, 164, 213, 1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: "origin"
+          },
+          {
+            label: 'Explorador Digital',
+            data: [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+            backgroundColor: 'rgba(168, 183, 255, 1)',
+            borderColor:'rgba(168, 183, 255, 1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: 1
+          },
+          {
+            label: 'Adoptador Digital',
+            data: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75],
+            backgroundColor: 'rgba(155, 218, 255, 1)',
+            borderColor:'rgba(155, 218, 255, 1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: 1
+          },
+          {
+            label: 'Líder Digital',
+            data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90],
+            backgroundColor: 'rgba(127, 224, 228, 1)',
+            borderColor:'rgba(127, 224, 228, 1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: 1
+          },
+          {
+            label: 'Disruptor Digital',
+            data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+            backgroundColor: 'rgba(173, 239, 242, 1)',
+            borderColor:'rgba(173, 239, 242, 1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            hideable: true,
+            fill: 1
+          }]
+        },
+          options: {
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                onClick: null,
+                labels: {
+                    filter: (legendItem, data) => {
+                        return legendItem.text == null || !legendItem.text.includes('Digital');
+                    }
+                }
+              }
+            },
+            scales: {
+              r: {
+                min: 0,
+                max: 100,
+                ticks: {
+                  count: 21,
+                  callback: (value, index, values ) => {
+                    if ([0,30,55,75,90,100].includes(value)) {
+                      return value
+                    };
+                  },
+                  backdropColor: "rgba(0,0,0,0)",
+                  z: 10
+                },
+                grid: {
+                  color: function(context) {
+                    let response = [];
+                    for (i = 0; i < context.scale.ticks.length; i++) {
+                      if (i == context.index) {
+                        if (Number.isInteger(context.scale.ticks[i].label)) {
+                          return "rgba(0, 0, 0, 0.2)"
+                        } else {
+                          return false
+                        }
+                      }
+                    };
+                  },
+                  z: 10
+                },
+              }
+            },
+            elements: {
+              line: {
+                borderWidth: 3,
+              }
+            }
+          },
+        });
+      </script>
+    </div>
+    <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 border border-dark ps-3 pe-3">
+      <h4 class="text-center text-uppercase"> INSIGHTS </h4>
+      <ul>
+        <li style="text-align: justify;">
+          Los habilitadores claves que impulsan la Transformación Digital de la organización son: 
+          <ul>
+            <% points_hab.sort_by{|k, v| -v}[0..2].each do |hab, points|%>
+              <% if points > itd.maturity_score %>
+                <li><b><%="#{hab.capitalize} (#{points.round})"%></b> </li>
+              <%end%>
+            <%end%>
+          </ul>
+        </li>
+        <li style="text-align: justify;">
+          Los habilitadores claves que ralentizan la Transformación Digital de la organización son: 
+          <ul>
+            <% points_hab.sort_by{|k, v| v}[0..2].each do |hab, points|%>
+              <% if points < itd.maturity_score %>
+                <li><b><%="#{hab.capitalize} (#{points.round})"%></b></li>
+              <%end%>
+            <%end%>
+          </ul>
+        </li>
+      </ul> 
+    </div>
+  </div>
+</div>

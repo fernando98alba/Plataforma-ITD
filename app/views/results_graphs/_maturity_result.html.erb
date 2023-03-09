@@ -1,0 +1,223 @@
+<div class="shadow p-3 mb-5 bg-white rounded">  
+  <h3>Resultado general de la evaluación</h3> 
+  <div class=" row  justify-content-between">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" > 
+      <div>
+        <canvas id="myChart2" height="180px"></canvas>
+      </div>
+      <div class="position-absolute" style="display:none;">
+        <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
+      </div>
+
+      <script>
+        const img = document.getElementById("location");
+        var ctx2 = document.getElementById('myChart2');
+        const data = {
+              labels: [0,10,20,40],
+              datasets: [
+              { 
+                label: 'Puntaje Obtenido',
+                type: "scatter",
+                data: [{
+                  y: <%= itd.alignment_score.round %>,
+                  x: <%= itd.maturity_score.round %>
+                }],
+                backgroundColor: "black",
+                borderColor:'black',
+                pointStyle: img,
+              },
+              {
+                label: 'Rezagado Digital',
+                type: "line",
+                data: [30, 30, 30, 30],
+                backgroundColor: 'rgba(127, 164, 213, 1)',
+                borderColor:'rgba(127, 164, 213, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: "origin"
+              },
+              
+              {
+                label: 'Explorador Digital',
+                type: "line",
+                data: [55, 55, 55, 55],
+                backgroundColor: 'rgba(168, 183, 255, 1)',
+                borderColor:'rgba(168, 183, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 1
+              },
+              {
+                label: 'Adoptador Digital',
+                type: "line",
+                data: [75, 75, 75, 75],
+                backgroundColor: 'rgba(155, 218, 255, 1)',
+                borderColor:'rgba(155, 218, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 1
+              },
+              {
+                label: 'Líder Digital',
+                type: "line",
+                data: [90, 90, 90, 90],
+                backgroundColor: 'rgba(127, 224, 228, 1)',
+                borderColor:'rgba(127, 224, 228, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 1
+              },
+              {
+                label: 'Disruptor Digital',
+                type: "line",
+                data: [100, 100, 100, 100],
+                backgroundColor: 'rgba(173, 239, 242, 1)',
+                borderColor:'rgba(173, 239, 242, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                hideable: true,
+                fill: 1
+              },
+            
+              ]
+            };
+
+            // config 
+            const config = {
+              data,
+              options: {
+                plugins: {
+                  maintainAspectRatio: false,
+                  legend: {
+                    onClick: null,
+                    labels: {
+                        usePointStyle: true,
+                        filter: (legendItem, data) => {
+                            return legendItem.text == null || !legendItem.text.includes('Digital');
+                        }
+                    }
+                  }
+                },
+                indexAxis: "y",
+                scales: {
+                  x: {
+                    ticks: {
+                      count: 101,
+                      callback: (value, index, values ) => {
+                        if ([0,30,55,75,90,100].includes(value)) {
+                          return value
+                        };
+                        if (value == 15) {
+                          return "Rezagado Digital"
+                        };
+                        if (value == 42) {
+                          return "Explorador Digital"
+                        };
+                        
+                        if (value == 65) {
+                          return "Adoptador Digital"
+                        };
+                        
+                        if (value == 82) {
+                          return "Líder Digital"
+                        };
+                        
+                        if (value == 95) {
+                          return "Disruptor Digital"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      },
+                      z: 10
+                    },
+                    min: 0, 
+                    max: 100,
+                    stacked: false,
+                  },
+                  y: {
+                    ticks: {
+                      count: 9,
+                      callback: (value, index, values ) => {
+                        if (data.labels.includes(value)) {
+                          return value
+                        };
+                        if (value == 5) {
+                          return "Balance"
+                        };
+                        if (value == 15) {
+                          return "Desbalance"
+                        };
+                        if (value == 30) {
+                          return "Desalineamiento"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      },
+                      z: 10
+                    },
+                    reverse: true
+                  }
+                }
+              },
+            };
+
+            // render init block
+            var myChart = new Chart(
+              document.getElementById('myChart2').getContext('2d'),
+              config
+            );
+
+
+      </script>
+    </div>
+    <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 border border-dark ps-3 pe-3">
+      <h4 class="text-center text-uppercase"> INSIGHTS </h4>
+      <p style="text-align: justify;">
+        Esto significa que nos encontramos en el nivel <b><%=itd.madurez.name%></b>, estas son <b><%=itd.madurez.description%></b>
+      </p>
+      <p style="text-align: justify;">
+        Además, presenta <b><%=itd.alineamiento.name%></b> en la asignación de recursos en los habilitadores de la transformación. <b><%=itd.alineamiento.description%></b>
+      </p>
+      <p style="text-align: justify;">
+        El puntaje total de madurez es <b><%=itd.maturity_score.round%></b> y el nivel de alineamiento es de <b><%=itd.alignment_score.round%></b>. 
+        <% if (itd.maturity_score-itd.madurez.min).to_f/(itd.madurez.max-itd.madurez.min) <=0.3 %>
+          Esto significa que están <b>iniciando el camino como <%=itd.madurez.name%></b>.
+        <% elsif (itd.maturity_score-itd.madurez.min).to_f/(itd.madurez.max-itd.madurez.min) <=0.6%>
+          Esto significa que están <b>transitando el camino del <%=itd.madurez.name%></b>.
+        <% elsif (itd.maturity_score-itd.madurez.min).to_f/(itd.madurez.max-itd.madurez.min) <=0.9%>
+          Esto significa que están <b>consolidados como <%=itd.madurez.name%></b>.
+        <%else%>
+          <% if itd.madurez.max == 100%>
+            Esto significa que están <b>fuertemente consolidados como <%=itd.madurez.name%></b>.
+          <%else%>
+            Esto significa que están <b>en transición a <%=Madurez.find_by(min: itd.madurez.max).name%></b>.
+          <%end%>
+        <%end%>
+      </p>
+    </div>
+  </div>
+</div>

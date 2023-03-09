@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  name: Rezagado Digital
+  description: Organizaciones que ven la Transformación Digital como una moda o un gasto no prioritario, usualmente no levantan nuevas necesidades de los clientes y, si utilizan tecnologías, lo hacen con foco en reducir costos.
+  min: 0
+  max: 30
+
+two:
+  name: Explorador Digital
+  description: Organizaciones que empiezan a entender la importancia de la Transformación Digital y en particular de centrarse en el cliente, pero no saben cómo hacerlo, razón por la cual ya tienen algunos líderes y equipos buscando alternativas.
+  min: 30
+  max: 55
+
+three:
+  name: Adoptador Digital
+  description: Organizaciones que han entendido que el rol de la Transformación Digital es impactar al negocio y lo están consiguiendo, trabajan consistentemente en mejorar la experiencia de clientes y algunos líderes relevantes están convencidos que este proceso debe acelerarse.
+  min: 55
+  max: 75
+
+four:
+  name: Líder Digital
+  description: Organizaciones que lideran la Transformación Digital en su industria y son referentes para organizaciones incluso de otros sectores; enfocan esfuerzos en mejorar la experiencia de sus colaboradores para mejorar la experiencia de sus clientes y la mayoría de los líderes están convencidos del valor de este proceso.
+  min: 75
+  max: 90
+
+five:
+  name: Disruptor Digital
+  description: Organizaciones que consideran la Transformación Digital como el factor diferenciador para competir, lo que se comparte en todos los niveles organizacionales. Implementan o desarrollan permanentemente nuevas tecnologías, el cliente está muy satisfecho y sorprendido, y la mayoría de los colaboradores prefieren seguir desarrollándose en la organización.
+  min: 90
+  max: 100

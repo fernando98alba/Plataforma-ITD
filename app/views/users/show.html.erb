@@ -1,27 +1,25 @@
-
-<div class="container-fluid">
-  <div class="main">
-      <div class="tile is-ancestor">
-        <div class="tile is-4 is-vertical is-parent">
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <p class="title"><%= @user.name%></p>
-            <p><%=@user.email%></p>
-            <% if current_user == @user%>
-              <%= button_to "Eliminar Usuario", user_registration_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class:"button is-info is-light" %>
-            <%end%> 
-          </div>
+<div class="main mt-4">
+    <div class="tile is-ancestor">
+      <div class="tile is-4 is-vertical is-parent">
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child box">
+          <p class="title"><%= @user.name%></p>
+          <p><%=@user.email%></p>
+          <% if current_user == @user%>
+            <%= button_to "Eliminar Usuario", user_registration_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class:"button is-info is-light" %>
+          <%end%> 
         </div>
       </div>
+    </div>
 
 
-      <button class="button is-info is-light">
-          <%= link_to "Volver a la pagina principal", root_path %>
-      </button>
-      <button class="button is-info is-light">
-          <%= link_to "Volver al listado de Usuarios", empresa_users_path(@user.empresa)%>
-      </button>
+    <button class="button is-info is-light">
+        <%= link_to "Volver a la pagina principal", root_path %>
+    </button>
+    <button class="button is-info is-light">
+        <%= link_to "Volver al listado de Usuarios", empresa_users_path(@user.empresa)%>
+    </button>
 
-  </div>
 </div>
+

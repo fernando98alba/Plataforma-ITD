@@ -1,0 +1,165 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  name: Propósito
+  habilitador: one
+
+two:
+  name: Diseño
+  habilitador: one
+
+three:
+  name: Alineamiento
+  habilitador: one
+
+four:
+  name: Ejecución
+  habilitador: one
+
+five:
+  name: Portfolio de modelos de negocios
+  habilitador: two
+
+six:
+  name: Productos y servicios
+  habilitador: two
+
+seven:
+  name: Modelo económico
+  habilitador: two
+
+eight:
+  name: Modelo de gobierno
+  habilitador: three
+
+nine:
+  name: Gestión de Riesgos
+  habilitador: three
+
+ten:
+  name: Diseño
+  habilitador: four
+
+eleven:
+  name: Roles y responsabilidades
+  habilitador: four
+
+twelve:
+  name: Métricas
+  habilitador: four
+
+thirteen:
+  name: Arquitectura organizaciónrial
+  habilitador: five
+
+fourteen:
+  name: TI y TO
+  habilitador: five
+
+fifteen:
+  name: Aplicaciones y desarrollo
+  habilitador: five
+
+sixteen:
+  name: Gestión
+  habilitador: six
+
+seventeen:
+  name: Analítica y toma de decisiones
+  habilitador: six
+
+eighteen:
+  name: Diseño sistémico
+  habilitador: seven
+
+nineteen:
+  name: Operación ágil
+  habilitador: seven
+
+twenty:
+  name: Gestión de propiedad intelectual
+  habilitador: eight
+
+twenty-one:
+  name: Gestión del conocimiento
+  habilitador: eight
+
+twenty-two:
+  name: Liderazgo
+  habilitador: nine
+
+twenty-three:
+  name: Competencias digitales
+  habilitador: nine
+
+twenty-four:
+  name: Compromiso y motivación
+  habilitador: nine
+
+twenty-five:
+  name: Disposición al cambio
+  habilitador: nine
+
+twenty-six:
+  name: Atracción de talento
+  habilitador: ten
+
+twenty-seven:
+  name: Gestión del talento
+  habilitador: ten
+
+twenty-eight:
+  name: Capacitación
+  habilitador: ten
+
+twenty-nine:
+  name: Gestión ágil
+  habilitador: eleven
+
+thirty:
+  name: Organización
+  habilitador: eleven
+
+thirty-one:
+  name: Mercado
+  habilitador: twelve
+
+thirty-two:
+  name: Aliados y ecosistema
+  habilitador: twelve
+
+thirty-three:
+  name: Branding
+  habilitador: thirteen
+
+thirty-four:
+  name: Experiencia
+  habilitador: fourteen
+
+thirty-five:
+  name: Relacionamiento con el cliente
+  habilitador: fourteen
+
+thirty-six:
+  name: Canales de venta y comunicación
+  habilitador: fourteen
+
+thirty-seven:
+  name: Responsabilidad
+  habilitador: fifteen
+
+thirty-eight:
+  name: Motivación
+  habilitador: fifteen
+
+thirty-nine:
+  name: Propiedad
+  habilitador: fifteen
+
+forty:
+  name: Reportería
+  habilitador: fifteen

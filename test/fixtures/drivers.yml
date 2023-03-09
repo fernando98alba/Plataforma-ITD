@@ -1,0 +1,643 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+one:
+  name: Diseño y definición
+  min_description: La organización no cuenta con una declaración de propósito
+  max_description: La organización tiene un propósito comunicado y compartido, en donde la transformación del negocio tiene un rol fundamental
+  identifier: p1
+  elemento: one
+
+two:
+  name: Ventajas competitivas sostenibles
+  min_description: La transformación digital es vista sólo como una fuente de eficiencia
+  max_description: La transformación digital es clave para generar diferenciación y sostenibilidad
+  identifier: p2
+  elemento: one
+
+three:
+  name: Alcance de la estrategia de transformación digital
+  min_description: La transformación digital es considerada como la digitalización de procesos.
+  max_description: La Estrategia de la organización es la estrategia de transformación del negocio, con foco en el cliente
+  identifier: p3
+  elemento: two
+
+four:
+  name: Conocimiento de la transformación digital
+  min_description: No se tiene conocimientos respecto de transformación digital, impactos ni beneficios que está generando en su industria
+  max_description: La organización cuenta con amplio conocimiento sobre la transformación digital en su industria e identifica las capacidades actuales para su despliegue
+  identifier: p4
+  elemento: two
+
+five:
+  name: Participación en el diseño
+  min_description: La Estrategia es construida sólo con el nivel ejecutivo de la organización
+  max_description: La Estrategia es un proceso participativo de todas las áreas que tienen un rol en la transformación del negocio, con fuente patrocinio del nivel ejecutivo para asegurar su despliegue
+  identifier: p5
+  elemento: two
+
+six:
+  name: Formalización de la estrategia
+  min_description: La Estrategia no está documentada  ni de fácil acceso para la organización
+  max_description: La Estrategia está documentada, es conocida y moviliza la toma de decisiones en toda la organización.
+  identifier: p6
+  elemento: two
+
+seven:
+  name: Alineamiento estratégico
+  min_description: La Estrategia Digital de la organización no entrega lineamientos para su operacionalización
+  max_description: La Estrategia Digital tiene una bajada operacional mediante estrategias funcionales, que habilitan su ejecución
+  identifier: p7
+  elemento: three
+
+eight:
+  name: Estructura organizacional
+  min_description: Se cuenta con una Estructura Organizacional que no ha sido modificada en los últimos 5 años
+  max_description: La Estructura organizacional está al servicio de la estrategia y, puede ser revisada y ajustada en caso de actualizarse
+  identifier: p8
+  elemento: three
+
+nine:
+  name: Alineamiento de presupuesto e incentivos
+  min_description: La asignación de presupuestos e incentivos no esta formalizada en la organización
+  max_description: La definición de presupuestos y de incentivos es una consecuencia de la estrategia de la organización, facilitando su ejecución
+  identifier: p9
+  elemento: three
+
+ten:
+  name: Comunicación de la estrategia
+  min_description: Los resultados de la ejecución de la Estrategia se comunican sólo al nivel ejecutivo de la organización
+  max_description: La Estrategia y sus resultados se transmiten mediante un plan de comunicaciones formal a todos los niveles organizacionales, dejando espacio para recibir comentarios y retroalimentación
+  identifier: p10
+  elemento: four
+
+eleven:
+  name: Gestión dinámica del portfolio de proyectos
+  min_description: Los proyectos no se conectan con la Estrategia
+  max_description: Se gestiona dinámicamente el portafolio de proyectos priorizados, para materializar los resultados de la estrategia
+  identifier: p11
+  elemento: four
+
+twelve:
+  name: Revisión y seguimiento
+  min_description: La organización no realiza seguimiento de los avances en su estrategia
+  max_description: La organización hace seguimiento periódicamente a la estrategia definida, se analiza el cumplimiento objetivos estratégicos mediante KPI asociados
+  identifier: p12
+  elemento: four
+
+thirteen:
+  name: Mejoras al modelo de negocios actual
+  min_description: La organización no cuenta con una visión integrada del modelo de negocios, por lo que dificulta la búsqueda de mejoras
+  max_description: La organización innova activamente en el portafolio de modelos de negocios con estrategias diferenciadas, impulsadas por la visión del cliente y de los stakeholders clave
+  identifier: p13
+  elemento: five
+
+fourteen:
+  name: Nuevos modelos de negocios digitales
+  min_description: La organización no explora nuevos modelos de negocios digitales
+  max_description: Innovación activa en nuevos modelos de negocios basados en tendencias digitales disruptivas
+  identifier: p14
+  elemento: five
+
+fifteen:
+  name: Propuesta de valor
+  min_description: La organización cuenta con una propuesta de valor única para atender a sus stakeholders
+  max_description: Las propuestas de valor de productos y servicios se conectan y adaptan en base a las necesidades de los distintos stakeholders
+  identifier: p15
+  elemento: six
+
+sixteen:
+  name: Desarrollo activo de oferta
+  min_description: El desarrollo de nuevos productos y servicios responde frente a la presión del mercado o como defensa frente a una competencia más activa
+  max_description: El diseño físico o digital de los nuevos productos y/o servicios se ajusta activamente para maximizar el valor a clientes y stakeholders
+  identifier: p16
+  elemento: six
+
+seventeen:
+  name: Mejora desde los datos
+  min_description: Las mejoras o desarrollos en productos y servicios se basa en la experiencia de los equipos
+  max_description: Los hallazgos desde los datos de clientes y stakeholders son el motor principal para desarrollar soluciones
+  identifier: p17
+  elemento: six
+
+eighteen:
+  name: Innovación en fuentes de valor
+  min_description: El foco de la organización se centra en la fuente de ingresos principal de la organización, con baja inversión de recursos en búsqueda de nuevas fuentes
+  max_description: La organización evalúa permanentemente innovaciones al modelo económico, con nuevas fuentes de ingreso
+  identifier: p18
+  elemento: seven
+
+nineteen:
+  name: Innovación en fuentes de costos
+  min_description: No existe un proceso para capturar ahorros en costos del negocio actual
+  max_description: La organización optimiza e innova en sus estructuras de costo incorporando tendencias y tecnologías digitales
+  identifier: p19
+  elemento: seven
+
+twenty:
+  name: Formalización del modelo de gobierno
+  min_description: La organización no tiene claridad sobre las funciones requeridas, las responsabilidades y los procesos a llevarse a cabo para la toma de decisiones eficiente
+  max_description: La organización tiene un modelo de toma de decisiones formal y eficiente, cuyos procesos, responsabilidades y funciones son claras y conocidas
+  identifier: p20
+  elemento: eight
+
+twenty-one:
+  name: Transparencia y trazabilidad
+  min_description: Los colaboradores se enteran por medios externos o tardíamente de las decisiones tomadas
+  max_description: Las decisiones y sus respectivas razones se comunican oportunamente y por medios formales a los colaboradores
+  identifier: p21
+  elemento: eight
+
+twenty-two:
+  name: Estructura de toma de decisiones
+  min_description: Las decisiones son tomadas por el nivel ejecutivo y no se comunican al resto de la organización
+  max_description: La toma de decisiones se realiza descentralizada y colaborativamente empoderando la toma de decisiones in situ
+  identifier: p22
+  elemento: eight
+
+twenty-three:
+  name: Disposición organizacional
+  min_description: La organización tiene una alta aversión al riesgo
+  max_description: La organización es audaz y toma riesgos controlados para habilitar la innovación constantemente
+  identifier: p23
+  elemento: nine
+
+twenty-four:
+  name: Gestión activa del riesgo
+  min_description: No existe un proceso para evaluar y mitigar riesgos del negocio
+  max_description: La organización cuenta con estándares de gestión de riesgos que permiten su evaluación, priorización y mitigación según su impacto al negocio
+  identifier: p24
+  elemento: nine
+
+twenty-five:
+  name: Definición y documentación de procesos
+  min_description: Los procesos de la organización no están documentados, ni formalizados
+  max_description: Los procesos están documentados y disponibles en plataformas digitales. El diseño considera la integración entre procesos de la organización
+  identifier: p25
+  elemento: ten
+
+twenty-six:
+  name: Mejora continua
+  min_description: Los procesos de la organización no han sido rediseñados
+  max_description: La organización revisa constantemente sus procesos e implementa acciones para mejorar su desempeño
+  identifier: p26
+  elemento: ten
+
+twenty-seven:
+  name: Automatización de procesos
+  min_description: Los procesos no han incorporado aspectos de digitalización ni automatización en sus actividades
+  max_description: Todos los procesos han automatizado las actividades rutinarias e incluido digitalización para mejorar trazabilidad
+  identifier: p27
+  elemento: ten
+
+twenty-eight:
+  name: Definición de roles y responsabilidades
+  min_description: No existe una definición formal de los roles asociados a los procesos de negocio de la organización
+  max_description: Los roles estan claramente definidos para todos los procesos de negocios de la organización, son reconocidos como responsables por su actitud y capacidades
+  identifier: p28
+  elemento: eleven
+
+twenty-nine:
+  name: Nivel decisional
+  min_description: Los responsables de los procesos de negocio no tienen nivel decisional para tomar decisiones de manera autónoma sobre el proceso
+  max_description: Los responsables de los procesos de negocio forman parte del nivel ejecutivo de la organización, lo que facilita definiciones de presupuesto y acciones de mejora
+  identifier: p29
+  elemento: eleven
+
+thirty:
+  name: Definición
+  min_description: La organización define algunas métricas enfocadas principalmente en costo y tiempo
+  max_description: Las métricas utilizadas están alineadas con los objetivos de la organización y se actualizan dependiendo del contexto
+  identifier: p30
+  elemento: twelve
+
+thirty-one:
+  name: Uso
+  min_description: Las métricas no son relevantes para la toma de decisiones en la organización
+  max_description: La organización actualiza y monitorea constantemente sus métricas para ver el avance de sus procesos y la estrategia
+  identifier: p31
+  elemento: twelve
+
+thirty-two:
+  name: Arquitectura tecnológica
+  min_description: La arquitectura tecnológica esta diseñada para soportar el modelo operativo actual
+  max_description: La arquitectura tecnológica es diseñada de manera flexible para soportar los procesos y para permitir cambios en el modelo operativo
+  identifier: p32
+  elemento: thirteen
+
+thirty-three:
+  name: Infraestructura tecnológica
+  min_description: La estrategia e iniciativas no tienen el soporte tecnológico que necesitan
+  max_description: La organización cuenta con la infraestructura tecnológica adecuada para soportar todas las iniciativas estratégicas y los modelos de negocios
+  identifier: p33
+  elemento: thirteen
+
+thirty-four:
+  name: Capacidad de integración
+  min_description: Los sistemas de la organización son independientes y la comunicación entre ellos es manual
+  max_description: Los sistemas de tecnología están integrados, permitiendo una comunicación simple y automática (de requerirse) para cumplir los requisitos de interoperabilidad
+  identifier: p34
+  elemento: thirteen
+
+thirty-five:
+  name: Ciberseguridad
+  min_description: No se tiene soluciones de ciberseguridad implementadas
+  max_description: La organización tiene y revisa sistemáticamente soluciones, procesos y aplicaciones (propias o de terceros) de ciberseguridad para sus sistemas y datos
+  identifier: p35
+  elemento: thirteen
+
+thirty-six:
+  name: Rol del área de Tecnología
+  min_description: El departamento de TI y TO es visto solo como un prestador de servicios para apoyar a otras áreas
+  max_description: El departamento TI y TO es central en la generación y entrega de valor en todos los niveles organizacionales
+  identifier: p36
+  elemento: fourteen
+
+thirty-seven:
+  name: Presupuesto flexible
+  min_description: Se tiene un presupuesto TI enfocado en iniciativas específicas que debe ser cumplido
+  max_description: El presupuesto TI es flexible para adaptarse a las necesidades cambiantes de los clientes y el entorno, facilitando el reenfoque de prioridades
+  identifier: p37
+  elemento: fourteen
+
+thirty-eight:
+  name: Uso de nuevas tecnologías
+  min_description: Las operaciones y servicios usan tecnologías tradicionales
+  max_description: Se usan tecnologías disruptivas como base de los esfuerzos de TI para mejorar operaciones y prestación de servicios
+  identifier: p38
+  elemento: fourteen
+
+thirty-nine:
+  name: Arquitectura de aplicaciones
+  min_description: La organización utiliza arquitectura e infraestructuras tradicionales para la mayoría de sus procesos
+  max_description: Se usan arquitecturas modernas en todos los sistemas y procesos que pueden ser migrados, fomentando la velocidad y flexibilidad de las operaciones y prestación de servicios
+  identifier: p39
+  elemento: fifteen
+
+forty:
+  name: Trabajo digital
+  min_description: El trabajo digital se entiende como el uso de correo y videoconferencias
+  max_description: En la organización se utilizan diversas herramientas que facilitan el trabajo individual y colaborativo digital
+  identifier: p40
+  elemento: fifteen
+
+forty-one:
+  name: Búsqueda tecnológica y despliegue
+  min_description: El departamento de TI responde a las solicitudes de la organización con las soluciones disponibles en esta
+  max_description: El departamento de TI busca proactivamente nuevas tecnologías que resuelvan los desafíos del negocio y las despliega en forma ágil
+  identifier: p41
+  elemento: fifteen
+
+forty-two:
+  name: Estrategia de datos
+  min_description: Los datos se mantienen en segundo plano y no son prioridad para el negocio. No se tiene claridad de los datos con los que se cuenta a nivel global.
+  max_description: Los datos son un activo estratégico para la gestión de procesos, la toma de decisiones y la agregación de valor a stakeholders. Se cuenta con una estrategia que define su gestión y uso a nivel compañía.
+  identifier: p42
+  elemento: sixteen
+
+forty-three:
+  name: Prácticas de gestión
+  min_description: La gestión de los datos es meramente reactiva y con un enfoque ad-hoc. No existe claridad de quién es el responsable de administrar el uso de los datos.
+  max_description: La organización gestiona sus datos de forma consistente, rigurosa y adoptada en todos los niveles. Se aplican procesos, reglas y roles de gobernanza que son claros y conocidos por todos.
+  identifier: p43
+  elemento: sixteen
+
+forty-four:
+  name: Confidencialidad de los datos
+  min_description: La organización hace uso de los datos internos y de clientes sin contar con una práctica formal establecida y disponible
+  max_description: La organización gestiona de forma responsable los datos tanto internos como de clientes, adoptando prácticas y marcos de trabajo de ética de datos que son informados
+  identifier: p44
+  elemento: sixteen
+
+forty-five:
+  name: Analítica de datos
+  min_description: La organización no cuenta con las herramientas que faciliten análisis de datos
+  max_description: Se utilizan herramientas y técnicas avanzadas de analítica (machine learning/inteligencia artificial) que apoyan constantemente la toma de decisiones y la innovación
+  identifier: p45
+  elemento: seventeen
+
+forty-six:
+  name: Toma de decisiones con datos
+  min_description: Las decisiones se apalancan en la experiencia de los equipos o especialistas, más que en análisis y obtención de insights objetivos.
+  max_description: La organización es data driven, se genera gran cantidad de hallazgos (insights) en tiempo real que habilitan la toma de acciones en las distintas áreas en base a los datos.
+  identifier: p46
+  elemento: seventeen
+
+forty-seven:
+  name: Consistencia
+  min_description: La organización entiende el modelo operativo como un conjunto de procesos y tenologías. No se gestionan integradamente.
+  max_description: El modelo operativo está diseñado de forma sistémica para que toda la organización trabaje de forma integrada con clientes y proveedores para materializar la propuesta de valor
+  identifier: p47
+  elemento: eighteen
+
+forty-eight:
+  name: Flexibilidad operacional
+  min_description: El modelo operativo es estático y no se modifica según los cambios de contextos
+  max_description: La organización es capaz de gestionar el modelo operativo de manera ágil y coordinada para adaptar sus componentes para responder a las necesidades cambiantes de clientes y el negocio
+  identifier: p48
+  elemento: nineteen
+
+forty-nine:
+  name: Protección y gestión
+  min_description: La organización no gestiona su propiedad intelectual por lo que existen riesgos que pueden impactar en el valor de la organización
+  max_description: La organización gestiona activamente su propiedad intelectual, asegurando integralmente su protección.
+  identifier: p49
+  elemento: twenty
+
+fifty:
+  name: Uso
+  min_description: La organización desconoce el valor asociado a una gestión de su propiedad intelectual, por lo que no invierte recursos en su gestión.
+  max_description: La organización obtiene nuevo valor o beneficios producto de un desarrollo y gestión activa de su propiedad intelectual.
+  identifier: p50
+  elemento: twenty
+
+fifty-one:
+  name: Gestión integral
+  min_description: La organización genera información, pero no la transforma en conocimiento que permita usar para generar mejoras.
+  max_description: Se gestiona integralmente el conocimiento generado en la organización para generar valor internamente o de cara al cliente
+  identifier: p51
+  elemento: twenty-one
+
+fifty-two:
+  name: Uso
+  min_description: La organización no consume el conocimiento que genera, y si lo hace, es de forma muy reactiva.
+  max_description: La organización usa activamente el conocimiento organizacional para mejorar procesos internos o desarrollar nuevas propuestas de valor o soluciones al cliente
+  identifier: p52
+  elemento: twenty-one
+
+fifty-three:
+  name: Orquestación de líderes
+  min_description: La organización no cuenta con líderes capaces de movilizar la transformación del negocio
+  max_description: Los lideres tienen objetivos alineados con la estrategia, y además una actuación coherente que permite movilizar a los colaboradores desde el corto al largo plazo con su propio ejemplo
+  identifier: p53
+  elemento: twenty-two
+
+fifty-four:
+  name: Liderazgo de colaboradores
+  min_description: Los colaboradores son fuertemente dependientes de la jerarquía para la gestión
+  max_description: Los colaboradores están empoderados para actuar con autonomía en sus funciones y su gestión sobre los habilitadores de la transformación digital
+  identifier: p54
+  elemento: twenty-two
+
+fifty-five:
+  name: Capacidades de comunicación
+  min_description: Los líderes tienen capacidades comunicacionales débiles. Se lleva a cabo una comunicación a nivel personal con equipos y jefaturas
+  max_description: Los líderes de la organización tienen habilidades comunicacionales destacables y son capaces de comunicar la estrategia y movilizar su ejecución con toda la organización
+  identifier: p55
+  elemento: twenty-two
+
+fifty-six:
+  name: Fomentar innovación
+  min_description: En la organización no se promueve la innovación en los equipos
+  max_description: Los líderes promueven y fomentan la innovación en la organización a través de nuevas capacidades digitales
+  identifier: p56
+  elemento: twenty-two
+
+fifty-seven:
+  name: Resolución autónoma de problemas
+  min_description: Los equipos tienen una mentalidad de gestión tradicional (gestión de recursos) y no incorporan capacidades digitales
+  max_description: Los equipos poseen una mentalidad ágil y autoaprendizaje proactivo, buscan fuentes de innovación y son autónomos para resolver problemas y avanzar en sus frentes de trabajo
+  identifier: p57
+  elemento: twenty-three
+
+fifty-eight:
+  name: Conocimiento experto
+  min_description: Los expertos clave para la organización trabajan en sus áreas funcionales y no prestan apoyo transversal a la transformación de la organización
+  max_description: El conocimiento experto en la transformación de la organización están identificados y definidos como personas y áreas de apoyo
+  identifier: p58
+  elemento: twenty-three
+
+fifty-nine:
+  name: Competencias digitales para la transformación
+  min_description: La organización no ha definido cuales son las competencias clave para la transformación
+  max_description: Existen competencias digitales para la transformación digital y están a disposición para satisfacer las necesidades de clientes y stakeholders
+  identifier: p59
+  elemento: twenty-three
+
+sixty:
+  name: Compromiso y motivación en los equipos
+  min_description: Los colaboradores no tienen interes respecto a los procesos de transformación digital
+  max_description: Los colaboradores buscan activamente participar en los procesos de transformación digital
+  identifier: p60
+  elemento: twenty-four
+
+sixty-one:
+  name: Entender el impacto
+  min_description: Los colaboradores no pueden hacer vínculo entre su trabajo y los impactos al cliente, ni a la transformación
+  max_description: Los colaboradores saben cual es su aporte al valor del cliente y la transformación de la organización
+  identifier: p61
+  elemento: twenty-four
+
+sixty-two:
+  name: Gestión del cambio efectiva
+  min_description: La organización no gestiona el cambio como parte de la transformación digital
+  max_description: La organización cuenta con capacidades de gestión del cambio que facilitan la adopción de  colaboradores, quienes logran adaptar facilmente sus formas de trabajo en contextos cambiantes
+  identifier: p62
+  elemento: twenty-five
+
+sixty-three:
+  name: Talento adecuado
+  min_description: La organización tiene dificultades para atraer y  reclutar talento digital
+  max_description: La estrategia de atracción de talentos es efectiva para adquirir las capacidades digitales que requiere la organización para su transformación, en alineamiento con la estrategia digital
+  identifier: p63
+  elemento: twenty-six
+
+sixty-four:
+  name: Evaluación de desempeño
+  min_description: La evaluación de desempeño se centra en el cumplimiento de objetivos operacionales
+  max_description: La evaluación de desempeño se centra en la generación de competencias digitales y el impacto en valor en base a la estrategia digital
+  identifier: p64
+  elemento: twenty-seven
+
+sixty-five:
+  name: Sistema de incentivos
+  min_description: La organización no tiene un sistema de incentivos
+  max_description: La organización genera y mantiene el compromiso y motivación en los equipos, a través de un adecuado sistema de incentivos (monetarios y no monetarios)
+  identifier: p65
+  elemento: twenty-seven
+
+sixty-six:
+  name: Desarrollo de carrera
+  min_description: La organización no tiene rutas de carrera definidas para sus colaboradores ni un plan de formación para acompañarlos en el proceso
+  max_description: La organización gestiona activamente las competencias de sus colaboradores, asegurando su crecimiento de acuerdo a un plan de desarrollo de carrera
+  identifier: p66
+  elemento: twenty-seven
+
+sixty-seven:
+  name: Desarrollo digital
+  min_description: La organización no cuenta con programas de capacitación en competencias digitales
+  max_description: La organización conoce y mide las capacidades digitales clave para el proceso de transformación. En base a esto identifica brechas y ofrece programas de capacitación para sus colaboradores
+  identifier: p67
+  elemento: twenty-eight
+
+sixty-eight:
+  name: Inversión en capacitación
+  min_description: La organización no define presupuesto para la formación de sus colaboradores
+  max_description: La organización invierte constantemente en el desarrollo de nuevas capacidades digitales, incorporando nuevas técnicas de aprendizaje
+  identifier: p68
+  elemento: twenty-eight
+
+sixty-nine:
+  name: Cultura
+  min_description: No existe una cultura de mejora continua o innovación. Se mantiene una cultura que castiga el error
+  max_description: Existe una cultura arraigada en la organización que fomenta la experimentación, aprendizajes e innovación
+  identifier: p69
+  elemento: twenty-nine
+
+seventy:
+  name: Estructura organizacional
+  min_description: La organización cuenta con una estructura organizacional que responde jerárquicamente a cada unidad de negocios
+  max_description: La estructura organizacional esta centrada en el uso de metodologías ágiles, fomentando la flexibilidad, colaboración, comunicación y toma de decisiones cross-funcional
+  identifier: p70
+  elemento: twenty-nine
+
+seventy-one:
+  name: Comunicación integral
+  min_description: Las comunicaciones internas de la organización se realizan sobre hitos específicos como cambios en la estructura o actividades corporativas
+  max_description: Se mantiene una comunicación transversal y constante (interna y con el entorno) que permite alineamiento y orquestación sobre la transformación del negocio
+  identifier: p71
+  elemento: twenty-nine
+
+seventy-two:
+  name: Asegurar valor al cliente
+  min_description: Los responsables sobre el valor al cliente son aquellos que mantienen un relacionamiento directo con él
+  max_description: Todos en la organización conocen el valor que aportan de cara al cliente y promueven mejoras que permite mejorar su experiencia de servicio
+  identifier: p72
+  elemento: twenty-nine
+
+seventy-three:
+  name: Capacidades organizacionales
+  min_description: Se está iniciando un camino hacia la transformación digital, pero no existe un responsable o definición de roles
+  max_description: La organización ha definido y formalizado el rol que juegan los distintos equipos y áreas en la transformación del negocio
+  identifier: p73
+  elemento: thirty
+
+seventy-four:
+  name: Foco en mejora continua
+  min_description: La organización no ha definido un modelo que permita hacer mejora continua de cara al cliente
+  max_description: La estructura y organización considera la formalización de equipos o células para movilizar la mejora continua e innovación de cara al cliente
+  identifier: p74
+  elemento: thirty
+
+seventy-five:
+  name: Desarrollo de nuevos mercados
+  min_description: Las capacidades de la organización son limitadas para el desarrollo de nuevos mercados
+  max_description: La organización cuenta con el ecosistema que permite explorar nuevos mercados o competir cross-industria
+  identifier: p75
+  elemento: thirty-one
+
+seventy-six:
+  name: Desarrollo del ecosistema
+  min_description: La organización no hace gestión de sus stakeholders, dado que no los ha identificado formalmente.
+  max_description: La organización trabaja colaborativamente con su ecosistema, generando valor a través de una gestión activa de los stakeholders internos y externos.
+  identifier: p76
+  elemento: thirty-two
+
+seventy-seven:
+  name: Gestión activa de ecosistema
+  min_description: La organización mantiene una relación transaccional con sus aliados y ecosistema.
+  max_description: La organización promueve una relación estratégica con su ecosistema para alcanzar una generación de valor a ambas partes (win-win)
+  identifier: p77
+  elemento: thirty-two
+
+seventy-eight:
+  name: Marca como activo
+  min_description: La organización no ve la marca como activo estratégico
+  max_description: La marca es un activo estratégico fundamental y tiene un peso relevante en la valorización de la organización
+  identifier: p78
+  elemento: thirty-three
+
+seventy-nine:
+  name: Reputación
+  min_description: La reputación de la organización no se gestiona y se ve determinada solo por las interacciones en canales
+  max_description: La organización gestiona activamente su reputación para asegurar el posicionamiento y percepción deseada de los stakeholders
+  identifier: p79
+  elemento: thirty-three
+
+eighty:
+  name: Diseño de experiencia clientes
+  min_description: La organización no conoce la experiencia que viven los clientes al interactuar con la organización
+  max_description: La organización gestiona activamente la experiencia de sus clientes para superar sus expectativas, invitándolo a participar en su diseño/actualización
+  identifier: p80
+  elemento: thirty-four
+
+eighty-one:
+  name: Mejora continua e Innovación en experiencia
+  min_description: La organización no conoce los problemas de sus clientes
+  max_description: La organización se hace cargo de analizar y mejorar constantemente la experiencia de sus clientes, incorporando innovación en las interacciones
+  identifier: p81
+  elemento: thirty-four
+
+eighty-two:
+  name: Conocimiento del cliente
+  min_description: La organización no cuenta con información ni sistemas que le permitan conocer ni entender a los clientes
+  max_description: La organización cuenta con diferentes softwares de analítica que le permiten gestionar información e insights del cliente respecto de sus preferencias y experiencia
+  identifier: p82
+  elemento: thirty-four
+
+eighty-three:
+  name: Redes de clientes
+  min_description: La organización no gestiona la relación con sus clientes
+  max_description: La organización gestiona activamente la relación con sus clientes durante todo el viaje, fomentando su involucramiento en decisiones o flujos de valor del negocio
+  identifier: p83
+  elemento: thirty-five
+
+eighty-four:
+  name: Marketing
+  min_description: La organización no cuenta con herramientas digitales de marketing y ventas para gestionar la relación con clientes
+  max_description: La organización cuenta con herramientas como CRM y realiza constantemente acciones de marketing para mantener y mejorar la relación con los clientes
+  identifier: p84
+  elemento: thirty-five
+
+eighty-five:
+  name: Omnicanalidad
+  min_description: La organización tiene disponibles canales tradicionales para la interacción con sus clientes
+  max_description: Los clientes pueden interactuar con la organización a través de canales tradicionales y digitales, en cualquier momento, con una experiencia similar e integrada
+  identifier: p85
+  elemento: thirty-six
+
+eighty-six:
+  name: Medición de desempeño
+  min_description: La organización no mide el desempeño de sus canales
+  max_description: La organización mide efectivamente el desempeño de los canales mediante el uso de métricas de valor al cliente y eficiencia
+  identifier: p86
+  elemento: thirty-six
+
+eighty-seven:
+  name: Comunicación efectiva
+  min_description: Los clientes tienen dificultades para comunicarse con la organización y/o no son atendidos
+  max_description: La organización se puede comunicar en tiempo real con los clientes para poder comunicar de manera ágil e hiper personalizada.
+  identifier: p87
+  elemento: thirty-six
+
+eighty-eight:
+  name: Responsabilidad
+  min_description: No se han definido KPIs medioambientales y sociales o bien solo se busca cumplir con los estándares mínimos legales.
+  max_description: Se han definido KPIs medioambientales y sociales en todos los niveles de la organización a modo de que sean tan importante como lo económico en la toma de decisiones
+  identifier: p88
+  elemento: thirty-seven
+
+eighty-nine:
+  name: Motivación
+  min_description: Las decisiones medioambientales y sociales se toman ad-hoc y solo para reducir el riesgo de incumplimiento legal.
+  max_description: Las decisiones medioambientales y sociales derivan de un propósito formal y transversal a la organización, destinado a generar mayor valor para la sociedad y su entorno.
+  identifier: p89
+  elemento: thirty-eight
+
+ninety:
+  name: Propiedad
+  min_description: Nadie es responsable de los impactos medioambientales y sociales o bien solo aquellos relacionados al compliance (área legal y operaciones)
+  max_description: Se toman decisiones de impacto medioambiental y social en todos los niveles de la organización y todos son responsables del desempeño medioambiental y social de esta.
+  identifier: p90
+  elemento: thirty-nine
+
+ninety-one:
+  name: Reportería
+  min_description: No se tienen considerados aspectos medioambientales y sociales en los temas a comunicar de la organización.
+  max_description: La organización publica periódicamente sus avances y esfuerzos medioambientales y sociales, tanto de forma interna como externa.
+  identifier: p91
+  elemento: forty

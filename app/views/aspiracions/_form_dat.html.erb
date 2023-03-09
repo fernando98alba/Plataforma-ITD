@@ -1,45 +1,21 @@
-<%= turbo_frame_tag "dat_form" do %>
-  <%= form_with(model: [empresa, aspiracion], url: update_dat_recomendation_path(empresa), method: :post) do |form| %>
-    <% if aspiracion.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
+<%= form_with(model: [empresa, aspiracion], url: update_dat_recomendation_path(empresa), method: :post, id: "submit_dat_form") do |form| %>
+  <% if aspiracion.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
 
-        <ul>
-          <% aspiracion.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    
-    <div>
-      <%= form.label :estrategico, style: "display: block" %>
-      <%= form.number_field :estrategico %>
-    </div>
-
-    <div>
-      <%= form.label :estructural, style: "display: block" %>
-      <%= form.number_field :estructural %>
-    </div>
-
-    <div>
-      <%= form.label :humano, style: "display: block" %>
-      <%= form.number_field :humano %>
-    </div>
-
-    <div>
-      <%= form.label :relacional, style: "display: block" %>
-      <%= form.number_field :relacional %>
-    </div>
-
-    <div>
-      <%= form.label :natural, style: "display: block" %>
-      <%= form.number_field :natural %>
-    </div>
-      <%= form.hidden_field :maturity_score, value: recomendation_mat["maturity_score"] %>
-      <%= form.hidden_field :alignment_score, value: recomendation_mat["alignment_score"] %>
-    <div>
-      <%= form.submit %>
+      <ul>
+        <% aspiracion.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
+  <%points_dat.keys.each do |dat|%>
+    <div class="d-flex text-end align-items-center">
+      <%= form.label dat.to_s, style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2"  %>
+      <%= form.number_field dat.to_s, placeholder: recomendation_dat[dat].round, max: 100, min: (points_dat[dat].round + 1), class: "input col-4 mb-2"  %>
+    </div>
+  <%end%>
+    <%= form.hidden_field :maturity_score, value: recomendation_mat["maturity_score"] %>
+    <%= form.hidden_field :alignment_score, value: recomendation_mat["alignment_score"] %>
 <% end %>

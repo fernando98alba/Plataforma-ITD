@@ -1,238 +1,537 @@
-<div class="container-fluid">
-  <div class="main">
-    <div class="shadow p-3 mb-5 bg-white rounded">  
-      <h3><%= "Evolución y aspiración de madurez y alineamiento"%></h3>
+<div class="main mt-4">
+  <% if current_user.is_admin%>
+    <%= link_to 'Definir nueva aspiración', empresa_aspiracions_path(@empresa), data: {turbo: false}, class:"btn btn-primary mb-2 me-2"%>
+  <%end%>
+  <div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+      <div class="shadow p-3 mb-5 bg-white rounded ">  
+        <h3><%= "Evolución y aspiración de madurez y alineamiento"%></h3>
 
-      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 "> 
-        <div>
-          <canvas id="myChart"></canvas>
-        </div>
-
-        <script>
-          let ctx = document.getElementById('myChart');
-
-          let data = [
-            { 
-              label: 'Puntaje ITD',
-              type: "scatter",
-              data: [{
-                y: <%= @aspiracion.alignment_score %>,
-                x: <%= @aspiracion.maturity_score %>
-              }],
-              backgroundColor: "red",
-              borderColor:'red'
-            }];
-
-          <% @itdcons.each do |itdcon|%>
-            <%if itdcon[:completed]%>
-              data.push({ 
-                label: 'Puntaje ITD',
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 "> 
+          <div>
+            <canvas id="myChart" ></canvas>
+          </div>
+          <div class="position-absolute" style="display:none;">
+            <img id="location" src=<%=image_path("logos/location_black.png")%> width="15" height="20"/>
+          </div>
+          
+          <div class="position-absolute" style="display:none;">
+            <img id="location_red" src=<%=image_path("logos/location_red.png")%> width="15" height="20"/>
+          </div>
+          <script>
+            let ctx = document.getElementById('myChart');
+            let img = document.getElementById("location");
+            let img_red = document.getElementById("location_red");
+            let data = [
+              { 
+                label: 'Aspiración de Madurez',
                 type: "scatter",
                 data: [{
-                  y: <%= itdcon.alignment_score %>,
-                  x: <%= itdcon.maturity_score %>
+                  y: <%= @aspiracion.alignment_score.round %>,
+                  x: <%= @aspiracion.maturity_score.round %>
                 }],
-                backgroundColor: "black",
-                borderColor:'black'
-              });
+                backgroundColor: "red",
+                borderColor:'red',
+                pointStyle: img_red,
+              }];
+            let data_evolution = [];
+            <% @itdcons.each do |itdcon|%>
+              <%if itdcon[:completed]%>
+                data_evolution.push({
+                  y: <%= @itdcons.last.alignment_score.round %>,
+                  x: <%= @itdcons.last.maturity_score.round %>
+                });
+              <%end%>
             <%end%>
-          <%end%>
-          data.push(
-            {
-              label: 'Rezagado',
-              data: [0, 0],
-              backgroundColor: 'rgba(0, 0, 50, 0.2)',
-              borderColor:'rgba(0, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            },
-            {
-              label: 'Explorador Digital',
-              data: [30, 30],
-              backgroundColor: 'rgba(0, 0, 50, 0.3)',
-              borderColor:'rgba(0, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            },
-            {
-              label: 'Adoptador Digital',
-              data: [25, 25],
-              backgroundColor: 'rgba(0, 0, 50, 0.2)',
-              borderColor:'rgba(0, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            },
-            {
-              label: 'Líder Digital',
-              data: [20, 20],
-              backgroundColor: 'rgba(0, 0, 50, 0.3)',
-              borderColor:'rgba(1, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            },
-            {
-              label: 'Disruptor Digital',
-              data: [15, 15],
-              backgroundColor: 'rgba(0, 0, 50, 0.3)',
-              borderColor:'rgba(1, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            },
-            {
-              label: 'Disruptor Digital',
-              data: [10, 10],
-              backgroundColor: 'rgba(0, 0, 50, 0.3)',
-              borderColor:'rgba(0, 0, 0, 0)',
-              borderWidth: 1,
-              fill: true
-            }
-          );
-          // render init block
-          new Chart(ctx, {
-            type: 'line',
-            labels: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-            data: {
-              labels: [0, 50],
-              datasets: data
-            },
-            options: {
-              indexAxis: 'y',
-              scales: {
-                x: {
-                  stacked: true,
-                  beginAtZero: true,
-                }
+            data.push({ 
+                  label: 'Evolución Madurez',
+                  type: "line",
+                  data: data_evolution,
+                  backgroundColor: "black",
+                  borderColor:'black',
+                  pointStyle: img
+                });
+            data.push(
+              {
+                label: 'Rezagado Digital',
+                type: "line",
+                data: [30, 30, 30, 30],
+                backgroundColor: 'rgba(127, 164, 213, 1)',
+                borderColor:'rgba(127, 164, 213, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: "origin"
               },
-            },
-          });
-        </script>
+              {
+                label: 'Explorador Digital',
+                type: "line",
+                data: [55, 55, 55, 55],
+                backgroundColor: 'rgba(168, 183, 255, 1)',
+                borderColor:'rgba(168, 183, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Adoptador Digital',
+                type: "line",
+                data: [75, 75, 75, 75],
+                backgroundColor: 'rgba(155, 218, 255, 1)',
+                borderColor:'rgba(155, 218, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Líder Digital',
+                type: "line",
+                data: [90, 90, 90, 90],
+                backgroundColor: 'rgba(127, 224, 228, 1)',
+                borderColor:'rgba(127, 224, 228, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Disruptor Digital',
+                type: "line",
+                data: [100, 100, 100, 100],
+                backgroundColor: 'rgba(173, 239, 242, 1)',
+                borderColor:'rgba(173, 239, 242, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+            );
+            // render init block
+            new Chart(ctx, {
+              data: {
+                labels:[0,10,20,40],
+                datasets: data
+              },
+              options: {
+                  plugins: {
+                  legend: {
+                    
+                    labels: {
+                      usePointStyle: true,
+                        filter: (legendItem, data) => {
+                            return legendItem.text == null || !legendItem.text.includes('Digital');
+                        }
+                    }
+                  }
+                },
+                indexAxis: 'y',
+                scales: {
+                  x: {
+                    ticks: {
+                      count: 101,
+                      callback: (value, index, values ) => {
+                        if ([0,30,55,75,90,100].includes(value)) {
+                          return value
+                        };
+                        if (value == 15) {
+                          return "Rezagado Digital"
+                        };
+                        if (value == 42) {
+                          return "Explorador Digital"
+                        };
+                        
+                        if (value == 65) {
+                          return "Adoptador Digital"
+                        };
+                        
+                        if (value == 82) {
+                          return "Líder Digital"
+                        };
+                        
+                        if (value == 95) {
+                          return "Disruptor Digital"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      },
+                      z: 10
+                    },
+                    min: 0, 
+                    max: 100,
+                    stacked: false,
+                  },
+                  y: {
+                    ticks: {
+                      count: 9,
+                      callback: (value, index, values ) => {
+                        if ([0,10,20,40].includes(value)) {
+                          return value
+                        };
+                        if (value == 5) {
+                          return "Balance"
+                        };
+                        if (value == 15) {
+                          return "Desbalance"
+                        };
+                        if (value == 30) {
+                          return "Desalineamiento"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      },
+                      z: 10
+                    },
+                    reverse: true
+                  }
+                },
+              },
+            });
+          </script>
+        </div>
+
       </div>
 
-    </div>
-
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <h3><%= "Brechas en los DATs"%></h3>
-      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-        <div>
-          <canvas id="myChart2"></canvas>
-        </div>
-        <script>
-          let label = [];
-          let values = [];
-          let brecha = [];
-          <% @points_dat.keys.each do |dat|%>
-            label.push("Capital <%= dat %>");
-            values.push(<%= @points_dat[dat]%>);
-            brecha.push(<%= @aspiracion[dat]%>);
-          <%end%>
-          console.log(values)
-          let ctx2 = document.getElementById('myChart2');
-          let data_dat = [{
-            label: 'Puntaje por capital',
-            type: 'bar',
-            data: values,
-            fill: true,
-            borderColor: '#D87DE7',
-            backgroundColor: '#D87DE7',
-            },
-            {
-            label: 'Aspiracion',
-            type: 'bar',
-            data: brecha,
-            fill: true,
-            borderColor: '#7DBAE7',
-            backgroundColor: '#7DBAE7',
-          }];
-          new Chart(ctx2, {
-            data: {
-            labels: label,
-            datasets: data_dat,
-            },
-            options: {
-              x: {
-                stacked: true
-              },
-              y: {
-                stacked: false,
-                beginAtZero: true,
-                reverse: true
-              },
-              elements: {
-                line: {
-                  borderWidth: 3
-
-                }
-              }
-            },
-          });             
-        </script>
-      </div>
-    </div>
-
-    <div class="shadow p-3 mb-5 bg-white rounded">
-      <h3><%= "Brechas en los habilitadores"%></h3>
-      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-        <div>
-          <canvas id="myChart3"></canvas>
-        </div>
-        <script>
-          label = [];
-          values = [];
-          brecha = [];
-          <% @points_hab.keys.each do |dat|%>
-            <%@points_hab[dat].keys.each do |hab|%>
-              label.push("<%= hab %>");
-              values.push(<%= @points_hab[dat][hab]%>);
-              brecha.push(<%= @aspiracion[hab]%>);
+      <div class="row">
+        
+        <h3><%= "Brechas en los DATs"%></h3>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 shadow p-3 mb-5 bg-white rounded">
+          <div>
+            <canvas id="myChart2"></canvas>
+          </div>
+          <script>
+            let label = [];
+            let values = [];
+            let brecha = [];
+            let maturity = [];
+            <% @points_dat.keys.each do |dat|%>
+              label.push("Capital <%= dat %>");
+              values.push(<%= @points_dat[dat].round%>);
+              maturity.push(<%= @itdcon["maturity_score"].round%>);
+              brecha.push(<%= @aspiracion[dat]%>);
             <%end%>
-          <%end%>
-          let ctx3 = document.getElementById('myChart3');
-          let data_hab = [{
-            label: 'Puntaje por habilitador',
-            data: values,
-            fill: true,
-            backgroundColor: 'rgba(130, 99, 132, 0)',
-            borderColor: 'rgb(130, 99, 132)',
-            pointBackgroundColor: 'rgb(130, 99, 132)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(130, 99, 132)'
-            },
-            {
-            label: 'Aspiracion',
-            data: brecha,
-            fill: true,
-            backgroundColor: 'rgba(255, 99, 132, 0)',
-            borderColor: 'rgb(255, 99, 132)',
-            pointBackgroundColor: 'rgb(255, 99, 132)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(255, 99, 132)'
-            },
-            {
-              label: 'cero',
-              data: [0]
-          }];
-          new Chart(ctx3, {
-            type: "radar",
-            data: {
-            labels: label,
-            datasets: data_hab,
-            },
-            options: {
-              scale: {
-                ticks: { min: 0 },
+            let ctx2 = document.getElementById('myChart2');
+            let data_dat = [{
+              label: 'Puntaje Obtenido',
+              type: 'line',
+              data: maturity,
+              backgroundColor: "red",
+              borderColor:'red',
+              pointRadius: 1,
               },
-              elements: {
-                line: {
-                  borderWidth: 3,
+              {
+              label: 'Puntaje Medición <%=@itdcon.created_at.strftime("%d-%m-%Y")%>',
+              type: 'bar',
+              data: values,
+              fill: true,
+              backgroundColor: "blue",
+              borderColor:'blue'
+              },
+              {
+              label: 'Aspiración',
+              type: 'bar',
+              data: brecha,
+              fill: true,
+              backgroundColor: "gray",
+              borderColor:'gray'
+            }];
+            new Chart(ctx2, {
+              data: {
+              labels: label,
+              datasets: data_dat,
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    
+                  }
+                },
+                scales: {
+                  x: {
+                    stacked: true
+                  },
+                  y: { 
+                    ticks: {
+                      count: 101,
+                      callback: (value, index, values ) => {
+                        if ([0,30,55,75,90,100].includes(value)) {
+                          return value
+                        };
+                        if (value == 15) {
+                          return "Rezagado Digital"
+                        };
+                        if (value == 42) {
+                          return "Explorador Digital"
+                        };
+                        
+                        if (value == 65) {
+                          return "Adoptador Digital"
+                        };
+                        
+                        if (value == 82) {
+                          return "Líder Digital"
+                        };
+                        
+                        if (value == 95) {
+                          return "Disruptor Digital"
+                        };
+                      }
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      }
+                    },
+                    min: 0, 
+                    max: 100,
+                  },
+                },
+                elements: {
+                  line: {
+                    borderWidth: 3
+                  }
                 }
-              }
-            },
-          });             
-        </script>
+              },
+            });          
+          </script>
+        </div>
+      
+
+      
+        <h3><%= "Brechas en los habilitadores"%></h3>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 shadow p-3 mb-5 bg-white rounded">
+          <div>
+            <canvas id="myChart3" height="500px"></canvas>
+          </div>
+          <script>
+            label = [];
+            values = [];
+            brecha = [];
+            <% @points_hab.keys.each do |dat|%>
+              <%@points_hab[dat].keys.each do |hab|%>
+                label.push("<%= hab.gsub("_", " ").capitalize %>");
+                values.push(<%= @points_hab[dat][hab].round%>);
+                brecha.push(<%= @aspiracion[hab].round%>);
+              <%end%>
+            <%end%>
+            let ctx3 = document.getElementById('myChart3');
+            let data_hab = [{
+                label: 'Puntaje Medición <%=@itdcon.created_at.strftime("%d-%m-%Y")%>',
+                data: values,
+                fill: false,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                pointBackgroundColor: 'rgb(255, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(255, 99, 132)'
+              },
+              {
+                label: 'Aspiración',
+                data: brecha,
+                fill: false,
+                backgroundColor: 'rgba(0, 99, 132, 0)',
+                borderColor: 'rgb(0, 99, 132)',
+                pointBackgroundColor: 'rgb(0, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(0, 99, 132)'
+              },
+              {
+                label: 'Rezagado Digital',
+                data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+                backgroundColor: 'rgba(127, 164, 213, 1)',
+                borderColor:'rgba(127, 164, 213, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: "origin"
+              },
+              {
+                label: 'Explorador Digital',
+                data: [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+                backgroundColor: 'rgba(168, 183, 255, 1)',
+                borderColor:'rgba(168, 183, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Adoptador Digital',
+                data: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75],
+                backgroundColor: 'rgba(155, 218, 255, 1)',
+                borderColor:'rgba(155, 218, 255, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Líder Digital',
+                data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90],
+                backgroundColor: 'rgba(127, 224, 228, 1)',
+                borderColor:'rgba(127, 224, 228, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                fill: 2
+              },
+              {
+                label: 'Disruptor Digital',
+                data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                backgroundColor: 'rgba(173, 239, 242, 1)',
+                borderColor:'rgba(173, 239, 242, 1)',
+                borderWidth: 1,
+                pointRadius: 0,
+                hideable: true,
+                fill: 2
+            }];
+            new Chart(ctx3, {
+              type: "radar",
+              data: {
+              labels: label,
+              datasets: data_hab,
+              },
+              options: {
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    
+                    labels: {
+                        filter: (legendItem, data) => {
+                            return legendItem.text == null || !legendItem.text.includes('Digital');
+                        }
+                    }
+                  }
+                },
+                scales: {
+                  r: {
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                      count: 21,
+                      callback: (value, index, values ) => {
+                        if ([0,30,55,75,90,100].includes(value)) {
+                          return value
+                        };
+                      },
+                      backdropColor: "rgba(0,0,0,0)",
+                      z: 10
+                    },
+                    grid: {
+                      color: function(context) {
+                        let response = [];
+                        for (i = 0; i < context.scale.ticks.length; i++) {
+                          if (i == context.index) {
+                            if (Number.isInteger(context.scale.ticks[i].label)) {
+                              return "rgba(0, 0, 0, 0.2)"
+                            } else {
+                              return false
+                            }
+                          }
+                        };
+                      },
+                      z: 10
+                    },
+                  }
+                },
+                elements: {
+                  line: {
+                    borderWidth: 3,
+                  }
+                }
+              },
+            });            
+          </script>
+        </div>
+        
       </div>
     </div>
 
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+      <div class="shadow p-3 mb-5 bg-white rounded ">
+        <h4><%= "Brechas drivers"%></h4>
+        <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+          <%Dat.all.each do |dat|%>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <%if @recomendation_driver[dat.name.downcase] != @points_dri[dat.name.downcase]%>
+                <div class="accordion-item">
+                  <h5 class="accordion-header" id="flush-heading<%= dat.name.downcase%>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= dat.name.downcase%>" aria-expanded="false" aria-controls="flush-collapse<%= dat.name.downcase%>">
+                      <h5><%="Capital #{dat.name}"%></h5>
+                    </button>
+                  </h5>
+                  <div id="flush-collapse<%= dat.name.downcase%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%= dat.name.downcase%>" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body d-flex flex-wrap justify-content-center">
+                      <table class="table table-bordered table-sm" style="font-size: 75%; margin-bottom:-2px">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Habilitador</th>
+                            <th class="text-center">Driver</th>
+                            <th class="text-center">Puntaje obtenido</th>
+                            <th class="text-center">Objetivo de puntaje</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%dat.habilitadors.all.each do |hab|%>
+                            <div>
+                              <%if @recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")] != @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "_")]%>
+                                <%hab.elementos.all.each do |ele|%>
+                                  <div>
+                                    <%if @recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")] != @points_dri[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")]%>
+                                      <br>
+                                      <%ele.drivers.all.each do |driver|%>
+                                        <%if @recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")][driver.identifier] != @itdcon[driver.identifier]%> 
+                                          <tr>
+                                            <td class="text-center"><%=hab.name%></td>
+                                            <td class="text-center"><%=driver.name%></td>
+                                            <td class="text-center"><%=@itdcon[driver.identifier].round(1)%></td>
+                                            <td class="text-center"><%=@recomendation_driver[dat.name.downcase][hab.name.downcase.gsub(" ", "_")][ele.name.downcase.gsub(" ", "_")][driver.identifier].round(1)%></td>
+                                          </tr>
+                                        <%end%>
+                                      <%end%>
+                                    <%end%>
+                                  </div>
+                                <%end%>
+                              <%end%>
+                            </div>
+                          <%end%>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div> 
+              <%end%>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

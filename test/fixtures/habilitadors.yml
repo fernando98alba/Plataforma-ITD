@@ -1,0 +1,81 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  name: Estrategia
+  description: "Se refiere a la forma cómo la organización generará valor en el futuro. Define objetivos, acciones, recursos y capacidades, para una ejecución que genere resultados en el tiempo."
+  dat: one
+
+two:
+  name: Modelos de negocios
+  description: "Se refiere a la visión sistémica del negocio, considerando la forma de generar, entregar y capturar valor a distintos stakeholders."
+  dat: one
+
+three:
+  name: Governance
+  description: "Se refiere al modelo (normas, principios y prácticas) de toma de decisiones, definiendo la interacción entre los distintos niveles organizacionales para adaptarse de manera ágil a los cambios en el contexto."
+  dat: one
+
+four:
+  name: Procesos
+  description: "Se refiere al conjunto de actividades que soportan las operaciones de la organización y la ejecución de la estrategia."
+  dat: two
+
+five:
+  name: Tecnología
+  description: "Se refiere al uso, adquisición y desarrollo de tecnologías para entregar valor a los clientes, así como para soportar los procesos de la organización."
+  dat: two
+
+six:
+  name: Datos y analítica
+  description: "Se refiere a la gestión, análisis y correcto uso de los datos para apoyar la toma de decisiones de la organización."
+  dat: two
+
+seven:
+  name: Modelo operativo
+  description: "Se refiere a cómo opera la organización, buscando la integración entre elementos de roles y competencias, relacionamiento con terceros, procesos, sistemas, información y métricas para materializar la propuesta de valor a los clientes y stakeholders."
+  dat: two
+
+eight:
+  name: Propiedad intelectual
+  description: "Se refiere a los activos de conocimiento generados en la organización y como los gestionamos para generar valor a clientes y stakeholders."
+  dat: two
+
+nine:
+  name: Personas
+  description: "Se refiere a los colaboradores y cómo enfrentan los procesos de transformación y cambio dentro de la organización, desarrollando y generando nuevas capacidades digitales, en alineamiento con los objetivos estratégicos."
+  dat: three
+
+ten:
+  name: Ciclo de vida del colaborador
+  description: "Se refiere a como la organización gestiona todo el ciclo de vida de las personas dentro de la organización, desde su atracción y selección, hasta su desarrollo para promoción o cambio de rol."
+  dat: three
+
+eleven:
+  name: Estructura organizacional
+  description: "Se refiere a cómo la estructura organizacional, se adapta y responde asertivamente a los desafíos estratégicos de la compañía y para ejecutar la Transformación Digital."
+  dat: three
+
+twelve:
+  name: Stakeholders
+  description: "Se refiere a las partes interesadas a ser consideradas en las definiciones estratégicas, de modo de agregarles valor en su ejecución."
+  dat: four
+
+thirteen:
+  name: Marca
+  description: "Se refiere a gestionar la marca y la reputación corporativa como un activo estratégico para la comunicación bidireccional con clientes y stakeholders."
+  dat: four
+
+fourteen:
+  name: Clientes
+  description: "Se refiere a conocer profundamente al cliente, enfocarse en sus necesidades y adaptar la oferta para generarle una experiencia positiva, integrándolo al quehacer de la organización."
+  dat: four
+
+fifteen:
+  name: Sustentabilidad
+  description: 'Se refiere al proceso de generación del triple valor, medioambiental, social
+y económico.'
+  dat: five

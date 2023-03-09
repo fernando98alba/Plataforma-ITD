@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  nombre_empresa: MyString
-  rut: MyString
+  name: Empresa Ejemplo
+  rut: 20072502-4
+  sector: Consultoria
+  size: small
 
 two:
-  nombre_empresa: MyString
-  rut: MyString
+  name: Empresa Example
+  rut: 20072504-4
+  sector: Consultoria
+  size: small

@@ -1,22 +1,33 @@
-<%= form.fields_for :verificador do |form| %>
+<%= form.fields_for :com_verificadors_atributtes do |f| %>
   <div class="modal fade" id="exampleModal<%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%>" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Verificador: <%= driver.verifier%></h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Verificadores de "<%= driver.name%>"</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class = "container">
-            <div class= "main">
-              <%= form.label driver.identifier, style: "display: block" %>
-              <%= form.text_field driver.identifier %>
+            <div class="main mt-4">
+              <%driver.verificadors.each do |verificador|%>
+              <h6>Verificador: <%=verificador.name%></h6>
+                <p>¿Cuenta con el verificador?<p>
+                <select name="itdind[com_verificadors_atributtes[ver<%=verificador.id%>]]" id="itdind_com_verificadors_atributtes_ver<%=verificador.id%>" class="form-select">
+                  <%ComVerificador::OPTIONS.each_with_index do |option, index|%>
+                    <option value=<%=index%>><%=option%></option>
+                  <%end%>
+                </select>
+                <br/>
+                <div class="form-group mb-2">
+                  <%= f.label "Agrega comentario al verificador", class: "mb-2" %><br />
+                  <%= f.text_field "comment_#{verificador.id}", class: "form-control " %>
+                </div>
+              <%end%>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <div type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
         </div>
       </div>
     </div>

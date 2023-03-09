@@ -1,56 +1,54 @@
-<header class="container-fluid">
-  <nav class="sidenav">
 
-    <div class="container-fluid">
 
-      <%= link_to image_tag("logos/logo.svg"), root_path, class:"navimage" %>
-      <br/>
-        <div class="offcanvas-header">
-        </div>
-        <div class="offcanvas-body ">
+<div class="sidenav">
 
-            <% if user_signed_in? %>
-              <% if current_user.empresa_id and current_user.accepted_or_not_invited?%>
-                <%= link_to 'Inicio', empresa_path(current_user.empresa_id), class:"navelement" %>
-                <br/>
-                <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement" %>
-                <br/>
-                <%if current_user.empresa.aspiracion.last%>
-                  <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion.last), class:"navelement", data: {turbo: false} %>
-                <%elsif current_user.empresa.itdcons.last%>
-                  <%= link_to 'Aspiración', empresa_aspiracions_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
-                <%else%>
-                  <%= link_to 'Aspiración', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
-                <%end%>
-                <br/>
-                <%= link_to 'Equipo', empresa_users_path(current_user.empresa_id), class:"navelement" %>
-                <br/>
-              <% else %>
-                <%= link_to 'Inicio', root_path, class:"navelement" %>
-                <br/>
-              <% end %>
-              <%= link_to 'Sobre nosotros', root_path, class:"navelement" %>
-              <br/>
-              <%= link_to 'Editar Perfil', edit_user_registration_path, class:"navelement" %>
-              <br/>
-              <div class="d-flex justify-content-center">
-                <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class:"navbuttonelement navelement" %>
-              </div>
-              <br/>
-              <!-- aquí se puede usar el metodo "data { turbo_method: :delete }-->
-              <%= link_to user_path(current_user) do%>
-                <%= image_tag "logos/profile.png", height: 60, class:"navelement position-absolute bottom-0 start-50 translate-middle mb-10 "%>
-              <%end%>
-            <% else %>
-              <%= link_to 'Inicio', root_path, class:"navelement" %>
-              <br/>
-                <%= link_to 'Ingresar', new_user_session_path, class:"navelement" %>
-              <br/>
-
-              <%= link_to 'Registrarse', new_user_registration_path, class:"navelement" %>
-              <br/>
-            <% end %>
-        </div>
+    <div class="offcanvas-header d-flex flex-wrap justify-content-center">
+      <%= link_to root_path do%>
+        <%= image_tag "logos/logo.png", width: "70vw"%>
+      <%end%>
     </div>
-  </nav>
-<header>
+    <div class="offcanvas-body ">
+
+        <% if user_signed_in? %>
+          <% if current_user.accepted_or_not_invited?%>
+            <%= link_to 'Inicio', empresa_path(current_user.empresa_id), class:"navelement" %>
+            <br/>
+            <%= link_to 'Mediciones', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+            <br/>
+            <%if current_user.empresa.aspiracion%>
+              <%= link_to 'Aspiración', empresa_aspiracion_path(current_user.empresa_id, current_user.empresa.aspiracion), class:"navelement", data: {turbo: false} %>
+            <%elsif current_user.empresa.itdcons.last%>
+              <%= link_to 'Aspiración', empresa_aspiracions_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+            <%else%>
+              <%= link_to 'Aspiración', empresa_itdcons_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+            <%end%>
+            <br/>
+            <%= link_to 'Equipo', empresa_users_path(current_user.empresa_id), class:"navelement", data: {turbo: false} %>
+            <br/>
+          <% else %>
+            <%= link_to 'Inicio', root_path, class:"navelement" %>
+            <br/>
+          <% end %>
+          <%= link_to 'Sobre nosotros', root_path, class:"navelement" %>
+          <br/>
+          <%= link_to 'Editar Perfil', edit_user_registration_path, class:"navelement" %>
+          <br/>
+          <div class="d-flex justify-content-center">
+            <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class:"navbuttonelement navelement" %>
+          </div>
+          <br/>
+          <!-- aquí se puede usar el metodo "data { turbo_method: :delete }-->
+          <%= link_to user_path(current_user) do%>
+            <%= image_tag "logos/profile.png", height: 60, class:"navelement position-absolute bottom-0 start-50 translate-middle mb-10 "%>
+          <%end%>
+        <% else %>
+          <%= link_to 'Inicio', root_path, class:"navelement" %>
+          <br/>
+            <%= link_to 'Ingresar', new_user_session_path, class:"navelement" %>
+          <br/>
+
+          <%= link_to 'Registrarse', new_user_registration_path, class:"navelement" %>
+          <br/>
+        <% end %>
+    </div>
+</div>

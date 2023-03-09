@@ -1,29 +1,23 @@
-<%= turbo_frame_tag "maturity_form" do %>
-  <%= form_with(model: [empresa, aspiracion], url: update_maturity_recomendation_path(empresa), method: :post) do |form| %>
-    <% if aspiracion.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
+<%= form_with(model: [empresa, aspiracion], url: update_maturity_recomendation_path(empresa), method: :post, id: "maturity_form") do |form| %>
+  <% if aspiracion.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
 
-        <ul>
-          <% aspiracion.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div>
-
-      <%= form.label :maturity_score, style: "display: block" %>
-      <%= form.number_field :maturity_score %>
-    </div>
-
-    <div>
-      <%= form.label :alignment_score, style: "display: block" %>
-      <%= form.number_field :alignment_score %>
-    </div>
-    <div>
-      <%= form.submit %>
+      <ul>
+        <% aspiracion.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
+
+  <div class="d-flex text-end align-items-center">
+    <%= form.label "Madurez", style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2" %>
+    <%= form.number_field :maturity_score, placeholder: itdcon.maturity_score.round, max: 100, min: (itdcon.maturity_score.round + 1),  class: "input col-4 mb-2" %>
+  </div>
+
+  <div class="d-flex text-end align-items-center">
+    <%= form.label "Alineamiento", style: "display: block; font-size:13px", class: "col-7 me-2 "%>
+    <%= form.number_field :alignment_score, placeholder: itdcon.alignment_score.round, min: 0, max: (itdcon.alignment_score.round - 1), class: "input col-4" %>
+  </div>
 <% end %>

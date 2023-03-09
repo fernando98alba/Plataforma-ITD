@@ -1,5 +1,5 @@
 <div class="container">
-<div class = "main">
+<div class ="main mt-4">
      <div class="row aligncenter">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-14 col-xs-8">
         <div class="shadow p-3 mb-5 bg-light rounded">
@@ -24,7 +24,7 @@
 
           <p class="text-center"> ¡Evalúa tu nivel de transformación digital aquí!</p>
           <div class="d-grid gap-2 col-8 mx-auto">
-            <%= link_to 'REALIZAR ITD (sin registro)', new_itdsin_path, class: "btn btn-primary btn"  %>
+            <%= link_to 'REALIZAR ITD (sin registro)', new_itdsin_path, class: "btn btn-primary btn", data: {turbo: false}  %>
           </div> 
           <% end %>
 

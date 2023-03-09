@@ -1,37 +1,26 @@
-<%= form_with(model: empresa) do |form| %>
-  <% if empresa.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(empresa.errors.count, "error") %>, necesitas llenar los siguientes campos: </h2>
-
-      <ul>
-        <% empresa.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+<%= f.fields_for :empresa do |fc| %>
+  <h3 class="card-title text-center">Rellena con los datos de tu empresa</h3>
+  <div class="form-group mb-2 ">
+    <%= fc.label "Nombre", class: "me-2"%><br />
+    <%= fc.text_field :name, autofocus: true, autocomplete: "name", class: "form-control "%>
   </div>
 
-  <div>
-    <%= form.label :rut, style: "display: block" %>
-    <%= form.text_field :rut %>
+  <div class="form-group mb-2 ">
+    <%= fc.label "Rut", class: "me-2" %><br />
+    <%= fc.text_field :rut, autofocus: true, class: "form-control "%>
   </div>
 
-  <div>
-    <%= form.label :sector, style: "display: block" %>
-    <%= form.text_field :sector %>
+  <div class="form-group mb-2 ">
+    <%= fc.label "Sector", class: "me-2" %><br />
+    <%= fc.text_field :sector, autofocus: true, class: "form-control "%>
+  </div>
+  <div class="form-group mb-2 ">
+    <%= fc.label "Número de colaboradores", class: "me-2" %><br />
+    <select name="user[empresa_attributes[size]]" id="user_empresa_attributes_size" class="form-select">
+      <%Empresa::OPTIONS.keys.each do |option|%>
+        <option value=<%=option%>><%=Empresa::OPTIONS[option]%></option>
+      <%end%>
+    </select>
   </div>
   
-  <div>
-    <%= form.label :income, style: "display: block" %>
-    <%= form.text_field :income %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

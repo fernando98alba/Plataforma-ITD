@@ -2,7 +2,17 @@
 es-CL:
   activerecord:
     attributes:
+      empresa:
+        name: Nombre de Empresa
+        lastname: Apellido de Empresa
+        rut: Rut de Empresa
+        size: Cantidad de colaboradores de Empresa
+        sector: Sector de Empresa
       user:
+        name: Nombre
+        lastname: Apellido
+        rut: Rut
+        password: La Contraseña
         confirmation_sent_at: Confirmación enviada a
         confirmation_token: Código de confirmación
         confirmed_at: Confirmado en
@@ -27,6 +37,9 @@ es-CL:
         unlock_token: Código de desbloqueo
         updated_at: Actualizado en
     models:
+      empresa:
+        one: Empresa
+        other: Empresas
       user:
         one: Usuario
         other: Usuarios
@@ -170,8 +183,8 @@ es-CL:
     mailer:
       invitation_instructions:
         subject: "Instruciones de la invitación"
-        hello: "Estimada/o %{email}"
-        someone_invited_you: "Has sido invitado a %{url}, puedes aceptarlo siguiendo el siguiente enlace"
+        hello: "Estimada/o %{name} %{lastname}"
+        someone_invited_you: "Has sido invitado a ser parte de %{empresa} en la Plataforma ITD, puedes aceptarlo siguiendo el siguiente enlace"
         accept: "Aceptar la invitación"
         accept_until: "Esta invitación expirará en %{due_date}."
         ignore: "Si no le interesa esta invitación, simplemente ignore este correo. No se creará tu cuenta hasta que accedas al enlace anterior y crees una contraseña."

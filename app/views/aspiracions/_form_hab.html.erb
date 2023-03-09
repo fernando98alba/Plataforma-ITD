@@ -1,39 +1,37 @@
-<%= turbo_frame_tag "hab_form" do %>
-  <%= form_with(model: [empresa, aspiracion], url: update_hab_recomendation_path(empresa), method: :post) do |form| %>
-    <% if aspiracion.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
+<%= form_with(model: [empresa, aspiracion], url: update_hab_recomendation_path(empresa), method: :post, id: "submit_#{dat}_form") do |form| %>
+  <% if aspiracion.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(aspiracion.errors.count, "error") %> prohibited this tobe from being saved:</h2>
 
-        <ul>
-          <% aspiracion.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+      <ul>
+        <% aspiracion.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-    <%= form.hidden_field :dat, value: dat %>
-    <%points_hab.keys.each do |new_dat|%> 
-      <%if new_dat == dat %>
-        <%points_hab[new_dat].keys.each do |hab|%> 
-          <div>
-            <%= form.label hab, style: "display: block" %>
-            <%= form.number_field hab %>
-          </div>
-        <%end%>
-      <%else %>
-        <%points_hab[new_dat].keys.each do |hab|%>
-          <% if aspiracion_hab[new_dat]%>
-            <%= form.hidden_field hab, value: aspiracion_hab[new_dat][hab]%>
-          <%end%>
+  <%= form.hidden_field :dat, value: dat %>
+  <%recomendation_mat.keys.each do |mat|%>
+    <%= form.hidden_field mat, value: recomendation_mat[mat] %>
+  <%end%>
+  <%points_hab.keys.each do |new_dat|%> 
+    <%if new_dat == dat %>
+      <%points_hab[new_dat].keys.each do |hab|%> 
+        <div class="d-flex text-end align-items-center">
+          <%= form.label hab.to_s, style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2"%>
+          <%= form.number_field hab.to_s, placeholder: recomendation_hab[new_dat][hab].round , max: 100, min: (points_hab[new_dat][hab].round + 1), class: "input col-4 mb-2"  %>
+        </div> 
+      <%end%>
+    <%else %>
+      <%points_hab[new_dat].keys.each do |hab|%>
+        <% if aspiracion_hab[new_dat]%>
+          <%= form.hidden_field hab.to_s, value: aspiracion_hab[new_dat][hab]%>
         <%end%>
       <%end%>
     <%end%>
-    <%aspiracion_dat.keys.each do |new_dat|%>
-      <%= form.hidden_field new_dat, value: aspiracion_dat[new_dat]%>
-    <%end%>
-    <div>
-      <%= form.submit %>
-    </div>
-  <% end %>
+  <%end%>
+  <%aspiracion_dat.keys.each do |new_dat|%>
+    <%= form.hidden_field new_dat.to_s, value: aspiracion_dat[new_dat]%>
+  <%end%>
 <% end %>
