@@ -1,0 +1,48 @@
+<div class="main mt-4 shadow p-3 mb-5 rounded mt-5d">
+  <h1 class="text-center" style="margin-bottom: 60px">Resultados Área<%= "#{@itdarea.area.name}"%> medición <%=l(@itdcon.created_at.to_date, format: :custom_itd)%></h1>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">   
+        
+      <div class="dropdown mb-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+          <%= "Respuestas Consolidadas #{@itdarea.area.name}"%>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><%= link_to "<b>Respuestas Consolidadas</b>".html_safe, empresa_itdcon_path(@empresa.id, @itdcon.id), data: {turbo: false}, class:"dropdown-item" %></b></li>
+          <li class="dropdown dropend">
+            <% @itdcon.itdareas.each do |itdarea|%>
+              <button class="dropdown-item dropdown-toggle" id="dropdownSubMenuButton<%=itdarea.area.name%>" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Respuestas <%=itdarea.area.name%>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownSubMenuButton<%=itdarea.area.name%>">
+                <%if itdarea != @itdarea%>
+                  <li><%= link_to "<b>Respuestas Consolidadas #{itdarea.area.name}</b>".html_safe, empresa_itdcon_itdarea_path(@empresa.id, @itdcon.id, itdarea), data: {turbo: false}, class:"dropdown-item" %></li>
+                <%end%>
+                <% itdarea.itdinds.each do |itdind|%>
+                  <% if itdind != @itdind %>
+                    <%if current_user.is_admin%>
+                      <li><%= link_to "Respuestas #{itdind.user.name} #{itdind.user.lastname}", empresa_itdcon_itdind_path(@empresa.id, @itdcon.id, itdind), data: {turbo: false}, class:"dropdown-item" %><li>
+                    <%end%>
+                  <% end %>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+      <%= render partial: "results_graphs/maturity_result", locals: {itd: @itdarea}%>
+      
+      <%= render partial: "results_graphs/dat_result", locals: {itd: @itdarea, points_dat: @points_dat}%>
+
+      <%= render partial: "results_graphs/hab_result", locals: {itd: @itdarea, points_hab: @points_hab}%>
+
+      <%= render partial: "results_graphs/cap_result", locals: {itd: @itdarea, points_dat: @points_dat, points_hab: @points_hab}%>
+    </div>
+  </div>
+  <%if current_user.is_admin%>
+    <div class = "d-flex justify-content-end marginright">
+      <%= link_to 'Definir aspiración', empresa_aspiracions_path(@empresa), class:"btn btn-primary" , data: {turbo: false}%>
+    </div>
+  <%end%>
+</div>
+          

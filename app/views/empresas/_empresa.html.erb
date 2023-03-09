@@ -8,5 +8,15 @@
     <strong>Rut:</strong>
     <%= empresa.rut %>
   </p>
-
+  <p>
+    <strong>Tamaño:</strong>
+    <%= "#{Empresa::OPTIONS[empresa.size]} colaboradores" %>
+  </p>
+  <%empresa.areas.length > 0%>
+  <strong> Áreas</strong>
+  <ul>
+    <%empresa.areas.each do |area|%>
+      <li><%=area.name%></li>
+    <%end%>
+  </ul>
 </div>

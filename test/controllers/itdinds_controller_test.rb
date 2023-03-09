@@ -108,7 +108,7 @@ class ItdindsControllerTest < ActionDispatch::IntegrationTest
     count = 0
     Driver.all.each do |driver|
       driver.verificadors.all.each do |verificador|
-        if com_verificadors(:one).verificador.id == verificador.id
+        if com_verificadors(:zero).verificador.id == verificador.id
           parameters_ver["ver"+verificador.id.to_s] = "2"
           parameters_ver["comment_"+verificador.id.to_s] = "Changed"
         else

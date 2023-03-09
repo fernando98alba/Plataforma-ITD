@@ -34,7 +34,6 @@ class AspiracionsController < ApplicationController
   end
 
   def update
-    puts "update"
     @aspiracion = @empresa.aspiracion
     respond_to do |format|
       if @aspiracion.update(aspiracion_params)
@@ -63,7 +62,6 @@ class AspiracionsController < ApplicationController
     end
     get_points
     calculate_recomendation
-    puts @recomendation_dat
     @aspiracion_mat["maturity_score"] = @recomendation_mat["maturity_score"]
     calculate_alignment
     if @aspiracion_mat["alignment_score"]> @recomendation_mat["alignment_score"]
@@ -71,7 +69,6 @@ class AspiracionsController < ApplicationController
     else
       @recomendation_mat["alignment_score"] = @aspiracion_mat["alignment_score"]
     end
-    puts @recomendation_dat
     respond_to do |format|
       format.turbo_stream
       format.json {render json: @recomendation_mat}

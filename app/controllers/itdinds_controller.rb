@@ -2,6 +2,7 @@ class ItdindsController < ApplicationController
 
   before_action :get_itdind
   before_action :get_itdcon
+  before_action :get_itdarea, only: [:edit, :update]
   before_action :get_empresa
   before_action :authenticate_user!
   before_action :correct_user_edit, only: [:edit, :update] #CHECK QUE ITDIND.ITDCON = @ITDCON
@@ -29,14 +30,21 @@ class ItdindsController < ApplicationController
     respond_to do |format|
       if @itdind.save
         if @itdind[:completed] == true
-          calculate_itdcon
+          if @itdarea
+            calculate_bigger_itd @itdarea, @itdarea.itdinds
+            if @itdarea[:completed]
+              calculate_bigger_itd @itdcon, @itdcon.itdareas
+            end
+          else
+            calculate_bigger_itd @itdcon, @itdcon.itdinds
+          end
           if @itdcon[:completed] == true
             format.html { redirect_to empresa_itdcon_path(@itdcon.empresa, @itdcon), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           else
             format.html { redirect_to empresa_itdcons_path(@itdcon.empresa), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           end
         else
-          format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), notice: "Respuestas guardadas correctamente." }
+          flash[:notice] = "Respuestas guardadas correctamente."
         end
       else #REVISAR EL ELSE
         format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), status: :unprocessable_entity }
@@ -67,7 +75,8 @@ class ItdindsController < ApplicationController
     (1..91).each do |index|
       question = "p" + index.to_s
       if !@parameters[question] 
-        @itdind[:completed] = false
+        #@itdind[:completed] = false
+        @itdind[question] = rand(4)
       else
         @itdind[question] = @parameters[question].to_i
       end
@@ -117,42 +126,43 @@ class ItdindsController < ApplicationController
     end
   end
 
-  def calculate_itdcon
-    itdinds = @itdcon.itdinds.where(completed: true)
-    if itdinds.length == @itdcon.itdinds.count
-      @itdcon[:completed] = true
+  def calculate_bigger_itd itd, itd_collection
+    itdinds = itd_collection.where(completed: true)
+    if itdinds.length == itd_collection.count
+      itd[:completed] = true
     end
+    puts itd
      #Atomicidad, y si dos cambian a true al mismo tiempo?
-    if @itdcon[:completed] == true
+    if itd[:completed] == true
       Driver.all.each do |driver|
-        @itdcon[driver.identifier] = 0
+        itd[driver.identifier] = 0
         itdinds.each do |itdind|
-          @itdcon[driver.identifier] += itdind[driver.identifier]
+          itd[driver.identifier] += itdind[driver.identifier]
         end
-        @itdcon[driver.identifier] = @itdcon[driver.identifier]/itdinds.length.to_f
+        itd[driver.identifier] = itd[driver.identifier]/itdinds.length.to_f
       end
-      @itdcon["maturity_score"] = 0
-      @itdcon["alignment_score"] = 0
+      itd["maturity_score"] = 0
+      itd["alignment_score"] = 0
       itdinds.each do |itdind|
-        @itdcon["maturity_score"] += itdind["maturity_score"]
-        @itdcon["alignment_score"] += itdind["alignment_score"]
+        itd["maturity_score"] += itdind["maturity_score"]
+        itd["alignment_score"] += itdind["alignment_score"]
       end
-      @itdcon["maturity_score"] = @itdcon["maturity_score"]/itdinds.length.to_f
-      @itdcon["alignment_score"] = @itdcon["alignment_score"]/itdinds.length.to_f
+      itd["maturity_score"] = itd["maturity_score"]/itdinds.length.to_f
+      itd["alignment_score"] = itd["alignment_score"]/itdinds.length.to_f
       Madurez.all.each do |level| #HACER LO MISMO PARA LOS IND
-        if @itdcon["maturity_score"] <= level.max and @itdcon["maturity_score"] >= level.min
-          @itdcon.madurez = level
+        if itd["maturity_score"] <= level.max and itd["maturity_score"] >= level.min
+          itd.madurez = level
           break
         end
       end
       Alineamiento.all.each do |level|
-        if @itdcon["alignment_score"] <= level.max and @itdcon["alignment_score"] >= level.min
-          @itdcon.alineamiento = level
+        if itd["alignment_score"] <= level.max and itd["alignment_score"] >= level.min
+          itd.alineamiento = level
           break
         end
       end
     end
-    @itdcon.save
+    itd.save
   end
 
   def get_points
@@ -183,6 +193,10 @@ class ItdindsController < ApplicationController
   def get_itdcon
     @itdcon = Itdcon.find_by(id: params[:itdcon_id])
     redirect_to root_path, notice: "Acción invalida." if !@itdcon
+  end
+
+  def get_itdarea
+    @itdarea = @itdind.itdarea
   end
 
   def get_empresa

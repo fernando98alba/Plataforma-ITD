@@ -11,6 +11,7 @@
         <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
           Nuevo ITD
         </button>
+        <%= render partial: "new", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
       <%end%>
     <%end%>
   </div>
@@ -20,7 +21,6 @@
     let color;
     let ctx;
   </script>
-  <%= render partial: "form", locals: {empresa: @empresa, itdcon: @empresa.itdcons.build, participants: @participants}%>
   <div class="row">
     <%if @last_itdcon%>
     <div class="p-3 mb-5 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
@@ -191,25 +191,72 @@
           <%end%>
         <%end%>
         <%if @last_not_completed_itdcon%>
-          <div class="row rounded border border-dark bg-white m-2 position-relative ps-2">
-            <b><%='ITD ' + l(@last_not_completed_itdcon.created_at.to_date, format: :custom_itd) %></b>
-            <br>
-            <br>
-            <p><%= "Miembros restantes:" %></p>
-            <div>
-              <ul>
-                <%@last_not_completed_itdcon.itdinds.each do |itdind|%>
-                  <%if !itdind[:completed]%>
-                    <%if itdind.user == current_user%>
-                      <li><%=itdind.user.name%> (tu)</li>
-                      <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_not_completed_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
-                    <%else%>
-                      <li><%=itdind.user.name%></li>
+          <div class="row rounded border border-dark bg-white m-2 position-relative ">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <b><%='ITD ' + l(@last_not_completed_itdcon.created_at.to_date, format: :custom_itd)%></b>
+              <% if current_user.is_admin%>
+                <%= render partial: "edit", locals: {empresa: @empresa, itdcon: @last_not_completed_itdcon, participants: @participants}%>
+                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#editItdconModal">
+                  Editar Medición
+                </button>
+              <%end%>
+            </div>
+            <%if @last_not_completed_itdcon.itdareas.length >0%>
+              <div>
+                <%@last_not_completed_itdcon.itdareas.each do |itd|%>
+                  <div class="rounded border border-dark bg-white mt-2 mb-2 position-relative ps-2">
+                    <b><%= "ITD de #{itd.area.name}" %></b>
+                    <br>
+                    <br>
+                    <div>
+                      <%if itd[:completed]%>
+                        <p><b><%= "Todos los miembros actuales respondieron" %></b></p>
+                      <%else%>
+                        <p><%= "Miembros restantes:" %></p>
+                        <ul>
+                          <%itd.itdinds.each do |itdind|%>
+                            <%if !itdind[:completed]%>
+                              <%if itdind.user == current_user%>
+                                <li><%=itdind.user.name%> (tu)</li>
+                                <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_not_completed_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                              <%else%>
+                                <li><%=itdind.user.name%></li>
+                              <%end%>
+                            <%end%>
+                          <%end%>
+                        </ul>
+                      <%end%>
+                      <% if current_user.is_admin%>
+                        <%= render partial: "itdareas/edit", locals: {empresa: @empresa, itdarea: itd, itdcon: @last_not_completed_itdcon, id: itd.area.name}%>
+                        <div>
+                          <button type="button" class="btn btn-primary position-absolute bottom-0 end-0 mb-2 me-2" data-bs-toggle="modal" data-bs-target="#<%=itd.area.name%>Modal">
+                            Editar participantes
+                          </button>
+                        </div>
+                      <%end%>
+                    </div>
+                  </div>
+                <%end%>
+              </div>
+            <%else%>
+              <br>
+              <br>
+              <p><%= "Miembros restantes:" %></p>
+              <div>
+                <ul>
+                  <%@last_not_completed_itdcon.itdinds.each do |itdind|%>
+                    <%if !itdind[:completed]%>
+                      <%if itdind.user == current_user%>
+                        <li><%=itdind.user.name%> (tu)</li>
+                        <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_not_completed_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                      <%else%>
+                        <li><%=itdind.user.name%></li>
+                      <%end%>
                     <%end%>
                   <%end%>
-                <%end%>
-              </ul>
-            </div>
+                </ul>
+              </div>
+            <%end%>
           </div>
         <% end %>
       </div>

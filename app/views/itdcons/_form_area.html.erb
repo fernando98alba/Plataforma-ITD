@@ -12,14 +12,10 @@
   <% end %>
   <div class = "container">
     <div class="main mt-4">
-      <%= form.check_box current_user.id, {checked: itdcon.itdinds.find_by(user_id: current_user.id) ? true : false} %>
-      <%= form.label "#{current_user.name} (Tu)"%> <br />
-      <%participants.each do |participant|%>
+      <%areas.each do |area|%>
         <div>
-          <%if participant != current_user%>
-            <%= form.check_box participant.id, {checked: itdcon.itdinds.find_by(user_id: participant.id) ? true : false} %>
-            <%= form.label participant.name%> <br />
-          <%end%>
+          <%= form.check_box area.id, {checked: itdcon.itdareas.find_by(area_id: area.id) ? true : false} %>
+          <%=area.name%><br />
         </div>
       <%end%>
     </div>

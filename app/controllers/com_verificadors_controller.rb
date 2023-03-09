@@ -6,6 +6,7 @@ class ComVerificadorsController < ApplicationController
   before_action :correct_user
   before_action :get_points, only: [ :show]
   before_action :correct_completed
+  
   def index
     @results_ver = {}
     itdind_ids = @itdcon.itdind_ids
@@ -33,7 +34,7 @@ class ComVerificadorsController < ApplicationController
         end
       end
       if @results_ver[dat.name.downcase].keys.length == 0
-        @results_ver.delete(hab.name.downcase)
+        @results_ver.delete(dat.name.downcase)
       end
     end
     @results_dat = {}
@@ -66,11 +67,6 @@ class ComVerificadorsController < ApplicationController
         end
       end
     end
-    puts @results_hab
-    puts "AAA"
-    puts @results_dat
-    puts "BBB"
-    puts @results_general
   end
 
   private

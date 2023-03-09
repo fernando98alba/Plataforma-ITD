@@ -1,0 +1,29 @@
+<div class="modal fade" id="areaModal" tabindex="-1" aria-labelledby="areaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="areaModalLabel">Agregue una nueva área</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: [empresa, area], id: "areaForm") do |form| %>
+          <div class="form-group mb-2 ">
+            <%= form.label "Nombre", class: "me-2"%><br />
+            <%= form.text_field :name, autofocus: true, autocomplete: "name", class: "form-control "%>
+          </div>
+          <label>Elija los miembros del área:</label>
+          <div class="form-group mb-2 ">
+            <%empresa.users.where(area_id: nil).each do |user|%>
+              <%= form.check_box user.id.to_s %>
+              <%= form.label user.name%> <br />
+            <%end%>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="submit" value="Submit" data-bs-dismiss="modal" form="areaForm">Agregar área</button>
+      </div>
+    </div>
+  </div>
+</div>

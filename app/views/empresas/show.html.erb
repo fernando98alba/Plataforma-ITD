@@ -13,9 +13,6 @@ mx-lg-auto -->
                   <h4> Datos Empresa </h4>
                   <%= render @empresa %>
                   <div>
-                  <span style="margin: 5px; margin-top: 10px">
-                  <%= link_to "Volver a empresas", root_path, class:"btn btn-outline-dark" %>
-                  </span>
                   
                   </div>          
               </div>
@@ -43,6 +40,9 @@ mx-lg-auto -->
                                       <th scope="col">Nombre</th>
                                       <th scope="col">Apellido</th>
                                       <th scope="col">Email</th>
+                                      <% if @empresa.areas.length > 0%>
+                                        <th scope="col">Área</th>
+                                      <%end%>
                                     </tr>
                                   </thead>
                                   <tbody class="table-group-divider">
@@ -52,21 +52,25 @@ mx-lg-auto -->
                                       <td><%= usuario.name %></td>
                                       <td><%= usuario.lastname %></td>
                                       <td><%= usuario.email %></td>
+                                      <% if usuario.area%>
+                                        <td><%= usuario.area.name %></td>
+                                      <% elsif @empresa.areas.length > 0%>
+                                        <td><%= ""%></td>
+                                      <%end%>
                                     </tr>
                                     <% end %>
                                   </tbody>
                                 </table>
-
                                 
                               </div>
-                              <% if current_user.is_admin = 1 %>
-                              <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label"><b>¡Agrega un colega!</b> Ingresa su correo para admitirlo en esta empresa </label>
-                                <!--<%= form_for "", url: empresa_path, role: "search", method: :get do %>
-                                <%= text_field_tag  :search, @nuevointegrante, autofocus: true, autocomplete: "email", class: "form-control form-control-lg" , placeholder: "Email del nuevo integrante" %>
-                                --><% end %>
-                              </div>
-                              <%=  %>
+                              <% if current_user.is_admin == "1"%>
+                                <div class="mb-3">
+                                  <%=render partial: "areas/new", locals: {empresa: @empresa, area: @empresa.areas.build}%> 
+                                  <p class="form-label"><b>!Agrega un área a tu empresa!</b></p>
+                                  <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#areaModal">
+                                    Agregar área
+                                  </button>
+                                </div>
                               <% end %>
                             </div>
                           </div>
@@ -75,7 +79,6 @@ mx-lg-auto -->
                    </div>
               </div> 
         </div>
-        <%= link_to "Borrar empresa", @empresa, data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" },class:"btn btn-outline-dark" %>
     </div>
   </div>
 </div>

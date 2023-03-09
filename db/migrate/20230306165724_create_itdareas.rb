@@ -1,7 +1,8 @@
-class CreateItdcons < ActiveRecord::Migration[7.0]
+class CreateItdareas < ActiveRecord::Migration[7.0]
   def change
-    create_table :itdcons do |t|
-      t.references :empresa, null: true, foreign_key: {on_delete: :cascade}
+    create_table :itdareas do |t|
+      t.references :itdcon, foreign_key: {on_delete: :cascade}
+      t.references :area, foreign_key: {on_delete: :cascade}
       t.references :madurez, null: true, foreign_key: true
       t.references :alineamiento, null: true, foreign_key: true
       t.float :p1
@@ -95,7 +96,8 @@ class CreateItdcons < ActiveRecord::Migration[7.0]
       t.float :p89
       t.float :p90
       t.float :p91
-
+      t.boolean :completed, default: false
+      
       t.timestamps
     end
   end

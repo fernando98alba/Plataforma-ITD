@@ -1,0 +1,19 @@
+<div class="modal fade" id="<%=id%>Modal" tabindex="-1" aria-labelledby="<%=id%>ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="<%=id%>ModalLabel">Elija los participantes de la medición</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render partial: "itdareas/form", locals: {empresa: empresa, itdcon: itdcon, itdarea: itdarea, id: id}%>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="submit" value="Submit" form="itdarea_<%=id%>_form" onclick="return confirm('¿Está seguro? Cualquier medición desmarcada se eliminará')">Editar medición</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
