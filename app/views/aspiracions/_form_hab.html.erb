@@ -20,7 +20,7 @@
       <%points_hab[new_dat].keys.each do |hab|%> 
         <div class="d-flex text-end align-items-center">
           <%= form.label hab.to_s, style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2"%>
-          <%= form.number_field hab.to_s, placeholder: recomendation_hab[new_dat][hab].round , max: 100, min: (points_hab[new_dat][hab].round + 1), class: "input col-4 mb-2"  %>
+          <%= form.number_field hab.to_s, placeholder: recomendation_hab[new_dat][hab].round , max: 100, min: (points_hab[new_dat][hab].round + 1), value: nil, class: "input col-4 mb-2"  %>
         </div> 
       <%end%>
     <%else %>

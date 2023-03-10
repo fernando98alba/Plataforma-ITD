@@ -24,18 +24,21 @@ class ItdconsController < ApplicationController
     #ADD any_participant_selected
     #respond_to do |format|
     @itdcon_params = create_params
-
+    puts "Values: #{@itdcon_params}"
+    puts "Areas: #{@empresa.areas.length}"
+    puts "Users: #{@empresa.user_ids}"
     if @itdcon_params.values.include? "1"
       if @itdcon.save
         if @empresa.areas.length == 0
           @itdcon_params.keys.each do |param|
             if @itdcon_params[param].to_i == 1
-              user = User.find_by(id: param.to_i) #Cambiar a paerticipants
+              user = @empresa.users.find_by(id: param.to_i) #Cambiar a paerticipants
               if user != current_user 
                 itdind = user.itdinds.build()
                 itdind.itdcon = @itdcon
                 itdind.save()
               else
+                puts "AAAA"
                 @itdind = current_user.itdinds.build()
                 @itdind.itdcon = @itdcon
                 @itdind.save

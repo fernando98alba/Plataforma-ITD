@@ -21,7 +21,7 @@
         <div class="form-group mb-2">
           <%= f.label :password, class: "mb-2" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
+          <em>(Debe tener <%= @minimum_password_length %> caracteres mínimo, una mayúscula, una minúscula, un número y un caracter especial)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control " %>
         </div>

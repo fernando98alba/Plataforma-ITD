@@ -18,6 +18,10 @@ class AspiracionsController < ApplicationController
     get_points #get element and driver points and recomendations
     @recomendation_element = {}
     @recomendation_driver = {}
+    puts "AAAA"
+    print @get_last_itdcon
+    puts @aspiracion
+    puts @points_hab
     calculate_element_driver_recomendation
   end
 

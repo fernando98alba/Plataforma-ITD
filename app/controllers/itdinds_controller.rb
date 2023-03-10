@@ -44,7 +44,7 @@ class ItdindsController < ApplicationController
             format.html { redirect_to empresa_itdcons_path(@itdcon.empresa), data: {turbo: false}, notice: "El Itd se creó correctamente." }
           end
         else
-          flash[:notice] = "Respuestas guardadas correctamente."
+          format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind) }
         end
       else #REVISAR EL ELSE
         format.html { redirect_to edit_empresa_itdcon_itdind_path(@itdcon.empresa, @itdcon, @itdind), status: :unprocessable_entity }
@@ -75,8 +75,8 @@ class ItdindsController < ApplicationController
     (1..91).each do |index|
       question = "p" + index.to_s
       if !@parameters[question] 
-        #@itdind[:completed] = false
-        @itdind[question] = rand(4)
+        @itdind[:completed] = false
+        #@itdind[question] = rand(4)
       else
         @itdind[question] = @parameters[question].to_i
       end
@@ -214,7 +214,7 @@ class ItdindsController < ApplicationController
       if @parameters[:com_verificadors_atributtes]
         state = @parameters[:com_verificadors_atributtes]["ver"+verificador.id.to_s]
         comment = @parameters[:com_verificadors_atributtes]["comment_"+verificador.id.to_s]
-        if !(state == "0" and comment == "")
+        if !(state == "0" and comment == "") #VER SI PUEDO MEJORARLO
           @verificador = ComVerificador.find_by(itdind_id: @itdind.id, verificador_id: verificador.id)
           if @verificador
             @verificador.update({state: state, comment: comment})

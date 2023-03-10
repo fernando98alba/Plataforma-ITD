@@ -248,7 +248,7 @@
                     <%if !itdind[:completed]%>
                       <%if itdind.user == current_user%>
                         <li><%=itdind.user.name%> (tu)</li>
-                        <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_not_completed_itdcon.id, itdind.id), class:"btn btn-primary position-absolute top-0 end-0 mt-2 me-2"%>
+                        <%= link_to 'Responder ITD', edit_empresa_itdcon_itdind_path(@empresa.id, @last_not_completed_itdcon.id, itdind.id), class:"btn btn-primary position-absolute bottom-0 end-0 mb-2 me-2"%>
                       <%else%>
                         <li><%=itdind.user.name%></li>
                       <%end%>

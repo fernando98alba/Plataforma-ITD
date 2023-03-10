@@ -13,7 +13,7 @@
   <%points_dat.keys.each do |dat|%>
     <div class="d-flex text-end align-items-center">
       <%= form.label dat.to_s, style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2"  %>
-      <%= form.number_field dat.to_s, placeholder: recomendation_dat[dat].round, max: 100, min: (points_dat[dat].round + 1), class: "input col-4 mb-2"  %>
+      <%= form.number_field dat.to_s, placeholder: recomendation_dat[dat].round, max: 100, min: (points_dat[dat].round + 1), value: nil, class: "input col-4 mb-2"  %>
     </div>
   <%end%>
     <%= form.hidden_field :maturity_score, value: recomendation_mat["maturity_score"] %>

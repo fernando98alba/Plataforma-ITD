@@ -64,13 +64,17 @@ mx-lg-auto -->
                                 
                               </div>
                               <% if current_user.is_admin == "1"%>
-                                <div class="mb-3">
+                                <%
+=begin%>
+ <div class="mb-3">
                                   <%=render partial: "areas/new", locals: {empresa: @empresa, area: @empresa.areas.build}%> 
                                   <p class="form-label"><b>!Agrega un área a tu empresa!</b></p>
                                   <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#areaModal">
                                     Agregar área
                                   </button>
-                                </div>
+                                </div> 
+<%
+=end%>
                               <% end %>
                             </div>
                           </div>
