@@ -51,3 +51,11 @@ six:
   is_admin: 0
   encrypted_password: A1b2c3$$
   empresa: two
+
+seven:
+  email: juan@ejemplo.com
+  name: Juan
+  lastname: Perez
+  is_admin: 0
+  encrypted_password: A1b2c3$$
+  empresa: two

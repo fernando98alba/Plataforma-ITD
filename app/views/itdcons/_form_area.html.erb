@@ -1,0 +1,24 @@
+<%= form_with(model: [empresa, itdcon], id: "itdcon_form") do |form| %>
+  <% if itdcon.errors.any? %>
+    <div>
+      <h2><%= pluralize(itdcon.errors.count, "error") %>, necesitas llenar los siguientes campos: </h2>
+
+      <ul>
+        <% itdcon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class = "container">
+    <div class="main mt-4">
+      <%areas.each do |area|%>
+        <div>
+          <%= form.check_box area.id, {checked: itdcon.itdareas.find_by(area_id: area.id) ? true : false} %>
+          <%=area.name%><br />
+        </div>
+      <%end%>
+    </div>
+  </div>
+<% end %>
+

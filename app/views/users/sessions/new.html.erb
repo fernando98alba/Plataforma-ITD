@@ -5,7 +5,6 @@
     </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|%> 
-        
         <div class="form-group mb-2 ">
           <%= f.label :email, class: "mb-2" %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control " %>
@@ -24,7 +23,7 @@
         <% end %>
 
         <div class="actions">
-          <%= f.submit "Iniciar sesión", class: "btn btn-primary" %>
+          <%= f.submit "Iniciar sesión",data: { turbo: false}, class: "btn btn-primary" %>
         </div>
       <% end %>
 

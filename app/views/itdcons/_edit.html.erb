@@ -1,0 +1,32 @@
+<div class="modal fade" id="editItdconModal" tabindex="-1" aria-labelledby="editItdconModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <%if itdcon.itdareas.length == 0%>
+          <h1 class="modal-title fs-5" id="editItdconModalLabel">Elija los participantes de la medición</h1>
+        <%else%>
+          <h1 class="modal-title fs-5" id="editItdconModalLabel">Elija las áreas que participaran de la medición</h1>
+        <%end%>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%if itdcon.itdareas.length == 0%>
+          <%= render partial: "form", locals: {empresa: empresa, itdcon: itdcon, participants: participants}%>
+        <%else%>
+          <%= render partial: "form_area", locals: {empresa: empresa, itdcon: itdcon, areas: empresa.areas}%>
+        <%end%>
+      </div>
+      <div class="modal-footer d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+          <%= link_to "Eliminar medición", [empresa, itdcon], data: { turbo_method: :delete, turbo_confirm: "¿Seguro que quiere eliminarla (se eliminarán además todas las mediciones individuales)?" }, class:"btn btn-danger mb-2 me-2" %>
+        </div>
+        <div>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary" name="submit" value="Submit" form="itdcon_form" onclick="return confirm('¿Está seguro? Cualquier medición desmarcada se eliminará')">Editar medición</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -10,14 +10,13 @@
       </ul>
     </div>
   <% end %>
-
   <div class="d-flex text-end align-items-center">
     <%= form.label "Madurez", style: "display: block; font-size:13px;", class: "col-7 me-2 mb-2" %>
-    <%= form.number_field :maturity_score, placeholder: itdcon.maturity_score.round, max: 100, min: (itdcon.maturity_score.round + 1),  class: "input col-4 mb-2" %>
+    <%= form.number_field :maturity_score, placeholder: itdcon.maturity_score.round, max: 100, min: (itdcon.maturity_score.round + 1), value: aspiracion_mat["maturity_score"]>0 ? aspiracion_mat["maturity_score"].round : (aspiracion.maturity_score ? aspiracion.maturity_score.round : nil) , class: "input col-4 mb-2" %>
   </div>
 
   <div class="d-flex text-end align-items-center">
     <%= form.label "Alineamiento", style: "display: block; font-size:13px", class: "col-7 me-2 "%>
-    <%= form.number_field :alignment_score, placeholder: itdcon.alignment_score.round, min: 0, max: (itdcon.alignment_score.round - 1), class: "input col-4" %>
+    <%= form.number_field :alignment_score, placeholder: itdcon.alignment_score.round, min: 0, max: (itdcon.alignment_score.round - 1), value: aspiracion_mat["maturity_score"]>0 ? aspiracion_mat["alignment_score"].round : (aspiracion.alignment_score ? aspiracion.alignment_score.round : nil), class: "input col-4" %>
   </div>
 <% end %>

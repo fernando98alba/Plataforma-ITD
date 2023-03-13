@@ -1,0 +1,26 @@
+<%= form_with(model: [empresa, itdcon, itdarea], id: "itdarea_#{id}_form") do |form| %>
+  <% if itdarea.errors.any? %>
+    <div>
+      <h2><%= pluralize(itdarea.errors.count, "error") %>, necesitas llenar los siguientes campos: </h2>
+
+      <ul>
+        <% itdarea.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class = "container">
+    <div class="main mt-4">
+      <%empresa.users.where(area_id: [nil, itdarea.area.id]).each do |user|%>
+        <%if user.accepted_or_not_invited?%>
+          <div>
+            <%= form.check_box user.id, {checked: Itdind.find_by(user_id: user.id) ? true : false} %>
+            <%= form.label user.name%> <br />
+          </div>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+<% end %>
+

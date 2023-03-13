@@ -18,11 +18,11 @@
     <%= form.hidden_field dat, value: aspiracion_dat[dat] %>
     <% if aspiracion_hab.keys.include? dat %>
       <% aspiracion_hab[dat].keys.each do |hab|%>
-        <%= form.hidden_field hab, value: aspiracion_hab[dat][hab].round %>
+        <%= form.hidden_field hab, value: aspiracion_hab[dat][hab] %>
       <% end %>
     <%else%>
       <% recomendation_hab[dat].keys.each do |hab|%>
-        <%= form.hidden_field hab, value: recomendation_hab[dat][hab].round %>
+        <%= form.hidden_field hab, value: recomendation_hab[dat][hab] %>
       <% end %>
     <% end %>
   <% end %>

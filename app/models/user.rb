@@ -6,7 +6,8 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :lastname, presence: true
   belongs_to :empresa
-  has_many :itdinds
+  belongs_to :area, optional: true
+  has_many :itdinds, dependent: :nullify
   validate :password_complexity
   accepts_nested_attributes_for :empresa
   private

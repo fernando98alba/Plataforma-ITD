@@ -9,7 +9,817 @@
 #
 
 # column: value
+zero:
+  state: 1
+  comment: Comentario
+  verificador: one
+  itdind: five
+
 one:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+three:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+ten:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+eleven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twelve:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+thirteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+fourteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+fifteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+sixteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+seventeen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+eighteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+nineteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-two:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-four:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-six:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-eight:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+twenty-nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+thirty:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-four:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-six:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-seven:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-eight:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+thirty-nine:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+forty:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+forty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: one
+
+forty-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+forty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: one
+
+forty-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+forty-five:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+forty-six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+forty-seven:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+forty-eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+forty-nine:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-two:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-five:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-six:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-eight:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+fifty-nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-four:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-six:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-seven:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+sixty-nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+seventy-nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+eighty:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-one:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-three:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-five:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-seven:
+  state: 2
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-eight:
+  state: 1
+  comment:
+  verificador: one
+  itdind: two
+
+eighty-nine:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-one:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-three:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-five:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-six:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-eight:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+ninety-nine:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and two:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and three:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and four:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and seven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and nine:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and ten:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and eleven:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twelve:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and fourteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and fifteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and sixteen:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and seventeen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and eighteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and nineteen:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-two:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-three:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-four:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-five:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-six:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-seven:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-eight:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and twenty-nine:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty-one:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty-two:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty-three:
+  state: 2
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty-four:
+  state: 1
+  comment:
+  verificador: one
+  itdind: three
+
+one hundred and thirty-five:
   state: 1
   comment: Comentario
   verificador: one

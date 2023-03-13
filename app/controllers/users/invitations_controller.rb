@@ -22,7 +22,6 @@ class Users::InvitationsController < DeviseController
     elsif resource.invitation_accepted?
       redirect_to new_user_session_path
     else
-      puts resource.empresa_id
       resource.accept_invitation()
       resource.save
       redirect_to new_user_session_path
@@ -31,11 +30,9 @@ class Users::InvitationsController < DeviseController
 
   # PUT /resource/invitation
   def update
-    puts update_resource_params
     raw_invitation_token = update_resource_params[:invitation_token]
     resource = accept_resource
     invitation_accepted = resource.errors.empty?
-    puts raw_invitation_token
     if invitation_accepted
       sign_in(resource)
       redirect_to root_path
@@ -81,7 +78,6 @@ class Users::InvitationsController < DeviseController
     end
 
     def update_resource_params
-      puts params
       devise_parameter_sanitizer.sanitize(:accept_invitation)
     end
 end

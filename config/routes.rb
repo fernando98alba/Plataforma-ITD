@@ -16,8 +16,10 @@ Rails.application.routes.draw do
   get "empresas/:empresa_id/users", to: "users#index", as: "empresa_users"
   get "users/:id", to: "users#show", as: "user"
   resources :empresas, only: [:show] do 
-    resources :itdcons, only: [:index, :show, :create] do
+    resources :areas, only: [:create]
+    resources :itdcons, only: [:index, :show, :create, :update, :destroy] do
       resources :itdinds, only: [:show, :edit, :update]
+      resources :itdareas, only: [:show, :update]
       resources :com_verificadors, only: [:index]
     end
     resources :aspiracions, only: [:index, :show, :create, :update]

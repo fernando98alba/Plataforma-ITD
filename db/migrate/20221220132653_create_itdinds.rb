@@ -1,7 +1,7 @@
 class CreateItdinds < ActiveRecord::Migration[7.0]
   def change
     create_table :itdinds do |t|
-      t.references :user, null: true, foreign_key: true
+      t.references :user, null: true, foreign_key: {on_delete: :cascade}
       t.references :madurez, null: true, foreign_key: true
       t.references :alineamiento, null: true, foreign_key: true
       t.integer :p1

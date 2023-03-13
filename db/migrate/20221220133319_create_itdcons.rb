@@ -1,7 +1,7 @@
 class CreateItdcons < ActiveRecord::Migration[7.0]
   def change
     create_table :itdcons do |t|
-      t.references :empresa, null: true, foreign_key: true
+      t.references :empresa, null: true, foreign_key: {on_delete: :cascade}
       t.references :madurez, null: true, foreign_key: true
       t.references :alineamiento, null: true, foreign_key: true
       t.float :p1
